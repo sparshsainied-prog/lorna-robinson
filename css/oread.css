@@ -1,0 +1,62 @@
+/* Oread page only: the tunnel hero (the cover's ribs rush past, the dark of the mouth closes, her words arrive),
+   then the rest of the blurb on lilac, the launch, and the way on to Hamadryad. */
+
+/* ---------- hero: into the tunnel ---------- */
+.hero { position: relative; height: 280vh; }
+.stage { --bw: min(calc(100vw - 48px), calc((100svh - 215px) / 1.6)); --bx: 0px; --by: 0px; position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.book { position: absolute; left: var(--bx); top: var(--by); width: var(--bw); aspect-ratio: 1500 / 2400; }
+.art { position: absolute; inset: 0; }
+.plate { position: absolute; inset: 0; background: #050404; box-shadow: 0 18px 40px rgba(0, 0, 0, .55); }
+.ring { position: absolute; display: block; max-width: none; will-change: transform; }
+/* the cover's printed title and name ride on the outer ring, so the drawing under them is never bared */
+.print { position: absolute; inset: 0; pointer-events: none; will-change: transform, opacity; }
+.dark { position: absolute; width: 600px; height: 600px; margin: -300px 0 0 -300px; border-radius: 50%; background: radial-gradient(circle, #0c0a0b 0 28%, rgba(12, 10, 11, 0) 50%); opacity: 0; will-change: transform, opacity; pointer-events: none; display: none; }
+html.js:not(.still) .dark { display: block; }
+.veil { position: absolute; inset: 0; background: #0c0a0b; opacity: 0; will-change: opacity; pointer-events: none; display: none; }
+html.js:not(.still) .veil { display: block; }
+/* the cover's own tall capitals, set as real text where the print puts them */
+.title { position: absolute; left: 77%; top: 5.5%; margin: 0; writing-mode: vertical-rl; text-orientation: upright; font-size: calc(var(--bw) * .29); line-height: .5; letter-spacing: -.31em; color: #f6f1ea; }
+.author { position: absolute; left: 20.5%; top: 91.4%; margin: 0; font-size: calc(var(--bw) * .086); line-height: 1; letter-spacing: .22em; color: var(--name); white-space: nowrap; }
+.words { position: absolute; left: var(--gutter); right: calc(var(--gutter) + 26px); top: calc(var(--by) + var(--bw) * 1.6 + 18px); will-change: opacity; }
+.words .line { font-size: clamp(1.15rem, 4.6vw, 1.4rem); line-height: 1.3; margin: 0 0 .5rem; max-width: none; }
+.arrive { position: absolute; inset: 0; display: grid; place-items: center; padding: 0 calc(var(--gutter) + 26px) 0 var(--gutter); will-change: opacity, transform; }
+.arrive > div { max-width: 38rem; }
+.arrive p { font-size: clamp(1.15rem, 4.6vw, 1.5rem); line-height: 1.45; color: var(--paper); }
+.arrive p:last-child { margin-bottom: 0; }
+/* faded with opacity only: the two paragraphs stay in the accessibility tree and reading order from the start */
+html.js:not(.still) .arrive { opacity: 0; pointer-events: none; }
+@media (min-width: 900px) {
+  .stage { --bw: min(calc(86svh * .625), 36vw); --bx: 7vw; --by: calc((100svh - var(--bw) * 1.6) / 2); }
+  .words { left: calc(7vw + var(--bw) + 5vw); right: calc(var(--spine) + 4vw); top: 50%; transform: translateY(-50%); max-width: 36rem; }
+  .words .line { font-size: clamp(1.6rem, 2.3vw, 2.2rem); line-height: 1.25; margin-bottom: .9rem; }
+  .arrive > div { max-width: 42rem; }
+  .arrive p { font-size: clamp(1.4rem, 1.9vw, 1.8rem); line-height: 1.4; }
+}
+@media (max-height: 560px) and (max-width: 899px) { .stage { --bw: 60vw; } }
+/* no JavaScript or reduced motion: the finished cover with its words, in flow, no pin, nothing hidden */
+html:not(.js) .hero, html.still .hero { height: auto; }
+html:not(.js) .stage, html.still .stage { position: relative; height: auto; padding-bottom: 1.5rem; }
+html:not(.js) .book, html.still .book { position: relative; left: auto; top: auto; margin: var(--by) 0 0 var(--bx); }
+html:not(.js) .art, html.still .art { overflow: hidden; }
+html:not(.js) .hero .fx, html.still .hero .fx { visibility: visible !important; }
+html:not(.js) .words, html.still .words { position: relative; left: auto; right: auto; top: auto; transform: none; max-width: none; padding: 1.4rem calc(var(--gutter) + 26px) 0 var(--gutter); }
+html:not(.js) .arrive, html.still .arrive { position: relative; inset: auto; display: block; padding: 1.6rem calc(var(--gutter) + 26px) 0 var(--gutter); opacity: 1; pointer-events: auto; }
+html:not(.js) .arrive > div, html.still .arrive > div { max-width: var(--measure); }
+@media (min-width: 900px) {
+  html:not(.js) .stage, html.still .stage { display: grid; grid-template-columns: var(--bw) 1fr; column-gap: 5vw; align-items: center; padding: 3rem calc(var(--spine) + 4vw) 3rem 7vw; }
+  html:not(.js) .book, html.still .book { margin: 0; grid-row: 1 / 3; }
+  html:not(.js) .words, html.still .words { padding: 0; align-self: end; }
+  html:not(.js) .arrive, html.still .arrive { padding: 1.6rem 0 0; align-self: start; }
+  html:not(.js) .arrive > div, html.still .arrive > div { max-width: 36rem; }
+  html:not(.js) .arrive p, html.still .arrive p { font-size: 1.25rem; line-height: 1.5; }
+}
+
+/* ---------- the rest of the blurb: the whole cover, still, beside the buy button ---------- */
+.collide .first { display: block; width: min(360px, 78vw); }
+.collide .cover { width: 100%; }
+@media (max-width: 859px) { .collide .first { display: none; } }
+.credit { font-size: 1.05rem; color: #3c3346; margin-top: 1.4rem; }
+
+/* ---------- the launch ---------- */
+.launch .dates { grid-template-columns: 1fr; }
+.launch .dates p { max-width: var(--measure); }

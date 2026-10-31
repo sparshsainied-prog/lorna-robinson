@@ -1,0 +1,57 @@
+/* Home page only: the hero (Hamadryad cracks open onto Oread), the shelf, the short Lorna. */
+
+/* ---------- hero: Hamadryad on top of Oread ---------- */
+.hero { position: relative; height: 300vh; }
+.stage { --bw: min(calc(100vw - 62px), calc((100svh - 245px) * .625)); position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.book { position: absolute; left: 12px; top: 12px; width: var(--bw); aspect-ratio: 1000 / 1600; overflow: hidden; background: #000; box-shadow: 0 18px 40px rgba(0, 0, 0, .55); }
+.plate { position: absolute; inset: 0; background: url(../img/oread.jpg) center / 100% 100% no-repeat; will-change: transform; transform-origin: 15.6% 57%; }
+.pit { position: absolute; inset: 0; background: #050404; will-change: opacity; }
+.pl { position: absolute; display: block; max-width: none; will-change: transform; }
+.words { position: absolute; left: var(--gutter); right: 46px; top: calc(12px + var(--bw) * 1.6 + 16px); }
+.says { display: grid; }
+.says > * { grid-area: 1 / 1; }
+.words h1 { font-family: var(--cap); font-weight: 400; font-size: 1.35rem; letter-spacing: .14em; color: var(--name); margin: 0 0 .35rem; }
+.say { will-change: opacity, transform; }
+.say .line { font-size: clamp(1.18rem, 4.9vw, 1.45rem); line-height: 1.3; margin: 0 0 .85rem; max-width: none; }
+.say .line b { font-family: var(--cap); font-weight: 400; font-size: 1.25em; letter-spacing: .06em; }
+.say.a b { color: var(--ring-hi); }
+.say.b b { color: var(--lilac); }
+@media (min-width: 900px) {
+  .stage { --bw: min(calc(86svh * .625), 40vw); }
+  .book { left: 7vw; top: 50%; transform: translateY(-50%); }
+  .words { left: calc(7vw + var(--bw) + 5vw); right: calc(var(--spine) + 4vw); top: 50%; transform: translateY(-50%); max-width: 38rem; }
+  .words h1 { font-size: 2rem; margin-bottom: .8rem; }
+  .say .line { font-size: clamp(1.9rem, 2.7vw, 2.75rem); line-height: 1.22; margin-bottom: 1.4rem; }
+}
+/* no JavaScript or reduced motion: the finished cover, no pin */
+html:not(.js) .hero, html.still .hero { height: auto; }
+html:not(.js) .stage, html.still .stage { position: relative; height: auto; padding-bottom: 1.5rem; }
+html:not(.js) .book, html.still .book { position: relative; left: auto; top: auto; transform: none; margin: 12px 0 0 12px; }
+html:not(.js) .pl, html.still .pl, html:not(.js) .pit, html.still .pit, html:not(.js) .say.a, html.still .say.a { display: none; }
+html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+html:not(.js) .words, html.still .words { position: relative; left: auto; right: auto; top: auto; transform: none; max-width: none; padding: 1.4rem calc(var(--gutter) + 26px) 0 var(--gutter); }
+@media (min-width: 900px) {
+  html:not(.js) .stage, html.still .stage { display: flex; align-items: center; gap: 5vw; padding: 3rem 4vw 3rem 7vw; }
+  html:not(.js) .book, html.still .book { margin: 0; flex: none; }
+  html:not(.js) .words, html.still .words { padding: 0; }
+}
+
+/* ---------- the two novels ---------- */
+.novel .cover { width: min(360px, 78vw); }
+@media (max-width: 859px) { .novel .cover { display: none; } }
+
+/* ---------- the shelf (#books) ---------- */
+.shelf ol { list-style: none; padding: 0; margin: 0; }
+.shelf li { display: grid; grid-template-columns: 92px 1fr; gap: 1.2rem; padding: 1.6rem 0; border-top: 1px solid var(--rule); align-items: start; }
+.shelf li:last-child { border-bottom: 1px solid var(--rule); }
+.shelf li img { width: 92px; box-shadow: 0 8px 18px rgba(0, 0, 0, .5); }
+.shelf li .more { grid-column: 2; }
+.shelf h3 { color: var(--name); }
+.shelf h3 a { text-decoration: none; }
+.shelf h3 a:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.shelf p { margin-bottom: .6rem; }
+.shelf .where { color: var(--soft); font-size: 1.05rem; }
+@media (min-width: 860px) { .shelf li { grid-template-columns: 130px 1fr 1fr; gap: 2.2rem; } .shelf li img { width: 130px; } .shelf li .more { grid-column: 3; padding-top: 2.2rem; } }
+
+/* ---------- a short Lorna (#about) ---------- */
+.lorna h2 { color: var(--paper); }

@@ -1,0 +1,37 @@
+/* Events page only: the list of dates, her trail poster beside the launch, and the past list. Nothing moves here. */
+
+.trail h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1rem; }
+.trail .lead { margin-bottom: 0; }
+/* the h2 "Coming" stays for structure and screen readers; the page title and the dates already say it */
+.trail .list > h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.list { padding-top: clamp(2.4rem, 6vw, 4rem); }
+
+/* one event under another; the shared .dates grid is two columns on desktop, here it stays one */
+.trail .dates { grid-template-columns: 1fr; gap: 3rem; }
+.trail .dates li { border-top: 1px solid var(--rule); padding-top: 1.6rem; }
+.trail .dates li:first-child { border-top: 0; padding-top: 0; }
+.trail .dates .day { font-size: clamp(3.2rem, 12vw, 4.6rem); }
+.trail .dates .what { line-height: 1.05; }
+.trail .dates .when { color: var(--soft); font-size: 1.05rem; line-height: 1.5; }
+.trail .dates .how { margin-bottom: 0; }
+.poster { margin: 1.4rem 0 0; }
+.poster img { width: min(240px, 60vw); box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
+.poster figcaption { font-size: 1rem; color: var(--soft); margin-top: .7rem; max-width: var(--measure); }
+.trail [data-when-empty] { margin-top: 1rem; }
+
+/* desktop: the words left, her poster at the right of the launch entry */
+@media (min-width: 860px) {
+  .trail .dates li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 4rem; align-items: start; }
+  .trail .dates li > * { grid-column: 1; }
+  .trail .dates li > .poster { grid-column: 2; grid-row: 1 / span 6; margin: 0; }
+  .poster img { width: 260px; }
+  .trail .dates .day { font-size: clamp(3.6rem, 5vw, 5rem); }
+}
+
+/* past: quieter */
+.past-list.dates { grid-template-columns: 1fr; gap: 2rem; }
+.past-list .poster { display: none; }
+.past-list .day { font-size: 2.4rem; }
+.past-list .what { font-size: 1.4rem; }
+.past-list p { color: var(--soft); }
+.past-list .tbl { color: var(--soft); }

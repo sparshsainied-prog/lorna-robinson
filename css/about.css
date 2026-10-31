@@ -1,0 +1,41 @@
+/* About page only: her story beside a heading that stays, the Classics shelf, the contact close. */
+
+/* ---------- Hello, I'm Lorna ---------- */
+.story h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; color: var(--paper); }
+.story .two { align-items: start; }
+/* the heading cell runs the full height of the story so the h1 has room to stay put while her story scrolls past */
+.story .two > div:first-child { align-self: stretch; }
+@media (min-width: 860px) {
+  .story h1 { position: sticky; top: 2.4rem; margin-bottom: 0; }
+}
+.path p { font-size: clamp(1.3rem, 1.3vw + .6rem, 1.6rem); line-height: 1.5; max-width: 34rem; }
+.path p i { font-style: italic; }
+.path .rules { margin-top: 2rem; }
+.path .rules li { line-height: 1.5; }
+/* every link in the facts list is underlined the same way, label or title, so the links can be told from the text */
+.path .rules a { text-decoration: underline; text-decoration-color: var(--name); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.path .rules a:hover { color: var(--name); text-decoration-thickness: 2px; }
+
+/* ---------- Latin, Greek and Ovid: a shelf of the four Classics books ---------- */
+.classics h2 { color: var(--paper); }
+.shelfrow { list-style: none; margin: 1.6rem 0 0; padding: 0 0 1rem; display: flex; align-items: flex-end; gap: clamp(.5rem, 2vw, 1.4rem); border-bottom: 2px solid var(--rule); }
+.shelfrow li { margin: 0; flex: 0 0 auto; }
+.shelfrow img { display: block; height: clamp(88px, 22vw, 300px); width: auto; flex: none; box-shadow: 0 10px 22px rgba(0, 0, 0, .55); }
+.shelfrow a { display: block; }
+.shelfrow a:hover img { box-shadow: 0 14px 28px rgba(0, 0, 0, .6); }
+/* the moment: each cover is set down onto the shelf by the reader's scroll (js/about.js sets --set 0..1 per cover).
+   translateY only, a pure function of scroll position, so it lifts again on the way back up. No fades.
+   Standing on the shelf from the start without JS and under reduced motion. */
+.shelfrow li { --set: 1; }
+html.js:not(.still) .shelfrow.fx li { transform: translateY(calc((var(--set) - 1) * -1.6rem)); will-change: transform; }
+.classics .rules { margin-top: 1.6rem; }
+.classics .rules li { padding: .7rem 0; }
+.classics .rules li:first-child { border-top: 0; }
+.classics .rules b { display: block; font-family: var(--cap); font-weight: 400; font-size: 1.6rem; letter-spacing: .04em; line-height: 1; margin-bottom: .2rem; }
+.classics .rules .pub { color: var(--soft); font-size: 1.05rem; }
+.classics .rules .pub a { text-decoration-color: var(--rule); text-underline-offset: 4px; }
+.classics .rules .pub a:hover { color: var(--paper); }
+
+/* ---------- Write to me ---------- */
+.write .btns { margin-top: .4rem; }
+.write .cafe-line { margin: 1.6rem 0 0; }

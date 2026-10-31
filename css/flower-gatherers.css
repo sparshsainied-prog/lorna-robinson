@@ -1,0 +1,55 @@
+/* Flower Gatherers page only. The cover (Lydia Hall) is three planes: the plaster wall with the title,
+   the orange fresco lily, and the drawn hand with its bracelet. Scrolling brings them together. */
+.fg { --minoan: #3c78a7; --plaster: #e4d4c0; }
+
+/* ---------- the find: a pinned stage ---------- */
+.find { position: relative; height: 280vh; }
+.find .stage { --cw: min(calc(100vw - 2 * var(--gutter) - 20px), calc((100svh - 290px) * .648)); position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.wall { position: absolute; left: 50%; top: 12px; transform: translateX(calc(-50% - 10px)); width: var(--cw); aspect-ratio: 1652 / 2550; background: var(--plaster); box-shadow: 0 16px 36px rgba(0, 0, 0, .55); overflow: hidden; }
+.wall img { position: absolute; display: block; max-width: none; }
+.wall .ground { left: 0; top: 0; width: 100%; height: 100%; }
+.wall .lily { left: 8.596%; top: 35.02%; width: 67.49%; height: 46.59%; will-change: opacity; }
+.wall .hand { left: 51.63%; top: 49.33%; width: 39.89%; height: 28.51%; will-change: transform, clip-path; }
+.wall .whole { left: 0; top: 0; width: 100%; height: 100%; display: none; }
+.find .words { position: absolute; left: var(--gutter); right: 46px; top: calc(12px + var(--cw) * 1.5436 + 18px); }
+.find h1 { font-size: clamp(2.6rem, 11vw, 6.4rem); margin: 0 0 .5rem; color: var(--paper); }
+.says { display: grid; }
+.says > * { grid-area: 1 / 1; will-change: opacity, transform; }
+.say p { font-size: clamp(1.12rem, 4.6vw, 1.4rem); line-height: 1.32; margin: 0 0 .8rem; max-width: none; }
+.say.a p { color: var(--ring-hi); }
+.say.b p { color: var(--lilac-pale); }
+.say.c p { color: var(--paper); }
+@media (min-width: 900px) {
+  .find .stage { --cw: min(calc(88svh * .648), 36vw); }
+  .wall { left: auto; right: calc(var(--spine) + 6vw); top: 50%; transform: translateY(-50%); }
+  .find .words { left: 7vw; right: calc(var(--spine) + 6vw + var(--cw) + 5vw); top: 50%; transform: translateY(-50%); max-width: 36rem; }
+  .find h1 { font-size: clamp(3rem, 6vw, 6.4rem); margin-bottom: 1rem; }
+  .say p { font-size: clamp(1.6rem, 2.3vw, 2.3rem); line-height: 1.25; margin-bottom: 1.3rem; }
+}
+/* no JavaScript or reduced motion: the whole cover, no pin, the last words */
+html:not(.js) .find, html.still .find { height: auto; }
+html:not(.js) .find .stage, html.still .find .stage { position: relative; height: auto; padding-bottom: 1.5rem; }
+html:not(.js) .wall, html.still .wall { position: relative; left: auto; right: auto; top: auto; transform: none; margin: 12px auto 0; }
+html:not(.js) .wall .ground, html.still .wall .ground, html:not(.js) .wall .lily, html.still .wall .lily, html:not(.js) .wall .hand, html.still .wall .hand { display: none; }
+html:not(.js) .wall .whole, html.still .wall .whole { display: block; }
+html:not(.js) .say.a, html.still .say.a, html:not(.js) .say.b, html.still .say.b { display: none; }
+html:not(.js) .say.c, html.still .say.c { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+.say.c p { max-width: 34rem; }
+html:not(.js) .find .words, html.still .find .words { position: relative; left: auto; right: auto; top: auto; transform: none; max-width: none; padding: 1.4rem calc(var(--gutter) + 26px) 0 var(--gutter); }
+@media (min-width: 900px) {
+  html:not(.js) .find .stage, html.still .find .stage { display: flex; flex-direction: row-reverse; align-items: center; gap: 5vw; padding: 3rem 6vw 3rem 7vw; }
+  html:not(.js) .wall, html.still .wall { margin: 0; flex: none; }
+  html:not(.js) .find .words, html.still .find .words { padding: 0; }
+}
+
+/* ---------- the book, on paper ---------- */
+.fg .pale h2 { color: var(--minoan); text-wrap: balance; }
+@media (min-width: 860px) { .fg .pale h2 { font-size: clamp(3rem, 4.6vw, 4.6rem); } }
+.fg .pale .link { text-decoration-color: var(--minoan); }
+.fg .pale .btn:hover { background: var(--minoan); color: var(--paper); }
+.fg .pale .where { color: #5e5750; }
+.fg .pale .credit { font-size: 1.05rem; color: #5e5750; margin-top: 1.6rem; }
+
+/* ---------- next and previous ---------- */
+.fg .shelfline { color: var(--soft); }
+.fg .nextprev { margin-top: 1.2rem; }
