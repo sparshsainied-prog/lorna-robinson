@@ -14,7 +14,7 @@
 .find .words { position: absolute; left: var(--gutter); right: 46px; top: calc(12px + var(--cw) * 1.5436 + 18px); }
 .find h1 { font-size: clamp(2.6rem, 11vw, 6.4rem); margin: 0 0 .5rem; color: var(--paper); }
 .says { display: grid; }
-.says > * { grid-area: 1 / 1; will-change: opacity, transform; }
+.says > * { grid-area: 1 / 1; }
 .say p { font-size: clamp(1.12rem, 4.6vw, 1.4rem); line-height: 1.32; margin: 0 0 .8rem; max-width: none; }
 .say.a p { color: var(--ring-hi); }
 .say.b p { color: var(--lilac-pale); }
@@ -25,6 +25,10 @@
   .find .words { left: 7vw; right: calc(var(--spine) + 6vw + var(--cw) + 5vw); top: 50%; transform: translateY(-50%); max-width: 36rem; }
   .find h1 { font-size: clamp(3rem, 6vw, 6.4rem); margin-bottom: 1rem; }
   .say p { font-size: clamp(1.6rem, 2.3vw, 2.3rem); line-height: 1.25; margin-bottom: 1.3rem; }
+}
+/* narrow: the cover above already carries the title, so the h1 under it is quiet, a caption to the plate */
+@media (max-width: 899px) {
+  .find h1 { font-size: 1.6rem; color: var(--soft); margin-bottom: .55rem; }
 }
 /* no JavaScript or reduced motion: the whole cover, no pin, the last words */
 html:not(.js) .find, html.still .find { height: auto; }
@@ -46,10 +50,13 @@ html:not(.js) .find .words, html.still .find .words { position: relative; left: 
 /* the register (site.js): the Minoan blue title's second impression prints in the lily's fresco orange, the
    cover's two pigments coming into register */
 .fg .pale h2 { color: var(--minoan); --reg-ink: var(--fresco); text-wrap: balance; }
-/* the fresco lily, in the page under the museum paragraph: its pigment surfaces as the column comes up
-   (js/flower-gatherers.js writes the opacity; .fx shows it whole under reduced motion and without JavaScript) */
-.fg .pale .fresco { width: min(240px, 58vw); height: auto; margin: 1.6rem 0 0 -4%; }
-@media (min-width: 860px) { .fg .pale .fresco { width: 62%; margin-top: 2.2rem; } }
+/* the fresco lily, in a row of its own under both columns, the section's close: it settles 32px as it comes up
+   (S.drift in js/flower-gatherers.js; .fx holds it at rest under reduced motion and without JavaScript) */
+.fg .pale .fresco { justify-self: center; width: min(260px, 62vw); height: auto; margin-top: .6rem; }
+@media (min-width: 860px) {
+  .fg .pale .fresco { grid-column: 1 / -1; width: min(34rem, 40vw); margin-top: -.6rem; }
+  .fg .pale.sec { padding-bottom: clamp(2.5rem, 4vw, 4rem); }
+}
 @media (min-width: 860px) { .fg .pale h2 { font-size: clamp(3rem, 4.6vw, 4.6rem); } }
 .fg .pale .link { text-decoration-color: var(--minoan); }
 .fg .pale .btn:hover { background: var(--minoan); color: var(--paper); }

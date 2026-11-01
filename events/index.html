@@ -13,7 +13,7 @@
   An event with no fixed date (like the monthly café) has no data-date, so it stays in the list.
 
   Keep the words between the > and < signs; leave the tags (the parts in angle brackets) as they are
-  (data-register on the date line and the poster's <figure> are what let those two pieces move as the page scrolls).
+  (data-register on the date line, and the poster's <figure> with its <span class="mouth">, are what let those pieces move as the page scrolls).
   The home page reads this list and shows the next two dated events on its own, so there is nothing to do there.
   (Without JavaScript the home page shows its own copy of the blocks: ask Sparsh to update that copy if you like.)
   If you break something, email Sparsh and he will put it right.
@@ -39,6 +39,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
+<link rel="preload" href="../img/speckle.png" as="image" crossorigin>
 <link rel="stylesheet" href="../css/events.css">
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
 </head>
@@ -51,7 +52,7 @@
     <li><a href="../oread/">Oread</a></li>
     <li><a href="../hamadryad/">Hamadryad</a></li>
     <li><a href="../#books">Books</a></li>
-    <li><a href="../events/">Events</a></li>
+    <li><a href="../events/" aria-current="page">Events</a></li>
     <li><a href="../about/">About</a></li>
     <li><a href="../write-with-us/">Write with us</a></li>
   </ol>
@@ -64,7 +65,7 @@
     <li><a href="../oread/">Oread <span>the new novel</span></a></li>
     <li><a href="../hamadryad/">Hamadryad <span>where it began</span></a></li>
     <li><a href="../#books">Books <span>all five</span></a></li>
-    <li><a href="../events/">Events <span>Oxford</span></a></li>
+    <li><a href="../events/" aria-current="page">Events <span>Oxford</span></a></li>
     <li><a href="../about/">About <span>Lorna</span></a></li>
     <li><a href="../write-with-us/">Write with us <span>monthly café</span></a></li>
   </ol>
@@ -87,20 +88,20 @@
 
         <!-- EVENT: copy this whole block (from <li to </li>) to add one. data-date is the last day, year-month-day. -->
         <li data-date="2026-11-14">
-          <span class="day cap" data-register>Sat 14 Nov</span>
+          <span class="day cap" data-register="low">Sat 14 Nov</span>
           <span class="what">Oread launch and mystery artefact trail</span>
           <p class="when">Saturday 14 November 2026, 2.30 to 5pm<br>Cheney School, Oxford</p>
           <p>Arrive any time at main reception and follow the trail through tunnel-like corridors in the Rumble Museum to the Iris Classics Centre: drinks, books, chat, creative writing for anyone who wants a go, and maybe a reading. Tunnel travellers of all ages are welcome.</p>
           <p class="how">Contact: <a class="link" href="mailto:lro@cheneyschool.org">lro@cheneyschool.org</a> or <a class="link" href="mailto:lorna@irisproject.org.uk">lorna@irisproject.org.uk</a></p>
           <figure class="poster">
-            <img src="../img/events/trail-poster.jpg" width="612" height="792" loading="lazy" alt="The poster for the trail: the Oread cover over a photograph of a concrete tunnel, with the date, the time and the Iris Classics Centre.">
+            <span class="mouth"><img src="../img/events/trail-poster.jpg" width="612" height="792" loading="lazy" alt="The poster for the trail: the Oread cover over a photograph of a concrete tunnel, with the date, the time and the Iris Classics Centre."></span>
             <figcaption><a class="link" href="https://apolloandartemisblog.wordpress.com/2026/10/18/the-tunnels-are-calling-mystery-artefact-trail-to-the-oreads/">The tunnels are calling: the post about the trail</a></figcaption>
           </figure>
         </li>
 
         <!-- EVENT: copy this whole block (from <li to </li>) to add one. data-date is the last day, year-month-day. -->
         <li data-date="2026-11-22">
-          <span class="day cap" data-register>Sun 22 Nov</span>
+          <span class="day cap" data-register="low">Sun 22 Nov</span>
           <span class="what">Oxford Indie Book Fair, <span class="tbl">table S33</span></span>
           <p class="when">Sunday 22 November 2026, 11am to 4.30pm<br>Oxford Examination Schools, 75 to 81 High Street, Oxford OX1 4BG</p>
           <p>Oread and Hamadryad on the table.</p>
@@ -109,7 +110,7 @@
 
         <!-- EVENT with no fixed date: no data-date, so it never moves to Past. -->
         <li>
-          <span class="day cap" data-register>Monthly</span>
+          <span class="day cap" data-register="low">Monthly</span>
           <span class="what">Classics and Creative Writing Café</span>
           <p class="when">Once a month<br>The Iris Classics Centre at Cheney School, or St Alban's Church on Charles Street, Oxford</p>
           <p>Bring an idea, have a go at writing, or just read and chat. Each session has a classical theme as a prompt, all genres are welcome, and it's for ages 14 to adult. There are drinks and snacks (donations towards costs are welcome). Come once or come every month.</p>

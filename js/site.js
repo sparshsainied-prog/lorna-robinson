@@ -67,7 +67,7 @@
       let top = 0, run = 1, last = -1;
       const fn = y => {
         const p = mq.matches ? 1 : clamp((y - top) / run);
-        if (Math.abs(p - last) < .0004) return;
+        if (p === last) return;
         last = p; draw(p);
       };
       fn.measure = () => { top = section.getBoundingClientRect().top + scrollY; run = Math.max(1, section.offsetHeight - vh); last = -1; };
@@ -94,7 +94,7 @@
       let last = -1;
       const fn = () => {
         const p = mq.matches ? 1 : site.progress(el, from, to);
-        if (Math.abs(p - last) < .0005) return;
+        if (p === last) return;
         last = p; draw(p, el);
       };
       site.onFrame(fn);
@@ -114,7 +114,7 @@
         if (mq.matches) { cy = 0; last = -1; el.style.transform = ''; return; }
         const top = el.getBoundingClientRect().top - cy;
         const p = clamp((from - top / vh) / (from - to));
-        if (Math.abs(p - last) < .0004) return;
+        if (p === last) return;
         last = p;
         const e = ease(p);
         cy = +(y * (1 - e)).toFixed(1);
@@ -151,11 +151,16 @@
      marked data-register="off", or not laid out (visually hidden), are left alone. */
   const regs = [...document.querySelectorAll('main h2.cap, main .cap[data-register]')].filter(h =>
     h.dataset.register !== 'off' && !h.closest('[data-pin], .hero, .dig') && h.getBoundingClientRect().width > 10 && h.textContent.trim());
-  regs.forEach(h => {
+  // data-register="low" (the big dates, which sit low in the first frame): comes into register sooner, from the
+  // bottom edge to 84% of the viewport, so a date already on screen at load reads as printed
+  site.register = h => {
+    if (h.classList.contains('reg')) return;
     h.dataset.print = h.textContent.trim();
     h.classList.add('reg');
-    site.prop(h, .96, .62, '--reg');
-  });
+    const low = h.dataset.register === 'low';
+    site.prop(h, low ? 1 : .96, low ? .84 : .62, '--reg');
+  };
+  regs.forEach(site.register);
 
   /* ---- book to book: Previous comes in from the left, Next from the right, as the links rise ---- */
   document.querySelectorAll('.nextprev').forEach(nav => {

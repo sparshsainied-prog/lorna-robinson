@@ -1,48 +1,92 @@
 /* Hamadryad page only. The pinned cover that grows ring by ring, the quote on the heart red, Oread after it. */
-:root { --heart: #9d3923; } /* sampled from the rings nearest the big heart on Lydia Hall's cover */
+/* --bw is the hero cover's width; the blurb and Oread below line up on the column it leaves (one left edge) */
+:root { --heart: #9d3923; /* sampled from the rings nearest the big heart on Lydia Hall's cover */
+  --bw: min(calc(100vw - 24px - 44px), calc((100svh - 230px) * .625)); } /* phone: the cover ends before the Contents tab */
+@media (min-width: 700px) { :root { --bw: min(calc(86svh * .625), 48vw); } }
+@media (min-width: 900px) { :root { --bw: min(calc(86svh * .625), 40vw); } }
 
 /* ---------- the cover, grown from the heart ---------- */
 .hero { position: relative; height: 300vh; }
-.stage { --bw: min(calc(100vw - 24px), calc((100svh - 230px) * .625)); position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .book { position: absolute; left: 12px; top: 12px; width: var(--bw); aspect-ratio: 900 / 1440; overflow: hidden; background: #000; box-shadow: 0 18px 40px rgba(0, 0, 0, .55); }
 .band { position: absolute; display: block; max-width: none; }
+/* each band's box on the 900 x 1440 cover, from build/make-hamadryad-bands.py; js/hamadryad.js drives opacity only */
+.band[data-i="0"] { left: 7.222%; top: 5.139%; width: 87.333%; height: 91.111%; }
+.band[data-i="1"] { left: 16.222%; top: 53.333%; width: 11.556%; height: 7.569%; }
+.band[data-i="2"] { left: 12.111%; top: 50.486%; width: 19.556%; height: 12.014%; }
+.band[data-i="3"] { left: 6.778%; top: 47.361%; width: 30.444%; height: 19.583%; }
+.band[data-i="4"] { left: 0; top: 43.750%; width: 42.889%; height: 26.389%; }
+.band[data-i="5"] { left: 0; top: 40.556%; width: 49.333%; height: 32.431%; }
+.band[data-i="6"] { left: 0; top: 36.458%; width: 55.111%; height: 40.278%; }
+.band[data-i="7"] { left: 0; top: 31.389%; width: 64.111%; height: 50.903%; }
+.band[data-i="8"] { left: 0; top: 26.736%; width: 70.889%; height: 60.139%; }
+.band[data-i="9"] { left: 0; top: 22.708%; width: 76.667%; height: 68.333%; }
+.band[data-i="10"] { left: 0; top: 18.889%; width: 82.556%; height: 76.806%; }
+.band[data-i="11"] { left: 0; top: 12.917%; width: 94%; height: 87.083%; }
+.band[data-i="12"] { left: 0; top: 5.833%; width: 100%; height: 94.167%; }
+.band[data-i="13"], .band[data-i="14"] { inset: 0; width: 100%; height: 100%; }
+.band[data-i="15"] { left: 74.889%; top: 0; width: 25.111%; height: 12.778%; }
+/* the untouched cover, laid over the grown stack as it finishes so the held cover is the print itself */
+/* no opacity rule here: js/hamadryad.js writes it inline on its first draw, so if the scripts never arrive the print shows */
+.band.full { inset: 0; width: 100%; height: 100%; }
 .words { position: absolute; left: var(--gutter); right: 46px; bottom: max(28px, 4svh); } /* sits at the foot of the screen, so the ground under the book is not bare while the rings grow */
 .words h1 { font-size: clamp(2.6rem, 11vw, 6.4rem); margin: 0 0 .5rem; color: var(--ring); }
 .words .line { font-size: clamp(1.12rem, 4.6vw, 1.4rem); line-height: 1.3; margin: 0; max-width: none; }
-@media (min-width: 900px) {
-  .stage { --bw: min(calc(86svh * .625), 40vw); }
-  .book { left: 7vw; top: 50%; transform: translateY(-50%); }
-  .words { left: calc(7vw + var(--bw) + 5vw); right: calc(var(--spine) + 4vw); top: 50%; bottom: auto; transform: translateY(-50%); max-width: 36rem; }
-  .words h1 { margin-bottom: 1.2rem; }
-  .words .line { font-size: clamp(1.3rem, 1.6vw, 1.6rem); line-height: 1.25; }
+/* tablet and up: the cover on the left, the title beside it */
+@media (min-width: 700px) {
+  .book { left: 5vw; top: 50%; transform: translateY(-50%); }
+  .words { left: calc(5vw + var(--bw) + 4vw); right: calc(var(--gutter) + 38px); top: 50%; bottom: auto; transform: translateY(-50%); max-width: 36rem; }
+  .words h1 { font-size: clamp(2.6rem, 7vw, 6.4rem); margin-bottom: 1rem; }
+  .words .line { font-size: clamp(1.15rem, 2.5vw, 1.6rem); line-height: 1.25; }
 }
-/* no JavaScript or reduced motion: the whole cover, the sentence showing, no pin */
+@media (min-width: 900px) {
+  .book { left: 7vw; }
+  .words { left: calc(7vw + var(--bw) + 5vw); right: calc(var(--spine) + 4vw); }
+  .words h1 { font-size: clamp(2.6rem, 11vw, 6.4rem); margin-bottom: 1.2rem; }
+  .words .line { font-size: clamp(1.3rem, 1.6vw, 1.6rem); }
+}
+/* no JavaScript or reduced motion: the whole cover as printed (no bands), the credit showing, no pin */
+html:not(.js) .band:not(.full), html.still .band:not(.full) { display: none; }
+html:not(.js) .band.full, html.still .band.full { opacity: 1; }
 html:not(.js) .hero, html.still .hero { height: auto; }
 html:not(.js) .stage, html.still .stage { position: relative; height: auto; padding-bottom: 1.5rem; }
 html:not(.js) .book, html.still .book { position: relative; left: auto; top: auto; transform: none; margin: 12px 0 0 12px; }
 html:not(.js) .words, html.still .words { position: relative; left: auto; right: auto; top: auto; bottom: auto; transform: none; max-width: none; padding: 1.4rem var(--gutter) 0; }
-@media (min-width: 900px) {
-  html:not(.js) .stage, html.still .stage { display: flex; align-items: center; gap: 5vw; padding: 3rem 4vw 3rem 7vw; }
+@media (min-width: 700px) {
+  html:not(.js) .stage, html.still .stage { display: flex; align-items: center; gap: 4vw; padding: 3rem calc(var(--gutter) + 38px) 3rem 5vw; }
   html:not(.js) .book, html.still .book { margin: 0; flex: none; }
   html:not(.js) .words, html.still .words { padding: 0; }
+}
+@media (min-width: 900px) {
+  html:not(.js) .stage, html.still .stage { gap: 5vw; padding: 3rem 4vw 3rem 7vw; }
+}
+
+/* ---------- the book: under the hero's title column, so the page keeps one left edge ---------- */
+@media (min-width: 900px) {
+  #story .in { margin-left: calc(7vw + var(--bw) + 5vw - var(--gutter)); max-width: 36rem; }
 }
 
 /* ---------- the quote, alone on the heart red ---------- */
 .heart { background: var(--heart); color: var(--paper); padding-top: clamp(4.5rem, 12vw, 9rem); padding-bottom: clamp(4.5rem, 12vw, 9rem); }
 .heart .quote { border: 0; padding: 0; margin: 0; font-size: clamp(1.45rem, 3vw, 2.15rem); line-height: 1.35; max-width: 46rem; }
-.heart .quote p { max-width: none; }
+.heart .quote p { max-width: none; text-indent: -.42em; } /* the opening mark hangs in the margin */
 .heart .quote cite { font-size: 1.1rem; margin-top: 1.4rem; opacity: 1; color: var(--name); }
 .heart .quote cite span { display: block; color: var(--paper); opacity: .85; }
-/* the rings the red was sampled from, bleeding off the right and the foot of the section; grown from .82 to 1 about
-   their own centre as the quote passes (js/hamadryad.js). Phone: narrower, behind the quote's foot, fainter so the
-   quote keeps its contrast. Reduced motion and no JS: .fx in site.css holds it at scale 1. */
+/* the heart itself, rings 0 to 5 filled, cut round on its own groove (img/hamadryad/heart.webp); grown from .82 to 1
+   about the heart's centre as the quote is read (js/hamadryad.js). Phone: under the cite, below the quote's last
+   line, fainter so the words keep their contrast. Reduced motion and no JS: .fx in site.css holds it at scale 1. */
 .heart { position: relative; overflow: hidden; }
 .heart .in { position: relative; }
-.heart .rings { position: absolute; right: -20vw; bottom: -26vw; width: 60vw; height: auto; opacity: .3; transform-origin: 50% 50%; pointer-events: none; }
-@media (min-width: 860px) {
-  .heart .rings { right: -6vw; bottom: -12vw; width: 38vw; opacity: .55; }
+.heart .rings { position: absolute; right: -6vw; bottom: -12vw; width: 38vw; height: auto; opacity: .55; transform-origin: 43.74% 50.11%; pointer-events: none; }
+@media (max-width: 859px) {   /* the heart's top sits 3vw under the cite at every width (both are in vw), so no word is ever on the rings */
+  .heart { padding-bottom: 41vw; }
+  .heart .rings { right: -14vw; bottom: -30vw; width: 64vw; opacity: .26; }
 }
 
 /* ---------- Oread after it ---------- */
 .sequel .cover { width: min(300px, 70vw); }
 .sequel .btns { margin-top: .4rem; }
+/* desktop: the Oread cover's left edge on the hero cover's (7vw), its words on the title column */
+@media (min-width: 900px) {
+  .sequel .in.two { max-width: none; margin-left: calc(7vw - var(--gutter)); grid-template-columns: var(--bw) minmax(0, 36rem); gap: 5vw; }
+}

@@ -1,6 +1,8 @@
 /* Events page only: the list of dates, her trail poster beside the launch, and the past list.
-   Two quiet pieces move (js/events.js and the shared register): the big dates print like the titles, and her poster rises
-   36px as the entry passes. Past and New dates sit still. */
+   The page's one moment is her trail poster opening from the tunnel: as the launch entry rises from the viewport foot to
+   45% of the way up, a circle centred on the mouth of the Oread cover's tunnel widens until the whole poster shows,
+   and the figure rises 36px over the same stretch (js/events.js). The big dates print like the titles (shared register).
+   Past and New dates sit still. Without JavaScript or under reduced motion the poster is simply whole. */
 
 .trail h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1rem; }
 .trail .lead { margin-bottom: 0; }
@@ -17,16 +19,24 @@
 .trail .dates .when { color: var(--soft); font-size: 1.05rem; line-height: 1.5; }
 .trail .dates .how { margin-bottom: 0; }
 .poster { margin: 1.4rem 0 0; }
-.poster img { width: min(240px, 60vw); box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
+.poster .mouth { display: block; width: 78vw; max-width: 100%; }
+.poster img { display: block; width: 100%; height: auto; box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
+html.still .poster .mouth, html:not(.js) .poster .mouth { clip-path: none !important; }
 .poster figcaption { font-size: 1rem; color: var(--soft); margin-top: .7rem; max-width: var(--measure); }
 .trail [data-when-empty] { margin-top: 1rem; }
 
-/* desktop: the words left, her poster at the right of the launch entry */
-@media (min-width: 860px) {
-  .trail .dates li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 4rem; align-items: start; }
+/* tablet and desktop: the words left, her poster at the right of the launch entry */
+@media (min-width: 720px) {
+  .trail .dates li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 2rem; align-items: start; }
   .trail .dates li > * { grid-column: 1; }
   .trail .dates li > .poster { grid-column: 2; grid-row: 1 / span 6; margin: 0; }
-  .poster img { width: 260px; }
+  .poster .mouth { width: 46vw; }
+  .poster figcaption { max-width: 46vw; }
+}
+@media (min-width: 1024px) {
+  .trail .dates li { column-gap: 4rem; }
+  .poster .mouth { width: min(30vw, 400px); }
+  .poster figcaption { max-width: min(30vw, 400px); }
   .trail .dates .day { font-size: clamp(3.6rem, 5vw, 5rem); }
 }
 

@@ -28,26 +28,35 @@
     const reach = (1 - easeIn(t)) * w * .06;              // the hand comes in from the wrist side as it is drawn
     hand.style.transform = `translate3d(${reach.toFixed(1)}px,${(-reach * .7).toFixed(1)}px,0)`;
     hand.style.visibility = t <= 0 ? 'hidden' : 'visible';
-    const a = ease(clamp((p - .14) / .12)) * (1 - ease(clamp((p - .40) / .08)));
-    const b = ease(clamp((p - .46) / .12)) * (1 - ease(clamp((p - .72) / .08)));
-    const c = ease(clamp((p - .80) / .12));
-    [a, b, c].forEach((o, i) => {
-      const el = say[i];
+    // the three sentences hand over: the leaving one is all but gone (rising 14px) before the arriving one surfaces
+    // (rising 14px into place), so two sentences are never seen stacked on each other; the title above holds through
+    // the brief beat between them. Whole pixels, and no transform at all once a sentence is at rest, so the type
+    // rasterises the same whichever way the reader arrived.
+    const ai = ease(clamp((p - .06) / .12));
+    const ao = ease(clamp((p - .38) / .05)), bi = ease(clamp((p - .42) / .06));
+    const bo = ease(clamp((p - .70) / .05)), ci = ease(clamp((p - .74) / .06));
+    [[ai, ao], [bi, bo], [ci, 0]].forEach(([inn, out], i) => {
+      const el = say[i], o = inn * (1 - out), y = Math.round((1 - inn) * 14 - out * 14);
       el.style.opacity = o.toFixed(3);
-      el.style.transform = `translate3d(0,${((1 - o) * 14).toFixed(1)}px,0)`;
-      el.style.visibility = o < .01 ? 'hidden' : 'visible';
+      el.style.transform = y ? `translate3d(0,${y}px,0)` : 'none';
+      if (i < 2) el.style.visibility = o < .01 ? 'hidden' : 'visible';   // the last words are never hidden (keyboard)
+      el.style.pointerEvents = o < .5 ? 'none' : '';
     });
   }
   S.pin(find, draw);
+  // .say.c holds the hero's links. It is never hidden from the keyboard: a Tab into it while the find is still
+  // running takes the page to the end of the find (the scroll itself, so the frame drawn is the finished one).
+  const toEnd = () => {
+    if (S.still) return;
+    const end = Math.round(find.getBoundingClientRect().top + scrollY + find.offsetHeight - innerHeight);
+    if (scrollY < end - 1) window.scrollTo({ top: end, behavior: 'instant' });
+  };
+  say[2].addEventListener('focusin', toEnd);
 
-  /* ---- the book, on paper: the fresco lily surfaces ----
-     The cover's own gesture, small: Lydia Hall's orange lily (the same cut plane as in the hero) sits in the page under
-     the museum paragraph, and its pigment comes up in the paper as the reader brings that column in (opacity 0 to 1
-     while the column's top rises from the bottom of the viewport to 55% up; then it stands). Read off the column, which
-     never moves. The two text columns stay still. Reduced motion and no JS: the lily printed whole (.fx). */
+  /* ---- the book, on paper: the fresco lily settles ----
+     Lydia Hall's orange lily (the same cut plane as in the hero) closes the section in a row of its own under both
+     columns. It is the site's single-image plane: 32px below its place as it enters, at rest as it leaves (S.drift),
+     no fade. The two text columns stay still. Reduced motion and no JS: at rest (.fx). */
   const fresco = document.querySelector('#about-the-book .fresco');
-  if (fresco) {
-    const col = fresco.parentElement;
-    S.track(col, 1, .55, p => { fresco.style.opacity = S.still ? '' : ease(p).toFixed(3); });
-  }
+  if (fresco) S.drift(fresco, 32);
 })();

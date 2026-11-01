@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
+<link rel="preload" href="img/speckle.png" as="image" crossorigin>
 <link rel="stylesheet" href="css/home.css">
 <link rel="preload" as="image" href="img/home/w0.webp" media="(min-width: 900px)">
 <link rel="preload" as="image" href="img/home/w0-m.webp" media="(max-width: 899px)">
@@ -30,7 +31,7 @@
 
 <nav class="spine" aria-label="Pages">
   <ol>
-    <li><a href="./">Home</a></li>
+    <li><a href="./" aria-current="page">Home</a></li>
     <li><a href="oread/">Oread</a></li>
     <li><a href="hamadryad/">Hamadryad</a></li>
     <li><a href="#books">Books</a></li>
@@ -43,7 +44,7 @@
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Contents">
   <button class="x" aria-label="Close the contents">Close</button>
   <ol>
-    <li><a href="./">Home</a></li>
+    <li><a href="./" aria-current="page">Home</a></li>
     <li><a href="oread/">Oread <span>the new novel</span></a></li>
     <li><a href="hamadryad/">Hamadryad <span>where it began</span></a></li>
     <li><a href="#books">Books <span>all five</span></a></li>
@@ -93,8 +94,8 @@
 </section>
 
 <section class="sec below novel" id="oread">
-  <!-- the near ribs of the Oread tunnel, carried down from the hero and bleeding in from the left -->
-  <div class="edge" aria-hidden="true"><picture><source media="(max-width: 859px)" srcset="img/home/t1-m.webp"><img src="img/home/t1.webp" alt="" width="993" height="1596" loading="lazy"></picture></div>
+  <!-- the near ribs of the Oread tunnel, carried down from the hero as the cover's black print alone, bleeding in from the left -->
+  <div class="edge" aria-hidden="true"><picture><source media="(max-width: 859px)" srcset="img/home/t1-ink-m.webp"><img src="img/home/t1-ink.webp" alt="" width="600" height="1504" loading="lazy"></picture></div>
   <div class="in two">
     <div class="hold"></div>
     <div>
@@ -132,13 +133,13 @@
          is added or changed on events/, copy the same block here too (the date in data-date drops it once it has passed). -->
     <ul class="dates" data-events>
       <li data-date="2026-11-14">
-        <span class="day cap">Sat 14 Nov</span>
+        <span class="day cap" data-register="low">Sat 14 Nov</span>
         <span class="what">Oread launch and mystery artefact trail</span>
         <p>2.30 to 5pm at Cheney School, Oxford. Arrive any time at main reception and follow the trail through tunnel-like corridors in the Rumble Museum to the Iris Classics Centre: drinks, books, chat, creative writing for anyone who wants a go, and maybe a reading. Tunnel travellers of all ages are welcome.</p>
         <a class="link" href="mailto:lro@cheneyschool.org">lro@cheneyschool.org</a>
       </li>
       <li data-date="2026-11-22">
-        <span class="day cap">Sun 22 Nov</span>
+        <span class="day cap" data-register="low">Sun 22 Nov</span>
         <span class="what">Oxford Indie Book Fair, <span class="tbl">table S33</span></span>
         <p>Oread and Hamadryad on the table.</p>
         <a class="link" href="https://www.oxfordindiebookfair.co.uk/">oxfordindiebookfair.co.uk</a>
@@ -154,17 +155,17 @@
     <h2 class="cap">Also on the shelf</h2>
     <ol>
       <li>
-        <a href="the-birder/"><img src="img/covers/the-birder-440.jpg" alt="The cover of The Birder: a linocut blackbird." width="440" height="675" loading="lazy"></a>
+        <a href="the-birder/" tabindex="-1" aria-hidden="true"><img src="img/covers/the-birder-440.jpg" alt="The cover of The Birder: a linocut blackbird." width="440" height="675" loading="lazy"></a>
         <div><h3><a href="the-birder/">The Birder</a></h3><p>An Ovid-inspired novel set in an alternate Oxford where people transform instead of dying.</p></div>
         <div class="more"><p class="where">Illustrated with linocut prints of birds around the city of Oxford.</p><a class="link" href="the-birder/">The Birder</a></div>
       </li>
       <li>
-        <a href="flower-gatherers/"><img src="img/covers/flower-gatherers-440.jpg" alt="The cover of Flower Gatherers: a Minoan fresco figure gathering flowers." width="440" height="679" loading="lazy"></a>
+        <a href="flower-gatherers/" tabindex="-1" aria-hidden="true"><img src="img/covers/flower-gatherers-440.jpg" alt="The cover of Flower Gatherers: a Minoan fresco figure gathering flowers." width="440" height="679" loading="lazy"></a>
         <div><h3><a href="flower-gatherers/">Flower Gatherers</a></h3><p>A Minoan-inspired novel exploring themes of motherhood, growing up, and what can really be known about the distant past.</p></div>
         <div class="more"><p class="where">Key chapters are set in the Ashmolean Museum's Aegean World Gallery, with illustrations by Lydia Hall.</p><a class="link" href="flower-gatherers/">Flower Gatherers</a></div>
       </li>
       <li>
-        <a href="telling-tales-in-nature/"><img src="img/covers/telling-tales-in-nature-440.jpg" alt="The cover of Telling Tales in Nature: Compendium, with botanical drawings." width="440" height="660" loading="lazy"></a>
+        <a href="telling-tales-in-nature/" tabindex="-1" aria-hidden="true"><img src="img/covers/telling-tales-in-nature-440.jpg" alt="The cover of Telling Tales in Nature: Compendium, with botanical drawings." width="440" height="660" loading="lazy"></a>
         <div><h3><a href="telling-tales-in-nature/">Telling Tales in Nature</a></h3><p>A collection of myths retold from the perspective of the spirits of plants.</p></div>
         <div class="more"><p class="where">All four books in one: Underworld Tales, Forest Tales, Orchard Tales and Meadow Tales, with illustrations by Lydia Hall.</p><a class="link" href="telling-tales-in-nature/">Telling Tales in Nature</a></div>
       </li>
@@ -175,7 +176,7 @@
 <section class="sec lorna" id="about">
   <div class="in two">
     <div>
-      <h2 class="cap">Hello, I'm Lorna</h2>
+      <h2 class="cap hold">Hello, I'm Lorna</h2>
     </div>
     <div>
       <p>My fascination with myths and stories began with The Usborne Book of Greek Myths and Legends and Ulysses 31. Some years later, I studied Classics at Lady Margaret Hall, Oxford. A chance encounter with a Gabriel García Márquez novel in my finals year made me curious about how much it shared with Ovid, and that curiosity became a doctorate on magical realism at University College London.</p>

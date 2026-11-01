@@ -17,21 +17,23 @@
   const hero = $('.hero'), stage = $('.stage'), book = $('.book'), pit = $('.pit'), years = $('.years'), ring = $('.years g');
   const wide = matchMedia('(min-width: 900px)');
   const htitle = $('.htitle'), otitle = $('.otitle'), sayA = $('.say.a'), sayB = $('.say.b'), yrs = $('.yrs');
+  // each plane's box is in css/home.css (the same TB and BOX), so the hero is composed without JavaScript; here only the
+  // point it turns and scales about: the heart of the big tree for the pieces, the vanishing point for the tunnel
   const place = (el, b, o) => {
-    Object.assign(el.style, { left: b[0] / AW * 100 + '%', top: b[1] / 2400 * 100 + '%', width: b[2] / AW * 100 + '%', height: b[3] / 2400 * 100 + '%' });
     el.style.transformOrigin = `${(o[0] - b[0]) / b[2] * 100}% ${(o[1] - b[1]) / b[3] * 100}%`;
   };
   const W = [...document.querySelectorAll('.pl')].map(el => {
     const j = +el.dataset.k.slice(1); place(el, BOX[el.dataset.k], C);
-    return { el, dx: Math.cos(BIS[j]), dy: Math.sin(BIS[j]), o: ORDER.indexOf(j), spin: (j % 2 ? -1 : 1) * (5 + j) };
+    return { el, j, dx: Math.cos(BIS[j]), dy: Math.sin(BIS[j]), o: ORDER.indexOf(j), spin: (j % 2 ? -1 : 1) * (5 + j) };
   });
   const T = {};
   document.querySelectorAll('.tp').forEach(el => { place(el, TB[el.dataset.k], VP); el.classList.add('fx'); T[el.dataset.k] = el; });
-  [otitle, sayB].forEach(el => el.classList.add('fx'));
+  [otitle, sayA, sayB].forEach(el => el.classList.add('fx'));
 
-  let k = .5, bh = 800, vh = innerHeight;
+  const says = $('.says');
+  let k = .5, bh = 800, vh = innerHeight, sh = 300;
   const measure = () => {
-    const b = book.getBoundingClientRect(); k = b.width / AW; bh = b.height; vh = innerHeight;
+    const b = book.getBoundingClientRect(); k = b.width / AW; bh = b.height; vh = innerHeight; sh = says.offsetHeight;
     // the Oread title rides with the near ribs, so it scales about the same vanishing point
     const t0 = otitle.style.transform; otitle.style.transform = 'none';
     const t = otitle.getBoundingClientRect(); otitle.style.transform = t0;
@@ -45,31 +47,38 @@
   function draw(p) {
     if (S.still) { // reduced motion: css/home.css shows the finished state; leave nothing inline on what it shows
       Object.values(T).forEach(el => { el.style.transform = ''; });
-      [otitle, sayB].forEach(el => { el.style.transform = ''; el.style.opacity = ''; el.style.visibility = ''; el.classList.remove('off'); });
+      [otitle, sayA, sayB].forEach(el => { el.style.transform = ''; el.style.opacity = ''; el.style.visibility = ''; el.classList.remove('off'); });
       sayA.removeAttribute('aria-hidden');
       return;
     }
-    // 1. the years: one ring counted outward from the heart to the bark while the rings lean in; her words say how many
-    const yr = ease(clamp(p / .12));
+    // 1. the years: one ring counted outward from the heart to the bark while the rings lean in; her words say how many.
+    //    Nothing of it is on the tree before the first scroll: the ring is drawn from the heart as the reader starts.
+    const yr = ease(clamp(p / .18));
     ring.style.transform = `scale(${(.02 + .98 * yr).toFixed(4)})`;
-    show(years, (1 - ease(clamp((p - .16) / .1))));
-    yrs.style.opacity = ease(clamp((p - .04) / .06)).toFixed(3);
+    show(years, ease(clamp(p / .05)) * (1 - ease(clamp((p - .19) / .1)))); // drawn in over the first flick, not popped on
+    yrs.style.opacity = ease(clamp((p - .02) / .16)).toFixed(3);
     const lean = (1 + .07 * yr).toFixed(4);
     // 2. the heart cracks (the pieces part by a hair), 3. they fall away one after another, spinning a little
-    const crack = ease(clamp((p - .12) / .12));
+    const crack = ease(clamp((p - .14) / .12));
     for (const w of W) {
       const t = clamp((p - (.2 + w.o * .03)) / .3);
       const d = (crack * (12 + w.o * 2) + easeIn(t) * 1400) * k;
       w.el.style.transform = `translate3d(${(w.dx * d).toFixed(1)}px,${(w.dy * d).toFixed(1)}px,0) rotate(${(easeIn(t) * w.spin).toFixed(2)}deg) scale(${lean})`;
-      show(w.el, 1 - clamp((t - .55) / .45)); // they thin out in the last of their flight, so they never cross the words solid
+      // they thin out in the last of their flight; the pieces whose path crosses the words column (w1 on desktop, w0 and
+      // w6 under 900px) start thinning sooner, so even behind the type they never pass it solid
+      const early = wide.matches ? w.j === 1 : (w.j === 0 || w.j === 6);
+      show(w.el, 1 - clamp((t - (early ? .3 : .55)) / (early ? .5 : .45)));
     }
     // the title plane lifts away and takes the Hamadryad line with it
     const lift = easeIn(clamp((p - .23) / .3));
     htitle.style.transform = `translate3d(${Math.round(lift * 40 * k)}px,${Math.round(-14 * yr - lift * vh * 1.3)}px,0) rotate(${(lift * 4).toFixed(2)}deg)`;
     htitle.style.visibility = lift >= 1 ? 'hidden' : 'visible';
-    const a = 1 - ease(clamp((p - .27) / .15));
-    say(sayA, a); sayA.style.transform = `translate3d(0,${Math.round(-easeIn(1 - a) * 28)}px,0)`; // fades before it moves, so it never rides into her name
-    if (a < .01) sayA.setAttribute('aria-hidden', 'true'); else sayA.removeAttribute('aria-hidden');
+    // the handover: one strip of print rolls up through the words' window (.says clips it, its edges dissolve in the
+    // padding), the Hamadryad line leaving up under her name as the Oread line comes up from below with the tunnel. Both
+    // are printed in full the whole way, so the copy never thins and the two never lie on top of each other.
+    const roll = ease(clamp((p - .29) / .14)), gap = sh + 24;
+    say(sayA, roll < 1 ? 1 : 0); sayA.style.transform = `translate3d(0,${Math.round(-roll * gap)}px,0)`;
+    if (roll >= 1) sayA.setAttribute('aria-hidden', 'true'); else sayA.removeAttribute('aria-hidden');
     // 4. the descent: the tunnel comes up out of the dark, the near ribs fastest, the far mouth least. The Oread
     //    line arrives from below as the last pieces are still leaving, so the copy never goes to nothing.
     const dz = ease(clamp((p - .32) / .52));
@@ -78,9 +87,7 @@
     const ground = ease(clamp((p - (wide.matches ? .3 : .28)) / .26)); // phones lift it a touch sooner so the screen never goes black
     pit.style.opacity = (1 - ground).toFixed(3);
     show(otitle, ground); // the Oread title is under the ground until the ground lifts
-    // 5. the Oread line and its buttons settle up out of the tunnel with the title
-    const b = ease(clamp((p - .42) / .26));
-    say(sayB, b); sayB.style.transform = `translate3d(0,${Math.round((1 - b) * 36)}px,0)`;
+    say(sayB, roll > 0 ? 1 : 0); sayB.style.transform = `translate3d(0,${Math.round((1 - roll) * gap)}px,0)`;
   }
   S.pin(hero, draw);
   // a keyboard reader tabbing to Get Oread or the launch lands on the finished state, not on a line that is not there yet
@@ -116,6 +123,8 @@
         c.querySelectorAll('a[href]').forEach(a => { a.setAttribute('href', new URL(a.getAttribute('href'), base).href); });
         return c;
       }));
+      // the clones keep data-register="low" from events/; they arrive after site.js set up the register, so register them here
+      list.querySelectorAll('.cap[data-register]').forEach(h => { if (h.dataset.register !== 'off') S.register(h); });
       if (empty) empty.hidden = next.length > 0;
     }).catch(() => {});
   }

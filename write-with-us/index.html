@@ -20,7 +20,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
-<link rel="stylesheet" href="../css/write-with-us.css">
+<link rel="preload" href="../img/speckle.png" as="image" crossorigin>
+<link rel="stylesheet" href="../css/write-with-us.css?v=2">
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
 </head>
 <body class="paper">
@@ -34,7 +35,7 @@
     <li><a href="../#books">Books</a></li>
     <li><a href="../events/">Events</a></li>
     <li><a href="../about/">About</a></li>
-    <li><a href="../write-with-us/">Write with us</a></li>
+    <li><a href="../write-with-us/" aria-current="page">Write with us</a></li>
   </ol>
 </nav>
 <button class="tab" aria-controls="sheet" aria-expanded="false">Contents</button>
@@ -47,7 +48,7 @@
     <li><a href="../#books">Books <span>all five</span></a></li>
     <li><a href="../events/">Events <span>Oxford</span></a></li>
     <li><a href="../about/">About <span>Lorna</span></a></li>
-    <li><a href="../write-with-us/">Write with us <span>monthly café</span></a></li>
+    <li><a href="../write-with-us/" aria-current="page">Write with us <span>monthly café</span></a></li>
   </ol>
 </div>
 
@@ -55,7 +56,7 @@
 
 <section class="sec pale open">
   <div class="in narrow">
-    <h1 class="cap">Come and write with us</h1>
+    <h1 class="cap" data-register="top">Come and write with us</h1>
     <p class="lead">The Classics and Creative Writing Café meets once a month, at the Iris Classics Centre at Cheney School or St Alban's Church on Charles Street, Oxford.</p>
   </div>
 </section>
@@ -81,7 +82,7 @@
     </div>
     <figure class="board">
       <img src="../img/write-with-us/board.jpg" width="694" height="925" loading="lazy" alt="A tall board, black on the left and white on the right, headed Artemis and Apollo with a moon and a sun. It is covered in paper feathers and wings in orange, lilac, yellow and blue, each with handwritten words: freedom, swooping, sun rising, crickets singing, air rushing through my feathers.">
-      <figcaption>Worded wings and feathers from a creative writing workshop Lorna runs at St Alban's Church.</figcaption>
+      <figcaption>Worded wings and feathers from a creative writing workshop Lorna runs at St Alban's&nbsp;Church.</figcaption>
     </figure>
   </div>
 </section>
@@ -97,6 +98,6 @@
 </footer>
 
 <script src="../js/site.js"></script>
-<script src="../js/write-with-us.js"></script>
+<script src="../js/write-with-us.js?v=2"></script>
 </body>
 </html>

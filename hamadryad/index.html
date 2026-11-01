@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
+<link rel="preload" href="../img/speckle.png" as="image" crossorigin>
 <link rel="stylesheet" href="../css/hamadryad.css">
 <link rel="preload" as="image" href="../img/hamadryad/band-00.webp">
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
@@ -31,7 +32,7 @@
   <ol>
     <li><a href="../">Home</a></li>
     <li><a href="../oread/">Oread</a></li>
-    <li><a href="../hamadryad/">Hamadryad</a></li>
+    <li><a href="../hamadryad/" aria-current="page">Hamadryad</a></li>
     <li><a href="../#books">Books</a></li>
     <li><a href="../events/">Events</a></li>
     <li><a href="../about/">About</a></li>
@@ -44,7 +45,7 @@
   <ol>
     <li><a href="../">Home</a></li>
     <li><a href="../oread/">Oread <span>the new novel</span></a></li>
-    <li><a href="../hamadryad/">Hamadryad <span>where it began</span></a></li>
+    <li><a href="../hamadryad/" aria-current="page">Hamadryad <span>where it began</span></a></li>
     <li><a href="../#books">Books <span>all five</span></a></li>
     <li><a href="../events/">Events <span>Oxford</span></a></li>
     <li><a href="../about/">About <span>Lorna</span></a></li>
@@ -54,28 +55,31 @@
 
 <main id="main">
 
-<!-- The cover, grown from its heart. Lydia Hall's tree rings are cut into bands (img/hamadryad/, from
-     build/make-hamadryad-bands.py); js/hamadryad.js brings them in one ring at a time as the page scrolls.
+<!-- The cover, grown from its heart. Lydia Hall's tree rings are cut into bands along their own grooves (img/hamadryad/,
+     from build/make-hamadryad-bands.py; boxes in css/hamadryad.css); js/hamadryad.js brings them in one ring at a time
+     as the page scrolls, then lays the untouched cover (.band.full) over the stack as it finishes. No JS or reduced
+     motion: only the untouched cover shows.
      The hero carries only the title and the credit: her blurb is said once, whole, in The book below. -->
 <section class="hero" aria-labelledby="title">
   <div class="stage">
     <div class="book" role="img" aria-label="The cover of Hamadryad: the cross-section of a tree grown from two hearts, its rings printed in orange on black, the title running down the right in rough white capitals.">
-      <img class="band" data-i="0" src="../img/hamadryad/band-00.webp" alt="" width="793" height="1335">
-      <img class="band" data-i="1" src="../img/hamadryad/band-01.webp" alt="" width="99" height="99">
-      <img class="band" data-i="2" src="../img/hamadryad/band-02.webp" alt="" width="165" height="165">
-      <img class="band" data-i="3" src="../img/hamadryad/band-03.webp" alt="" width="271" height="271">
-      <img class="band" data-i="4" src="../img/hamadryad/band-04.webp" alt="" width="367" height="367">
-      <img class="band" data-i="5" src="../img/hamadryad/band-05.webp" alt="" width="439" height="483">
-      <img class="band" data-i="6" src="../img/hamadryad/band-06.webp" alt="" width="491" height="587">
-      <img class="band" data-i="7" src="../img/hamadryad/band-07.webp" alt="" width="563" height="731">
-      <img class="band" data-i="8" src="../img/hamadryad/band-08.webp" alt="" width="629" height="863">
-      <img class="band" data-i="9" src="../img/hamadryad/band-09.webp" alt="" width="686" height="977">
-      <img class="band" data-i="10" src="../img/hamadryad/band-10.webp" alt="" width="742" height="1091">
-      <img class="band" data-i="11" src="../img/hamadryad/band-11.webp" alt="" width="742" height="1246">
-      <img class="band" data-i="12" src="../img/hamadryad/band-12.webp" alt="" width="900" height="1343">
+      <img class="band" data-i="0" src="../img/hamadryad/band-00.webp" alt="" width="786" height="1312">
+      <img class="band" data-i="1" src="../img/hamadryad/band-01.webp" alt="" width="104" height="109">
+      <img class="band" data-i="2" src="../img/hamadryad/band-02.webp" alt="" width="176" height="173">
+      <img class="band" data-i="3" src="../img/hamadryad/band-03.webp" alt="" width="274" height="282">
+      <img class="band" data-i="4" src="../img/hamadryad/band-04.webp" alt="" width="386" height="380">
+      <img class="band" data-i="5" src="../img/hamadryad/band-05.webp" alt="" width="444" height="467">
+      <img class="band" data-i="6" src="../img/hamadryad/band-06.webp" alt="" width="496" height="580">
+      <img class="band" data-i="7" src="../img/hamadryad/band-07.webp" alt="" width="577" height="733">
+      <img class="band" data-i="8" src="../img/hamadryad/band-08.webp" alt="" width="638" height="866">
+      <img class="band" data-i="9" src="../img/hamadryad/band-09.webp" alt="" width="690" height="984">
+      <img class="band" data-i="10" src="../img/hamadryad/band-10.webp" alt="" width="743" height="1106">
+      <img class="band" data-i="11" src="../img/hamadryad/band-11.webp" alt="" width="846" height="1254">
+      <img class="band" data-i="12" src="../img/hamadryad/band-12.webp" alt="" width="900" height="1356">
       <img class="band" data-i="13" src="../img/hamadryad/band-13.webp" alt="" width="900" height="1440">
       <img class="band" data-i="14" src="../img/hamadryad/band-14.webp" alt="" width="900" height="1440">
-      <img class="band" data-i="15" src="../img/hamadryad/band-15.webp" alt="" width="219" height="178">
+      <img class="band" data-i="15" src="../img/hamadryad/band-15.webp" alt="" width="226" height="184">
+      <img class="band full" src="../img/hamadryad/full.webp" alt="" width="900" height="1440">
     </div>
     <div class="words">
       <h1 class="cap" id="title">Hamadryad</h1>
@@ -95,14 +99,14 @@
   </div>
 </section>
 
-<!-- The quote, on its own: the red sampled from the rings nearest the heart. Behind it, at the right edge, the band of
-     rings the red was sampled from (band-05, cut from Lydia Hall's cover); js/hamadryad.js grows it a little as the
-     quote passes, a quiet echo of the hero. Decorative: aria-hidden, empty alt. -->
+<!-- The quote, on its own: the red sampled from the rings nearest the heart. Behind it, at the right edge, that heart
+     itself (heart.webp: rings 0 to 5 of Lydia Hall's cover, filled, cut round on their own groove); js/hamadryad.js
+     grows it a little as the quote is read, a quiet echo of the hero. Decorative: aria-hidden, empty alt. -->
 <section class="sec heart" aria-label="What Professor Stephen Harrison said about Hamadryad">
-  <img class="rings fx" src="../img/hamadryad/band-05.webp" alt="" width="439" height="483" loading="lazy" aria-hidden="true">
+  <img class="rings fx" src="../img/hamadryad/heart.webp" alt="" width="439" height="467" loading="lazy" aria-hidden="true">
   <div class="in">
     <blockquote class="quote">
-      <p>"Lorna Robinson's Hamadryad presents a utopian/dystopian future in which a brilliant political response to the climate crisis allows Britons to bond formally with individual trees, a smart updating of classical hamadryads or tree-spirits. We follow the involving stories of a series of interconnected individuals and their varied interactions with coming worlds of ecocrisis, in a thoughtful and moving narrative which confronts the key issue of our time."</p>
+      <p>“Lorna Robinson's Hamadryad presents a utopian/dystopian future in which a brilliant political response to the climate crisis allows Britons to bond formally with individual trees, a smart updating of classical hamadryads or tree-spirits. We follow the involving stories of a series of interconnected individuals and their varied interactions with coming worlds of ecocrisis, in a thoughtful and moving narrative which confronts the key issue of our time.”</p>
       <cite>Professor Stephen Harrison <span>Professor of Latin Literature, University of Oxford</span></cite>
     </blockquote>
   </div>

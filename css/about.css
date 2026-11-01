@@ -1,8 +1,9 @@
 /* About page only: her story beside a heading that stays, with the line drawn down it; the Classics shelf; the contact close. */
 
 /* ---------- Hello, I'm Lorna ---------- */
-.story h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; color: var(--paper); }
+.story h1 { font-size: clamp(3rem, 12vw, 8rem); margin: 0 0 1.4rem; color: var(--paper); }
 .story .two { align-items: start; }
+@media (min-width: 860px) { .story .two { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
 /* the heading cell runs the full height of the story so the h1 has room to stay put while her story scrolls past */
 .story .two > div:first-child { align-self: stretch; }
 @media (min-width: 860px) {
@@ -23,15 +24,16 @@
 
 /* ---------- Latin, Greek and Ovid: a shelf of the four Classics books ---------- */
 .classics h2 { color: var(--paper); }
-.shelfrow { list-style: none; margin: 1.6rem 0 0; padding: 0 0 1rem; display: flex; align-items: flex-end; gap: clamp(.5rem, 2vw, 1.4rem); border-bottom: 2px solid var(--rule); }
+/* the top margin carries the lift as well, so a cover held up never touches the heading above it */
+.shelfrow { list-style: none; margin: calc(1rem + clamp(.9rem, 2.4vw, 2.2rem)) 0 0; padding: 0; display: flex; align-items: flex-end; gap: clamp(.4rem, 1.6vw, 1.4rem); border-bottom: 2px solid var(--rule); }
 .shelfrow li { margin: 0; flex: 0 0 auto; }
-.shelfrow img { display: block; height: clamp(88px, 22vw, 300px); width: auto; flex: none; box-shadow: 0 10px 22px rgba(0, 0, 0, .55); }
+.shelfrow img { display: block; height: clamp(108px, 29vw, 360px); width: auto; flex: none; box-shadow: 0 6px 14px rgba(0, 0, 0, .55); }
 .shelfrow a { display: block; }
-.shelfrow a:hover img { box-shadow: 0 14px 28px rgba(0, 0, 0, .6); }
-/* set down: each cover is held 1.6rem above the shelf and set down by the reader's scroll (site.shelve in js/about.js
+.shelfrow a:hover img { box-shadow: 0 8px 18px rgba(0, 0, 0, .6); }
+/* set down: each cover is held above the shelf (about 6% of its height: .9rem on phone, up to 2.2rem on desktop) and set down by the reader's scroll (site.shelve in js/about.js
    gives each li --set 0..1 and class set; css/site.css turns it into translateY of --lift). Lifted again on the way back
    up. No fades. Standing on the shelf from the start without JS and under reduced motion. */
-.shelfrow li { --lift: -1.6rem; }
+.shelfrow li { --lift: calc(-1 * clamp(.9rem, 2.4vw, 2.2rem)); }
 .classics .rules { margin-top: 1.6rem; }
 .classics .rules li { padding: .7rem 0; }
 .classics .rules li:first-child { border-top: 0; }

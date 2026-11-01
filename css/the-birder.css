@@ -11,7 +11,7 @@
 .title h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0; color: var(--sky-ink); }
 /* the second moon from the cover, where the bird lands */
 .perch { display: inline-block; width: 1em; height: 1em; vertical-align: -.12em; margin-left: .12em; border-radius: 50%; }
-html.js:not(.still) .perch { background: var(--sky); opacity: .35; }   /* js brings it to 1 as the bird comes */
+html.js:not(.still) .perch { background: var(--sky); opacity: 0; transform: scale(.6); }   /* js raises it to full as the bird lifts */
 html:not(.js) .perch, html.still .perch { display: none; }
 .book { grid-area: book; position: relative; justify-self: end; width: min(66vw, calc((100svh - 400px) * .652), 330px); aspect-ratio: 900 / 1380; box-shadow: 0 16px 34px rgba(0, 0, 0, .55); background: #1c2a36; }
 .plate { width: 100%; height: auto; display: block; }
@@ -25,13 +25,16 @@ html.js:not(.still) .patch, html.js:not(.still) .bird { display: block; }
 .stage .link { text-decoration-color: var(--sky-ink); }
 .stage :focus-visible { outline-color: var(--sky-ink); }
 .book { box-shadow: 0 16px 34px rgba(16, 13, 12, .28); }
-@media (min-width: 900px) {
+/* two columns from 700px: the title and the line beside the cover (tablets in portrait included) */
+@media (min-width: 700px) {
   .stage { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "title book" "say book"; grid-template-rows: 1fr 1fr; align-items: start; column-gap: 5vw; row-gap: 1.2rem; padding: 2rem calc(var(--spine) + 4vw) 2rem 7vw; }
-  .book { width: min(calc(84svh * .652), 34vw, 460px); align-self: center; }
+  .book { width: min(calc(84svh * .652), 44vw, 420px); align-self: center; }
   .title { align-self: end; }
   .say { align-self: start; max-width: 36rem; }
   .say .lead { font-size: clamp(1.5rem, 2.1vw, 2rem); line-height: 1.25; margin-bottom: 1.4rem; }
 }
+@media (min-width: 700px) and (max-width: 899px) { .title h1 { font-size: 7.2vw; } }   /* the moon stays on the title's line */
+@media (min-width: 900px) { .book { width: min(calc(84svh * .652), 34vw, 460px); } }
 @media (max-width: 899px) { .stage { padding-right: calc(var(--gutter) + 26px); } }
 /* no JavaScript or reduced motion: the unaltered cover, no pin, no cut-out */
 html:not(.js) .hero, html.still .hero { height: auto; }
@@ -51,17 +54,24 @@ html:not(.js) .stage, html.still .stage { position: relative; height: auto; min-
 .places { list-style: none; margin: 1.8rem 0 0; padding: 0 0 0 4.4rem; }
 .places li { border-top: 1px solid #d9d0c2; padding: 1rem 0 .9rem; }
 .places li:last-child { border-bottom: 1px solid #d9d0c2; }
-.places .name { font-family: var(--cap); font-weight: 400; font-size: clamp(2.1rem, 8vw, 4.8rem); line-height: .95; letter-spacing: .02em; color: var(--ground); display: block; }
+.places .name { text-wrap: balance; font-family: var(--cap); font-weight: 400; font-size: clamp(2.1rem, 8vw, 4.8rem); line-height: .95; letter-spacing: .02em; color: var(--ground); display: block; }
 .hop { position: absolute; left: 0; top: 0; width: 3rem; height: auto; display: none; will-change: transform; }
 html.js .hop { display: block; }
 @media (min-width: 900px) { .places { padding-left: 7rem; } .hop { width: 4.6rem; } .places li { padding: 1.3rem 0 1.1rem; } }
 
-/* ---------- the linocuts: a shelf the reader slides along ---------- */
-.strip { list-style: none; margin: 1.6rem calc(-1 * var(--gutter)) 0; padding: .4rem var(--gutter) 1.2rem; display: flex; gap: 1.1rem; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+/* ---------- the linocuts: a shelf the reader slides along ----------
+   It bleeds to the right edge of the screen (past the column and the phone's tab gutter), with room at its end so
+   the last print scrolls clear of the Contents tab. Each print is pulled from the inked block as the shelf comes up
+   (site.shelve gives each li --set 0..1): the paper uncovers top to bottom and lifts off a two degree tilt. The
+   clip runs 40px past the print on three sides so the shadow is kept (and 40px past the top at --set 0, so none shows). Reduced motion and no JS: --set is 1. */
+.strip { list-style: none; margin: 1.6rem calc(-1 * var(--gutter)) 0; padding: .8rem calc(var(--gutter) + 38px) 1.2rem var(--gutter); display: flex; gap: 1.1rem; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
 .strip:focus-visible { outline: 3px solid var(--name); outline-offset: -3px; }
-.strip li { flex: none; }
-.strip img { height: min(54vh, 460px); width: auto; box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
-@media (min-width: 900px) { .strip { gap: 1.6rem; } }
+.strip li { flex: none; --lift: 0rem; }
+.strip img { height: min(54vh, 460px, 100vw); width: auto; box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
+.strip li img { clip-path: inset(-40px -40px calc((1 - var(--set, 1)) * (100% + 80px) - 40px) -40px); transform: rotate(calc((1 - var(--set, 1)) * -2deg)); transform-origin: top left; }
+/* phone: about 70vw a print, so a quarter of the next one shows, most of it clear of the Contents tab */
+@media (max-width: 899px) { .strip { margin-right: calc(-1 * (var(--gutter) + 26px)); gap: .8rem; } }
+@media (min-width: 900px) { .strip { gap: 1.6rem; scrollbar-color: var(--paper) transparent; } }
 
 /* ---------- reviews ---------- */
 .revs { display: grid; gap: 1.6rem; }
@@ -69,4 +79,8 @@ html.js .hop { display: block; }
 @media (min-width: 860px) { .revs { grid-template-columns: 1fr 1fr; gap: 4rem; } }
 
 /* ---------- close ---------- */
+/* the blackbird from the hero, settled on the end of "Read The Birder" (js/the-birder.js brings it in) */
+.perched { display: flex; align-items: flex-end; gap: .35rem; margin: 0 0 1.4rem; }
+.perched h2 { margin: 0; min-width: 0; }
+.alight { flex: none; width: 2.6rem; aspect-ratio: 220 / 246; margin-bottom: .1em; background: var(--paper); -webkit-mask: url(../img/the-birder/bird.webp) center / contain no-repeat; mask: url(../img/the-birder/bird.webp) center / contain no-repeat; }
 .close .nextprev { margin-top: 2.6rem; padding-top: 1.2rem; border-top: 1px solid var(--rule); }

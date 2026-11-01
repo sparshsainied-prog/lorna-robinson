@@ -1,11 +1,16 @@
 /* Write with us (the Classics and Creative Writing Café): paper from top to footer, her words, one photo.
-   A quiet paper page that closes the site: the titles print into register (shared), the When / To book list is ruled
-   onto the paper as it comes up (js/write-with-us.js), and her invitation and the board photo never move. */
+   A quiet paper page that closes the site: the title prints into register on the first scroll, the When / To book list
+   is ruled onto the paper as it comes up, and the signature, her Artemis and Apollo board opens at its seam
+   (all three in js/write-with-us.js). Her invitation and every line of text never move. */
 
 body.paper { background: var(--paper); }
 .pale h1 { color: var(--ring-deep); font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; }
 .pale .lead { color: var(--ground); }
 /* the opening sits close to the fold so the invitation and the photo are already in reach */
+/* one left edge: the title, lead and invitation sit on the same 1120px container as the table below, kept to a
+   760px measure inside it, so at desktop width every block starts on one line */
+.open .in.narrow, .written .in.narrow { max-width: 1120px; }
+.open .in > *, .written .in > * { max-width: 760px; }
 .open { padding-top: clamp(5rem, 14vw, 9rem); padding-bottom: clamp(1.5rem, 4vw, 3rem); }
 
 /* her sentence in the reading italic, large, left-aligned like a page */
@@ -16,14 +21,21 @@ body.paper { background: var(--paper); }
 .table { padding-top: 0; }
 .board { margin: 0; }
 .board img { width: min(360px, 100%); border: 1px solid #d9d0c2; } /* a print on paper, not a floating object */
-.board figcaption { font-size: 1rem; color: #5e5750; margin-top: .8rem; max-width: 22rem; }
+.board figcaption { font-size: 1rem; color: #5e5750; margin-top: .8rem; max-width: 22rem; text-wrap: balance; }
+/* the signature: the board opens at its seam. js/write-with-us.js writes --open 0 to 1 as the photo rises; at 0 only a
+   strip about the black/white seam shows (the seam sits about 47.5% across the photo, so the left inset is 5 points
+   smaller than the right and the strip is centred on it), and the moon and sun halves part outward to the full photo.
+   The photo only: the caption below is never clipped. Whole photo under reduced motion and without JavaScript. */
+html.js:not(.still) .board img { clip-path: inset(0 calc((1 - var(--open, 1)) * 30%) 0 calc((1 - var(--open, 1)) * 25%)); }
+@media (min-width: 600px) and (max-width: 859px) { .board img { width: min(560px, 100%); } } /* source is 694px: sharp at 1x */
+@media (max-width: 599px) { .table p, .lead { text-wrap: wrap; } } /* phone: a plain ragged edge, no pretty-wrap gaps */
 .table .rules { margin-top: 1.4rem; margin-bottom: 1.8rem; }
 .table .rules li { max-width: var(--measure); }
 /* the list is ruled onto the paper as it comes up: each hairline is drawn from the left (js/write-with-us.js writes
    --rp, and --rq for the foot of the list, 0 to 1). Whole lines without JavaScript and under reduced motion. */
 .table .rules li { position: relative; border-top: 0; }
 .table .rules li:last-child { border-bottom: 0; }
-.table .rules li::before, .table .rules li:last-child::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: #d9d0c2; transform-origin: 0 50%; }
+.table .rules li::before, .table .rules li:last-child::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: color-mix(in srgb, var(--ring-deep) 35%, transparent); transform-origin: 0 50%; }
 .table .rules li::before { top: 0; }
 .table .rules li:last-child::after { bottom: 0; }
 html.js:not(.still) .table .rules li::before { transform: scaleX(var(--rp, 1)); will-change: transform; }

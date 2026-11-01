@@ -120,7 +120,10 @@ h3 { font-family: var(--cap); font-weight: 400; font-size: 2rem; letter-spacing:
 .dates .day { font-family: var(--cap); font-size: clamp(3.4rem, 13vw, 5.6rem); line-height: .9; color: var(--name); display: block; }
 .dates .what { font-family: var(--cap); font-size: 1.8rem; letter-spacing: .04em; display: block; margin: .4rem 0 .5rem; color: var(--lilac); }
 .dates p { color: var(--paper); }
-.dates .tbl { color: var(--ring-hi); }
+/* no one-word last line ("Classics and Creative / Writing Café"); a title with a table number breaks before it, greedy, as pretty would pull a word down to it */
+.dates .what { text-wrap: pretty; }
+.dates .what:has(.tbl) { text-wrap: wrap; }
+.dates .tbl { color: var(--ring-hi); white-space: nowrap; }
 .past .day { color: var(--soft); }
 .past .what { color: var(--soft); }
 [data-past-wrap][hidden], [data-when-empty][hidden] { display: none; }
@@ -152,9 +155,14 @@ html.still .fx, html:not(.js) .fx { transform: none !important; opacity: 1 !impo
 
 /* the register (js/site.js): a heading's second impression, same speckle, offset up and left, which comes into
    register (--reg 0 to 1) as the heading rises. The "/ """ keeps it out of the accessibility tree; a browser that
-   does not know that syntax draws no ghost at all. Nothing under reduced motion or without JavaScript. */
-html.js:not(.still) .reg { position: relative; }
-html.js:not(.still) .reg::after { content: attr(data-print) / ""; position: absolute; inset: 0; color: var(--reg-ink, currentColor); opacity: calc(.42 * (1 - var(--reg, 1))); transform: translate(calc(-.055em * (1 - var(--reg, 1))), calc(-.045em * (1 - var(--reg, 1)))); pointer-events: none; will-change: transform, opacity; }
+   does not know that syntax draws no ghost at all. Nothing under reduced motion or without JavaScript.
+   The second impression prints under the letters (z-index -1 inside the heading's own stacking context), so only the
+   offset sliver shows, a crisp edge of ink up and left like a misregistered plate. --reg-dx / --reg-dy set the offset.
+   A heading that is already positioned (sticky, say) carries class "hold" and keeps its own position; the page that
+   holds it gives it position: relative where it does not stick, so the ghost always anchors to the heading. */
+html.js:not(.still) .reg { isolation: isolate; }
+html.js:not(.still) .reg:not(.hold) { position: relative; }
+html.js:not(.still) .reg::after { content: attr(data-print) / ""; position: absolute; inset: 0; z-index: -1; color: var(--reg-ink, currentColor); opacity: calc(.7 * (1 - var(--reg, 1))); transform: translate(calc(var(--reg-dx, -.055em) * (1 - var(--reg, 1))), calc(var(--reg-dy, -.045em) * (1 - var(--reg, 1)))); pointer-events: none; will-change: transform, opacity; }
 
 /* shelved items (site.shelve): held --lift above the shelf at --set 0, standing on it at 1 */
 .set { --lift: -1.2rem; }

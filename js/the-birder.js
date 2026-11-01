@@ -1,35 +1,50 @@
-/* The Birder page only. Two pieces, both pure functions of the scroll position (window.site):
-   1. the hero: the blackbird cut from Lydia Hall's cover lifts off its branch and perches beside the title,
-   2. the walk: the same bird moves from one named place to the next as the reader goes down the list.
-   Under reduced motion the cover is shown whole (css hides the cut-out) and the walk bird sits by the first name. */
+/* The Birder page only. Four pieces, all pure functions of the scroll position (window.site):
+   1. the hero (the signature): the blackbird cut from Lydia Hall's cover lifts off its branch and lands on the
+      second moon at the end of the title,
+   2. the walk: the same bird moves from one named place to the next as the reader goes down the list,
+   3. the linocuts: each print is pulled from the block as the shelf comes up,
+   4. the invitation: the bird again, small, settling on the end of "Read The Birder".
+   Under reduced motion and without JavaScript everything is at rest: the cover whole (css hides the cut-out), the
+   walk bird by the first name, the prints uncovered, the last bird on its heading. */
 (() => {
   const S = window.site;
   const { clamp, ease } = S;
 
-  /* ---- 1. the hero ---- */
+  /* ---- 1. the hero ----
+     The bird lands at half the moon's width with its feet on the moon's lower part (as it sits on the cover's moon),
+     not as a sticker over the disc. The moon itself starts small and clear and comes up to full over the first half
+     of the flight, so it rises as the bird lifts. Where the title and the cover sit side by side (700px up) the flight
+     is a climb and a drop across the gap; on a phone, where the title sits straight above the cover, it is a sideways
+     loop out into the sky right of the moon and back, so the bird does not just hop up and drop. */
   const hero = document.querySelector('.hero'), bird = document.querySelector('.bird'), perch = document.querySelector('.perch');
   if (hero && bird && perch) {
-    let dx = 0, dy = 0, sc = 1, lastP = 0;
+    let dx = 0, dy = 0, sc = 1, out = 0, lastP = 0;
     const draw = p => {
       lastP = p;
-      if (S.still) { bird.style.transform = ''; perch.style.opacity = ''; return; }
+      if (S.still) { bird.style.transform = ''; perch.style.opacity = ''; perch.style.transform = ''; return; }
       const t = ease(clamp((p - .02) / .93));           // lifts at once, lands as the run ends: no hold
-      const arc = Math.sin(t * Math.PI);                // a rise in the middle of the flight
-      const x = dx * t, y = dy * t - arc * 90;
+      const arc = Math.sin(t * Math.PI);                // 0 at both ends, 1 in the middle of the flight
+      const wide = innerWidth >= 700;                   // the two-column hero (css/the-birder.css, 700px up)
+      const x = dx * t + (wide ? 0 : arc * out), y = dy * t - arc * (wide ? 90 : 30);
       const s = 1 + (sc - 1) * t;
-      const r = -16 * arc;                              // beak up while climbing, level when it lands
+      const r = -16 * arc;                              // beak up while in the air, level when it lands
       bird.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${r.toFixed(2)}deg) scale(${s.toFixed(3)})`;
-      perch.style.opacity = (.35 + .65 * t).toFixed(3);  // the cover's second moon comes up to meet it
+      const m = clamp(t / .5);                          // the cover's second moon: up to full by mid-flight
+      perch.style.opacity = m.toFixed(3);
+      perch.style.transform = `scale(${(.6 + .4 * m).toFixed(3)})`;
     };
     const measure = () => {
-      bird.style.transform = '';
+      bird.style.transform = ''; perch.style.transform = 'none';
       const b = bird.getBoundingClientRect(), q = perch.getBoundingClientRect();
-      if (!b.width || !q.width) return;
-      sc = q.width / b.width;
-      // land the bird's centre on the perch, the pale moon at the end of the title
-      dx = (q.left + q.width / 2) - (b.left + b.width / 2);
-      dy = (q.top + q.height / 2) - (b.top + b.height / 2);
-      draw(lastP);
+      if (b.width && q.width) {
+        sc = .5 * q.width / b.width;
+        // the bird's bottom centre (its feet and tail) to a point on the moon's lower part
+        const tx = q.left + q.width * .55, ty = q.top + q.height * .78;
+        dx = tx - (b.left + b.width / 2);
+        dy = ty - sc * b.height / 2 - (b.top + b.height / 2);
+        out = Math.max(0, Math.min(70, innerWidth - q.right - 50));   // sideways room right of the moon (phone)
+      }
+      draw(lastP);                                      // the first frame at scroll 0 is the same one a round trip ends on
     };
     S.pin(hero, draw);
     addEventListener('resize', measure);
@@ -68,22 +83,17 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fn.measure(); fn(scrollY, innerHeight); });
   }
 
-  /* ---- 3. the linocuts: the shelf slides into place ----
-     The eleven prints are a walk around Oxford on a sideways shelf. As the section comes up they sit 56px to the
-     right and slide left together, the way the reader's own finger will push them, coming to rest flush with the
-     column by the time the shelf itself is 45% of the way up the viewport (measured on the shelf, not the section,
-     so the travel happens while the prints are in sight, under the heading). On a phone the first print already ends a few
-     pixels short of the Contents tab, so there the shelf comes the other way, 18px in from the left edge (the
-     width of the gutter, so nothing is clipped and nothing goes under the tab). Still while they are looked at,
-     and the reader's own sideways scroll is untouched. Reduced motion: at rest. */
-  const strip = document.querySelector('#prints .strip'), lis = strip ? [...strip.querySelectorAll(':scope > li')] : [];
-  if (strip && lis.length) {
-    lis.forEach(li => li.classList.add('fx'));
-    S.track(strip, 1, .45, p => {
-      if (S.still) { lis.forEach(li => li.style.transform = ''); return; }
-      const x = (1 - ease(p)) * (innerWidth < 900 ? -18 : 56);
-      const t = `translate3d(${x.toFixed(1)}px,0,0)`;
-      lis.forEach(li => li.style.transform = t);
-    });
-  }
+  /* ---- 3. the linocuts: each print pulled from the block ----
+     site.shelve gives each print --set 0..1 as the shelf's foot comes up from the bottom edge (all set by the time it
+     is 72% of the way up), one after another left to right; css/the-birder.css turns --set into the paper uncovering
+     top to bottom off a two degree tilt. Still once set; the reader's own sideways scroll is untouched. A small
+     stagger, so the first two prints on a phone and the first four on a desktop come up nearly together. */
+  const strip = document.querySelector('#prints .strip');
+  if (strip) S.shelve(strip, strip.querySelectorAll(':scope > li'), .04);
+
+  /* ---- 4. the invitation: the same blackbird settles on the end of "Read The Birder" ----
+     A quiet echo of the hero. It comes 28px in from beyond the end of the heading, beak first (the cut-out faces
+     left), and 18px down, while the heading rises from the bottom edge to 70%. Heading, buttons and text are still. */
+  const alight = document.querySelector('#buy .alight');
+  if (alight) S.move(alight, 28, -18, 1, .7);
 })();

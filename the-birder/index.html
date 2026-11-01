@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
+<link rel="preload" href="../img/speckle.png" as="image" crossorigin>
 <link rel="stylesheet" href="../css/the-birder.css">
 <link rel="preload" as="image" href="../img/covers/the-birder.jpg">
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
@@ -60,7 +61,7 @@
     <div class="title"><h1 class="cap">The Birder<span class="perch" aria-hidden="true"></span></h1></div>
     <div class="book">
       <img class="plate" src="../img/covers/the-birder.jpg" alt="The cover of The Birder: bare trees against a blue and white winter sky with two moons, a blackbird on a branch, the spires and dome of Oxford behind green hills, and a girl with a long plait standing under the trees. The title is in gold." width="900" height="1380" fetchpriority="high">
-      <img class="patch" src="../img/the-birder/patch.jpg" alt="" width="220" height="246">
+      <img class="patch" src="../img/the-birder/patch.jpg" alt="" width="440" height="492">
       <img class="bird" src="../img/the-birder/bird.webp" alt="" width="220" height="246">
     </div>
     <div class="say">
@@ -130,7 +131,11 @@
 
 <section class="sec dusk close" id="buy">
   <div class="in">
-    <h2 class="cap">Read The Birder</h2>
+    <!-- the hero's blackbird again (the same cut-out, img/the-birder/bird.webp, as a mask in paper white: black ink
+         would vanish on this ground, and white on black is how the linocuts above print it), settling on the end of
+         the heading as it rises (js/the-birder.js). It sits beside the h2, not in it: .cap's speckle mask would clip
+         it to the heading's box. -->
+    <div class="perched"><h2 class="cap">Read The Birder</h2><span class="alight" aria-hidden="true"></span></div>
     <div class="btns"><a class="btn org" href="https://www.amazon.co.uk/dp/B0DNC7V79X">Buy The Birder</a><a class="link" href="../#books">All the books</a></div>
     <nav class="nextprev" aria-label="Book to book"><a rel="prev" href="../hamadryad/">Previous: Hamadryad</a><a rel="next" href="../flower-gatherers/">Next: Flower Gatherers</a></nav>
   </div>

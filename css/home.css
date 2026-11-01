@@ -8,21 +8,41 @@
    position, --tw the room the vertical title has. */
 .hero { position: relative; height: 300vh; }
 .stage { --bw: clamp(300px, 118vw, calc((100svh - 240px) / 1.2)); --bx: min(0px, calc((100vw - var(--bw)) * .6)); --by: max(230px, 27svh); --tw: calc(100svh - var(--by) - 44px); position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
-.book { position: absolute; left: var(--bx); top: var(--by); width: var(--bw); aspect-ratio: 1500 / 2400; }
+.book { position: absolute; z-index: 1; left: var(--bx); top: var(--by); width: var(--bw); aspect-ratio: 1500 / 2400; }
 .book picture { display: contents; }
 .pl, .tp { position: absolute; display: block; max-width: none; will-change: transform; }
+/* the pieces fade as well as fly: with opacity in will-change their layer keeps its paint when it is hidden and shown again
+   (without it a piece could come back unpainted on the way up, a dark wedge in the ring) */
+.pl { will-change: transform, opacity; }
+/* every plane's box, in % of the 1500 x 2400 art (TB and BOX in js/home.js, from build/home-planes.json), so the hero
+   is composed before and without JavaScript; js/home.js only sets each plane's transform-origin and its transforms */
+.tp[data-k=t1] { left: .333%; top: .25%; width: 99.267%; height: 99.75%; }
+.tp[data-k=t2] { left: .333%; top: 13.792%; width: 84.667%; height: 86.208%; }
+.tp[data-k=t3] { left: .333%; top: 33.792%; width: 52.667%; height: 49.125%; }
+.pl[data-k=w0] { left: 1.267%; top: .375%; width: 74.4%; height: 56.583%; }
+.pl[data-k=w1] { left: 21.533%; top: 28.167%; width: 54.133%; height: 36.5%; }
+.pl[data-k=w2] { left: 21.6%; top: 56.917%; width: 54.067%; height: 32.875%; }
+.pl[data-k=w3] { left: 9.267%; top: 56.917%; width: 62.267%; height: 32.875%; }
+.pl[data-k=w4] { left: .4%; top: 56.917%; width: 21.267%; height: 32.875%; }
+.pl[data-k=w5] { left: .4%; top: 53.167%; width: 21.267%; height: 8.167%; }
+.pl[data-k=w6] { left: .4%; top: 1.375%; width: 21.267%; height: 55.583%; }
 .pit { position: absolute; inset: 0; background: var(--ground); will-change: opacity; }
 .years { position: absolute; width: calc(var(--bw) * .78); height: calc(var(--bw) * .78); left: calc(21.6% - var(--bw) * .39); top: calc(56.92% - var(--bw) * .39); overflow: visible; opacity: 1; will-change: opacity; -webkit-mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; }
 .years g { transform-box: fill-box; transform-origin: 50% 50%; will-change: transform; }
 .years circle { fill: none; stroke: var(--name); stroke-width: 3; vector-effect: non-scaling-stroke; }
 .years .under { stroke: var(--ground); stroke-width: 6; } /* a dark edge under the counted ring, so it reads on the orange print */
-.htitle, .otitle { position: absolute; margin: 0; top: calc(var(--by) + 14px); right: 50px; writing-mode: vertical-rl; text-orientation: upright; line-height: .5; letter-spacing: -.31em; color: #f6f1ea; will-change: transform, opacity; }
+.htitle, .otitle { position: absolute; z-index: 1; margin: 0; top: calc(var(--by) + 14px); right: 50px; writing-mode: vertical-rl; text-orientation: upright; line-height: .5; letter-spacing: -.31em; color: #f6f1ea; will-change: transform, opacity; }
 .htitle { font-size: calc(var(--tw) / 8); }
 .otitle { font-size: calc(var(--tw) / 4.45); }
-.words { position: absolute; left: var(--gutter); right: calc(var(--gutter) + 26px); top: 40px; max-width: 36rem; }
+/* the words print over everything: the flying ring pieces pass behind the type, never across it */
+.words { position: absolute; z-index: 2; left: var(--gutter); right: calc(var(--gutter) + 26px); top: 40px; max-width: 36rem; }
 @media (min-width: 600px) { .htitle, .otitle { right: auto; left: calc(var(--bx) + var(--bw) * .867); translate: -50% 0; } }
 .words h1 { font-family: var(--cap); font-weight: 400; font-size: 1.35rem; letter-spacing: .14em; color: var(--name); margin: 0 0 .3rem; }
 .says { display: grid; }
+/* the words' window: the two lines roll through it at the handover (js/home.js). It is 1.2rem taller than the words at
+   top and foot (cancelled by the margin, so nothing moves), clips there, and the print dissolves in that room, never
+   on the words at rest */
+html.js:not(.still) .says { padding: 1.2rem 0; margin: -1.2rem 0; overflow: clip; -webkit-mask: linear-gradient(transparent .9rem, #000 1.2rem, #000 calc(100% - .9rem), transparent); mask: linear-gradient(transparent .9rem, #000 1.2rem, #000 calc(100% - .9rem), transparent); }
 .says > * { grid-area: 1 / 1; }
 .say { will-change: opacity, transform; }
 .say.off { pointer-events: none; }
@@ -45,13 +65,23 @@
   .say.b .btns { gap: .7rem 1.1rem; }
   .say.b .btn { font-size: 1.75rem; }
 }
+/* tablets (600 to 899): the art as wide as the screen, the heart of the rings inside the first screen, the words above
+   it at a size that reads at arm's length; js/home.js measure() reads the box, so nothing else changes */
+@media (min-width: 600px) and (max-width: 899px) {
+  .stage { --bw: clamp(320px, calc((100svh - 340px) / .91), calc(100vw + 48px)); --bx: min(0px, calc((100vw - var(--bw)) / 2)); --by: 300px; }
+  .say .line, .yrs { font-size: clamp(1.4rem, 3.4vw, 1.9rem); }
+  .words h1 { font-size: 1.8rem; }
+}
 @media (max-height: 560px) and (max-width: 899px) { .stage { --bw: min(70vw, 66svh); --by: 28svh; } } /* phone landscape: the heart of the rings stays inside the first screen */
 /* no JavaScript or reduced motion: the finished state, one screen, nothing pinned, depth kept in the composition */
 html:not(.js) .hero, html.still .hero { height: auto; }
 html:not(.js) .stage, html.still .stage { position: relative; }
 html:not(.js) .pl, html.still .pl, html:not(.js) .pit, html.still .pit, html:not(.js) .years, html.still .years,
-html:not(.js) .htitle, html.still .htitle, html:not(.js) .say.a, html.still .say.a { display: none; }
+html:not(.js) .htitle, html.still .htitle { display: none; }
+/* the Hamadryad line keeps its room (hidden, not removed), so the words sit exactly where draw(1) leaves them */
+html:not(.js) .say.a, html.still .say.a { visibility: hidden; }
 html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+html:not(.js) .tp, html:not(.js) .otitle, html.still .tp, html.still .otitle { transform: none !important; opacity: 1 !important; visibility: visible !important; }
 
 /* ---------- the two novels ----------
    No cover thumbnails here: the reader has just fallen into that cover. Each section picks the hero's art up at
@@ -60,16 +90,24 @@ html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none
 .novel { position: relative; overflow: hidden; }
 .novel .edge { position: absolute; top: 0; bottom: 0; width: 46%; overflow: hidden; pointer-events: none; }
 .novel .edge img { position: absolute; width: 140%; max-width: none; height: auto; }
+/* Oread: the tunnel's ribs as the cover's black print alone (img/home/t1-ink.webp, white paper and black crayon, cut
+   from her untouched drawing by build/make-home-planes.py), multiplied onto her lilac, so it reads as the black print
+   on the section, not a copy of the hero frame. Its right side frays out through the speckle before the words. */
 #oread .edge { left: 0; }
-#oread .edge img { left: -62%; top: -8%; }
-#hamadryad .edge { right: 0; }
+#oread .edge img { width: 110%; left: -10%; top: -6%; mix-blend-mode: multiply; -webkit-mask: linear-gradient(to right, #000 52%, transparent 90%), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(to right, #000 52%, transparent 90%), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect; }
+/* Hamadryad: the big tree frays out through the print's speckle where the section ends, never on a cut line */
+#hamadryad .edge { right: 0; -webkit-mask: linear-gradient(#000 80%, transparent), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(#000 80%, transparent), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect; }
 #hamadryad .edge img { right: -58%; top: -2%; }
 .novel .in.two { position: relative; }
 @media (max-width: 859px) {
   .novel .edge { position: relative; width: auto; height: 46vw; margin: 0 calc(-1 * var(--gutter)) 1.2rem; }
   .novel .edge img { width: 92vw; }
-  #oread .edge img { left: -30vw; top: -34vw; }
   #hamadryad .edge img { right: -34vw; top: -4vw; }
+  #hamadryad .edge { -webkit-mask: linear-gradient(transparent, #000 20%), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(transparent, #000 20%), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect; }
+  /* phones: the ribs bleed off the section's left and top edges as a print does, no box; the text starts below them */
+  #oread .edge { position: absolute; top: -6vw; left: 0; height: 60vw; width: 70vw; margin: 0; }
+  #oread .edge img { width: 77vw; left: -5vw; top: -40vw; -webkit-mask: linear-gradient(to right, #000 50%, transparent 94%), linear-gradient(#000 36%, transparent 51%), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in, source-in; mask: linear-gradient(to right, #000 50%, transparent 94%), linear-gradient(#000 36%, transparent 51%), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect, intersect; }
+  #oread .in.two { padding-top: 46vw; }
   .novel .in.two > .hold { display: none; }
 }
 
@@ -93,6 +131,13 @@ html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none
 /* ---------- a short Lorna (#about) ----------
    On desktop the heading stays while her two paragraphs pass, the same gesture as the About page's h1. The heading
    cell runs the full height of the row so the h2 has room to stay; one column on phones, so nothing holds there. */
-.lorna h2 { color: var(--paper); }
+.lorna h2 { color: var(--paper); position: relative; } /* class "hold": sticky from 860px (below), relative under it, so the register ghost anchors to it */
 .lorna .two > div:first-child { align-self: stretch; }
-@media (min-width: 860px) { .lorna h2 { position: sticky; top: 2.4rem; margin-bottom: 0; } }
+/* the hold: from 860px the heading stays at 2.4rem while her two paragraphs pass (the right column's foot room makes
+   that last at least half a screen); static under reduced motion and without JavaScript */
+@media (min-width: 860px) {
+  .lorna .two { align-items: start; }
+  .lorna h2 { margin-bottom: 0; }
+  html.js:not(.still) .lorna .two h2.cap.hold { position: sticky; top: 2.4rem; }
+  html.js:not(.still) .lorna .two > :last-child { padding-bottom: 36vh; }
+}

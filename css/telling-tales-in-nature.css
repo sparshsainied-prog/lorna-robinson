@@ -1,4 +1,4 @@
-/* Telling Tales in Nature only: the descent through Lydia Hall's cover, and the reading below it.
+/* Telling Tales in Nature only: the climb up through Lydia Hall's cover, and the reading below it.
    One accent sampled from the cover's foreground leaves. */
 :root { --leaf: #99af5b; }
 
@@ -6,32 +6,41 @@
 .dig { position: relative; height: 260vh; }
 .dig .stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-start; padding: 4.5rem var(--gutter) 1.2rem; }
 .dig h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 .9rem; color: var(--paper); }
-.well { position: relative; overflow: hidden; aspect-ratio: 1000 / 1499; width: min(100% - 26px, calc((100svh - 330px) * .667)); background: var(--ground); outline: 1px solid var(--rule); }
+/* the window: its size is set by js from the height actually left on the stage (this is the fallback); the pane
+   clips the close view, so the landed shadow (::after, opacity driven by the widening) can fall outside it */
+.well { position: relative; aspect-ratio: 1000 / 1499; width: min(100% - 26px, calc((100svh - 330px) * .667)); background: var(--ground); outline: 1px solid var(--rule); }
+.well .pane { position: absolute; inset: 0; overflow: hidden; }
+.well::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: 0 14px 30px rgba(0, 0, 0, .5); opacity: var(--land, 0); }
 .well img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; max-width: none; transform-origin: 0 0; will-change: transform; }
 /* the four tales in her order; in motion the lit one follows the window up the painting */
 .tales { list-style: none; margin: .5rem 0 .9rem; padding: 0; }
 .tales li { font-family: var(--cap); font-size: clamp(1.5rem, 6vw, 2rem); letter-spacing: .05em; line-height: 1.15; color: var(--leaf); will-change: opacity; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   .dig .stage { justify-content: center; padding: 2rem var(--gutter); }
-  .dig .in { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 4rem; align-items: center; width: 100%; }
+  .dig .in { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(2rem, 4vw, 4rem); align-items: center; width: 100%; }
   .dig h1 { margin-bottom: 1.6rem; }
   .well { width: min(100%, calc(84svh * .667)); order: 2; justify-self: center; }
   .tales { margin: 0; }
-  .tales li { font-size: 2.6rem; line-height: 1.2; }
+  .tales li { font-size: clamp(2rem, 3.4vw, 2.6rem); line-height: 1.2; }
+}
+@media (min-width: 700px) and (max-width: 899px) {
+  .dig h1 { font-size: clamp(3rem, 7.4vw, 4.4rem); }
 }
 /* reduced motion or no JavaScript: the whole cover, still, and the four tales written out */
 html.still .dig, html:not(.js) .dig { height: auto; }
 html.still .dig .stage, html:not(.js) .dig .stage { position: relative; height: auto; display: block; padding-top: clamp(3.5rem, 9vw, 7rem); padding-bottom: 2rem; }
 html.still .well, html:not(.js) .well { width: min(360px, 78vw); outline: 0; box-shadow: 0 14px 30px rgba(0, 0, 0, .5); }
-html.still .well img, html:not(.js) .well img { position: static; transform: none !important; }
+html.still .well::after, html:not(.js) .well::after { content: none; }
+html.still .well .pane, html:not(.js) .well .pane { position: static; }
+html.still .well img, html:not(.js) .well img { position: static; display: block; transform: none !important; }
 html.still .tales, html:not(.js) .tales { margin: 1rem 0 1.4rem; }
 html.still .tales li, html:not(.js) .tales li { opacity: 1 !important; font-size: 1.6rem; padding: .3rem 0; }
-@media (min-width: 900px) {
+@media (min-width: 700px) {
   html.still .dig .in, html:not(.js) .dig .in { align-items: start; }
   html.still .well, html:not(.js) .well { order: 0; justify-self: start; }
 }
 
-/* ---------- the reading below: one column, the cover is already above ---------- */
-.compendium .read { max-width: 38rem; }
+/* ---------- the reading below: one column, starting on the hero title's left edge; the cover is already above ---------- */
+.compendium .read { max-width: 38rem; margin-inline-start: max(0px, (100% - 1120px) / 2); } /* the left edge of the hero's 1120px column */
 .compendium h2 { color: var(--leaf); --reg-ink: var(--paper); } /* the register (site.js): "Four books in one" in leaf green, its second impression in paper, as the lettering on the cover is paper among leaves */
 .classics { color: var(--soft); font-size: 1.05rem; margin-top: 1.6rem; }
