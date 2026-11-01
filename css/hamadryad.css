@@ -33,6 +33,15 @@ html:not(.js) .words, html.still .words { position: relative; left: auto; right:
 .heart .quote p { max-width: none; }
 .heart .quote cite { font-size: 1.1rem; margin-top: 1.4rem; opacity: 1; color: var(--name); }
 .heart .quote cite span { display: block; color: var(--paper); opacity: .85; }
+/* the rings the red was sampled from, bleeding off the right and the foot of the section; grown from .82 to 1 about
+   their own centre as the quote passes (js/hamadryad.js). Phone: narrower, behind the quote's foot, fainter so the
+   quote keeps its contrast. Reduced motion and no JS: .fx in site.css holds it at scale 1. */
+.heart { position: relative; overflow: hidden; }
+.heart .in { position: relative; }
+.heart .rings { position: absolute; right: -20vw; bottom: -26vw; width: 60vw; height: auto; opacity: .3; transform-origin: 50% 50%; pointer-events: none; }
+@media (min-width: 860px) {
+  .heart .rings { right: -6vw; bottom: -12vw; width: 38vw; opacity: .55; }
+}
 
 /* ---------- Oread after it ---------- */
 .sequel .cover { width: min(300px, 70vw); }

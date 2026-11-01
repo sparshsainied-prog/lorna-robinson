@@ -39,4 +39,15 @@
     });
   }
   S.pin(find, draw);
+
+  /* ---- the book, on paper: the fresco lily surfaces ----
+     The cover's own gesture, small: Lydia Hall's orange lily (the same cut plane as in the hero) sits in the page under
+     the museum paragraph, and its pigment comes up in the paper as the reader brings that column in (opacity 0 to 1
+     while the column's top rises from the bottom of the viewport to 55% up; then it stands). Read off the column, which
+     never moves. The two text columns stay still. Reduced motion and no JS: the lily printed whole (.fx). */
+  const fresco = document.querySelector('#about-the-book .fresco');
+  if (fresco) {
+    const col = fresco.parentElement;
+    S.track(col, 1, .55, p => { fresco.style.opacity = S.still ? '' : ease(p).toFixed(3); });
+  }
 })();

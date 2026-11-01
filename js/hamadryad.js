@@ -32,6 +32,10 @@
   }
   S.pin(hero, draw);
 
-  // Oread's cover below rises a little as the reader brings it up, as on the home page
-  document.querySelectorAll('.sequel .cover').forEach(el => S.drift(el, 48));
+  // the quote on the heart red: the band of rings the red was sampled from grows a little (scale .82 to 1 about its
+  // centre) as the section passes up the screen, a quiet echo of the hero's growth; still at 1 under reduced motion
+  const heart = document.querySelector('.heart'), rings = heart && heart.querySelector('.rings');
+  if (rings) S.track(heart, 1, 0, p => { rings.style.transform = S.still ? '' : `scale(${(.82 + .18 * ease(p)).toFixed(4)})`; });
+
+  // The Oread cover under Then Oread stands still: the rings have just grown, and the same rise lives on the Oread page itself.
 })();

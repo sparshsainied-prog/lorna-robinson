@@ -149,4 +149,14 @@ h3 { font-family: var(--cap); font-weight: 400; font-size: 2rem; letter-spacing:
    every piece sits in its finished state: nothing is hidden, nothing moves. */
 .fx { will-change: transform, opacity; }
 html.still .fx, html:not(.js) .fx { transform: none !important; opacity: 1 !important; will-change: auto; }
+
+/* the register (js/site.js): a heading's second impression, same speckle, offset up and left, which comes into
+   register (--reg 0 to 1) as the heading rises. The "/ """ keeps it out of the accessibility tree; a browser that
+   does not know that syntax draws no ghost at all. Nothing under reduced motion or without JavaScript. */
+html.js:not(.still) .reg { position: relative; }
+html.js:not(.still) .reg::after { content: attr(data-print) / ""; position: absolute; inset: 0; color: var(--reg-ink, currentColor); opacity: calc(.42 * (1 - var(--reg, 1))); transform: translate(calc(-.055em * (1 - var(--reg, 1))), calc(-.045em * (1 - var(--reg, 1)))); pointer-events: none; will-change: transform, opacity; }
+
+/* shelved items (site.shelve): held --lift above the shelf at --set 0, standing on it at 1 */
+.set { --lift: -1.2rem; }
+html.js:not(.still) .set { transform: translateY(calc((1 - var(--set, 1)) * var(--lift))); }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

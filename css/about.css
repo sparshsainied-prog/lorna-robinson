@@ -1,4 +1,4 @@
-/* About page only: her story beside a heading that stays, the Classics shelf, the contact close. */
+/* About page only: her story beside a heading that stays, with the line drawn down it; the Classics shelf; the contact close. */
 
 /* ---------- Hello, I'm Lorna ---------- */
 .story h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; color: var(--paper); }
@@ -8,6 +8,11 @@
 @media (min-width: 860px) {
   .story h1 { position: sticky; top: 2.4rem; margin-bottom: 0; }
 }
+/* the line: the yellow of her name on the covers, drawn down the left of her story by the scroll (js/about.js scales it
+   from the top). Fully drawn without JS and under reduced motion (.fx is frozen by css/site.css). */
+.path { position: relative; }
+.path .line { position: absolute; left: -.75rem; top: 0; bottom: 0; width: 2px; background: var(--name); transform-origin: 50% 0; }
+@media (min-width: 860px) { .path .line { left: -1.75rem; } }
 .path p { font-size: clamp(1.3rem, 1.3vw + .6rem, 1.6rem); line-height: 1.5; max-width: 34rem; }
 .path p i { font-style: italic; }
 .path .rules { margin-top: 2rem; }
@@ -23,11 +28,10 @@
 .shelfrow img { display: block; height: clamp(88px, 22vw, 300px); width: auto; flex: none; box-shadow: 0 10px 22px rgba(0, 0, 0, .55); }
 .shelfrow a { display: block; }
 .shelfrow a:hover img { box-shadow: 0 14px 28px rgba(0, 0, 0, .6); }
-/* the moment: each cover is set down onto the shelf by the reader's scroll (js/about.js sets --set 0..1 per cover).
-   translateY only, a pure function of scroll position, so it lifts again on the way back up. No fades.
-   Standing on the shelf from the start without JS and under reduced motion. */
-.shelfrow li { --set: 1; }
-html.js:not(.still) .shelfrow.fx li { transform: translateY(calc((var(--set) - 1) * -1.6rem)); will-change: transform; }
+/* set down: each cover is held 1.6rem above the shelf and set down by the reader's scroll (site.shelve in js/about.js
+   gives each li --set 0..1 and class set; css/site.css turns it into translateY of --lift). Lifted again on the way back
+   up. No fades. Standing on the shelf from the start without JS and under reduced motion. */
+.shelfrow li { --lift: -1.6rem; }
 .classics .rules { margin-top: 1.6rem; }
 .classics .rules li { padding: .7rem 0; }
 .classics .rules li:first-child { border-top: 0; }

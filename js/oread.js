@@ -65,6 +65,10 @@
   }
   S.pin(hero, draw);
 
-  // the Hamadryad cover below rises a little as the reader brings it up
-  document.querySelectorAll('.collide .cover').forEach(el => S.drift(el, 48));
+  // the Oread cover below rises 48px as the reader brings it up. Measured from its untransformed link (site.drift reads
+  // the moving element's own rect, which makes the rest position path-dependent by a pixel or two), so it is exact both ways.
+  document.querySelectorAll('.collide .cover').forEach(el => {
+    el.classList.add('fx');
+    S.track(el.parentElement, 1.1, -.2, p => { el.style.transform = S.still ? '' : `translate3d(0,${(48 * (1 - p)).toFixed(1)}px,0)`; });
+  });
 })();

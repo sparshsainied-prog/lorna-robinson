@@ -33,5 +33,5 @@ html.still .tales li, html:not(.js) .tales li { opacity: 1 !important; font-size
 
 /* ---------- the reading below: one column, the cover is already above ---------- */
 .compendium .read { max-width: 38rem; }
-.compendium h2 { color: var(--leaf); }
+.compendium h2 { color: var(--leaf); --reg-ink: var(--paper); } /* the register (site.js): "Four books in one" in leaf green, its second impression in paper, as the lettering on the cover is paper among leaves */
 .classics { color: var(--soft); font-size: 1.05rem; margin-top: 1.6rem; }

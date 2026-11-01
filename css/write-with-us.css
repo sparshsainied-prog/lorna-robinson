@@ -1,5 +1,6 @@
 /* Write with us (the Classics and Creative Writing Café): paper from top to footer, her words, one photo.
-   Nothing on this page moves: a quiet paper page that closes the site. */
+   A quiet paper page that closes the site: the titles print into register (shared), the When / To book list is ruled
+   onto the paper as it comes up (js/write-with-us.js), and her invitation and the board photo never move. */
 
 body.paper { background: var(--paper); }
 .pale h1 { color: var(--ring-deep); font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; }
@@ -18,6 +19,15 @@ body.paper { background: var(--paper); }
 .board figcaption { font-size: 1rem; color: #5e5750; margin-top: .8rem; max-width: 22rem; }
 .table .rules { margin-top: 1.4rem; margin-bottom: 1.8rem; }
 .table .rules li { max-width: var(--measure); }
+/* the list is ruled onto the paper as it comes up: each hairline is drawn from the left (js/write-with-us.js writes
+   --rp, and --rq for the foot of the list, 0 to 1). Whole lines without JavaScript and under reduced motion. */
+.table .rules li { position: relative; border-top: 0; }
+.table .rules li:last-child { border-bottom: 0; }
+.table .rules li::before, .table .rules li:last-child::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: #d9d0c2; transform-origin: 0 50%; }
+.table .rules li::before { top: 0; }
+.table .rules li:last-child::after { bottom: 0; }
+html.js:not(.still) .table .rules li::before { transform: scaleX(var(--rp, 1)); will-change: transform; }
+html.js:not(.still) .table .rules li:last-child::after { transform: scaleX(var(--rq, 1)); will-change: transform; }
 .table .more { margin-top: 1.6rem; font-size: 1.05rem; color: #5e5750; }
 @media (min-width: 860px) {
   .table .in.two { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } /* words left, the photo right; on phone the photo follows the words */

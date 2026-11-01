@@ -14,6 +14,24 @@
      .pin(section, fn) for a tall section with a sticky stage inside: fn(p) with p = scrolled / (height - vh), 0..1,
                        called only when p changes; under reduced motion fn(1) is called once and never again.
      .drift(el, px)    the element eases `px` pixels (negative = upward) across its travel through the viewport
+     .track(el, from, to, fn)
+                       fn(p, el) each frame with p = progress(el, from, to), only when p changes; under reduced
+                       motion fn(1) once (and again if the preference changes). Returns an unregister function.
+     .prop(el, from, to, name = '--p')
+                       writes progress(el, from, to) into a CSS custom property on el, so the page's CSS can
+                       drive a transform from it (calc against var(--p)); 1 under reduced motion
+     .move(el, x, y, from = 1, to = .6)
+                       el travels from an offset of (x, y) px to rest at 0 as it rises from `from` to `to`
+     .shelve(row, items, stagger = .14)
+                       items (default: row's children) are set down one after another, left to right, as the row
+                       comes up: each gets --set 0..1 and class "set"; css/site.css turns --set into a translateY
+                       of --lift (default -1.2rem: held a little above, set down). Reduced motion: --set 1.
+   Shared quiet behaviours applied by this file (no page code needed):
+     the register    every h2.cap in main (and any .cap[data-register]) prints with a faint second impression,
+                     offset up and left, that comes into register as the heading rises into view (--reg 0..1).
+                     Opt out with data-register="off" on the heading. Set --reg-ink on the heading or section to
+                     print the ghost in another colour (default currentColor).
+     book to book    in .nextprev the Previous link arrives from 14px left and Next from 14px right.
    Under reduced motion, or without JavaScript, css/site.css freezes .fx elements at their finished state. */
 (() => {
   const html = document.documentElement;
@@ -58,17 +76,93 @@
       return () => site.offFrame(fn);
     },
     drift(el, px) {
+      // progress is read from where the element would be untransformed (its rect minus the offset written last
+      // frame), so the value never feeds back: the same scrollY gives the same pixel going down and coming up
       el.classList.add('fx');
+      let cur = 0;
       const fn = () => {
-        if (mq.matches) { el.style.transform = ''; return; }
-        const p = site.progress(el, 1.1, -.2);
-        el.style.transform = `translate3d(0,${(px * (1 - p)).toFixed(1)}px,0)`;
+        if (mq.matches) { cur = 0; el.style.transform = ''; return; }
+        const top = el.getBoundingClientRect().top - cur;
+        const p = clamp((1.1 - top / vh) / 1.3);
+        cur = +(px * (1 - p)).toFixed(1);
+        el.style.transform = `translate3d(0,${cur}px,0)`;
       };
       site.onFrame(fn);
-      return () => { site.offFrame(fn); el.style.transform = ''; };
+      return () => { site.offFrame(fn); cur = 0; el.style.transform = ''; };
+    },
+    track(el, from, to, draw) {
+      let last = -1;
+      const fn = () => {
+        const p = mq.matches ? 1 : site.progress(el, from, to);
+        if (Math.abs(p - last) < .0005) return;
+        last = p; draw(p, el);
+      };
+      site.onFrame(fn);
+      const re = () => { last = -1; fn(); };
+      mq.addEventListener('change', re);
+      return () => { site.offFrame(fn); mq.removeEventListener('change', re); };
+    },
+    prop(el, from, to, name = '--p') {
+      return site.track(el, from, to, p => el.style.setProperty(name, p.toFixed(4)));
+    },
+    move(el, x, y, from = 1, to = .6) {
+      // as drift: the vertical offset written last frame is taken off the rect before progress is read, so a
+      // piece that travels in y is exactly reversible too
+      el.classList.add('fx');
+      let cy = 0, last = -1;
+      const fn = () => {
+        if (mq.matches) { cy = 0; last = -1; el.style.transform = ''; return; }
+        const top = el.getBoundingClientRect().top - cy;
+        const p = clamp((from - top / vh) / (from - to));
+        if (Math.abs(p - last) < .0004) return;
+        last = p;
+        const e = ease(p);
+        cy = +(y * (1 - e)).toFixed(1);
+        el.style.transform = `translate3d(${(x * (1 - e)).toFixed(1)}px,${cy}px,0)`;
+      };
+      site.onFrame(fn);
+      const re = () => { last = -1; fn(); };
+      mq.addEventListener('change', re);
+      return () => { site.offFrame(fn); mq.removeEventListener('change', re); el.style.transform = ''; };
+    },
+    shelve(row, items, stagger = .14) {
+      const list = [...(items || row.children)];
+      if (!list.length) return () => {};
+      list.forEach(el => el.classList.add('set', 'fx'));
+      const span = 1 - stagger * (list.length - 1);
+      const fn = (y, vh) => {
+        if (mq.matches) { list.forEach(el => el.style.removeProperty('--set')); return; }
+        const r = row.getBoundingClientRect();
+        // set down as the row's foot enters at the bottom of the viewport, all standing by the time it is 72% of the way up
+        const base = (vh - r.bottom) / (vh * .28);
+        list.forEach((el, i) => el.style.setProperty('--set', clamp((base - i * stagger) / span).toFixed(4)));
+      };
+      site.onFrame(fn);
+      mq.addEventListener('change', () => fn(scrollY, vh));
+      return () => { site.offFrame(fn); list.forEach(el => el.style.removeProperty('--set')); };
     }
   };
   window.site = site;
+
+  /* ---- the register: section titles print with a second impression that comes into register as they rise ----
+     The covers' titles are rough, speckled print. Each h2.cap (and any .cap[data-register]) gets data-print = its
+     text; css/site.css draws it again in ::after, masked with the same speckle, offset .055em up and left, fading
+     as --reg goes 0 to 1 while the heading rises from 96% to 62% of the viewport. Headings inside a pinned act, or
+     marked data-register="off", or not laid out (visually hidden), are left alone. */
+  const regs = [...document.querySelectorAll('main h2.cap, main .cap[data-register]')].filter(h =>
+    h.dataset.register !== 'off' && !h.closest('[data-pin], .hero, .dig') && h.getBoundingClientRect().width > 10 && h.textContent.trim());
+  regs.forEach(h => {
+    h.dataset.print = h.textContent.trim();
+    h.classList.add('reg');
+    site.prop(h, .96, .62, '--reg');
+  });
+
+  /* ---- book to book: Previous comes in from the left, Next from the right, as the links rise ---- */
+  document.querySelectorAll('.nextprev').forEach(nav => {
+    const prev = nav.querySelector('a[rel="prev"]'), next = nav.querySelector('a[rel="next"]');
+    if (prev) site.move(prev, -14, 0, 1, .7);
+    if (next) site.move(next, 14, 0, 1, .7);
+  });
 
   /* ---- reduced motion: html.still, kept live ---- */
   const setStill = () => html.classList.toggle('still', mq.matches);

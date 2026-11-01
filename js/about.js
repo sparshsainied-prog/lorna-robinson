@@ -1,23 +1,38 @@
-/* About page: the four Classics covers are set down onto their shelf as the reader scrolls the shelf into view.
-   Each cover's position is a pure function of scroll (0 held just above the shelf, 1 standing on it), staggered left to
-   right along the row, so the row is shelved one book after another and lifted again the same way on the way back up.
-   Nothing plays on its own. Under reduced motion or without JS the covers stand on the shelf from the start. */
+/* About page.
+   1. The line: a single rule in the yellow of her name on the covers draws itself down the left of her story as the
+      reader travels it. Its tip rides at about two thirds of the viewport, so it always ends where the eye is, from
+      the Usborne book to the facts list where the Rumble Museum link sits. scaleY from scroll position only: it
+      undraws on the way back up, nothing plays on by itself. Fully drawn without JS and under reduced motion.
+   2. The shelf: the four Classics covers are set down onto their shelf one after another, left to right, as the shelf
+      comes up (window.site.shelve, the same behaviour as the home shelf), lifted again the same way going back. */
 (() => {
-  const S = window.site, row = document.querySelector('.shelfrow');
-  if (!S || !row) return;
-  const books = [...row.querySelectorAll('li')];
-  if (!books.length) return;
-  row.classList.add('fx');
-  const fn = (y, vh) => {
-    if (S.still) { books.forEach(b => b.style.removeProperty('--set')); return; }
-    const r = row.getBoundingClientRect();
-    // the row is set down as its shelf edge enters at the bottom of the viewport and has settled by the time it is 72% of the way up
-    const from = vh, to = vh * .72, span = from - to;
-    const base = (from - r.bottom) / span;
-    books.forEach((b, i) => {
-      const p = S.clamp((base - i * .14) / (1 - .14 * (books.length - 1)));
-      b.style.setProperty('--set', p.toFixed(4));
-    });
-  };
-  S.onFrame(fn);
+  const S = window.site;
+  if (!S) return;
+
+  /* ---- the line ---- */
+  const path = document.querySelector('.story .path'), line = path && path.querySelector('.line');
+  if (line) {
+    line.classList.add('fx');
+    const facts = path.querySelectorAll('.rules li');
+    const stop = facts[1] || facts[facts.length - 1];     // the Rumble Museum line
+    let len = 1;
+    const fn = () => {
+      if (S.still) { line.style.transform = ''; return; }
+      const top = path.getBoundingClientRect().top;
+      const p = S.clamp((innerHeight * .66 - top) / len);
+      line.style.transform = `scaleY(${p.toFixed(4)})`;
+    };
+    fn.measure = () => {
+      const pr = path.getBoundingClientRect();
+      len = Math.max(1, stop ? stop.getBoundingClientRect().bottom - pr.top : pr.height);
+      line.style.height = len.toFixed(1) + 'px';
+      line.style.bottom = 'auto';
+    };
+    S.onFrame(fn);
+    matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', fn);
+  }
+
+  /* ---- the shelf ---- */
+  const row = document.querySelector('.shelfrow');
+  if (row) S.shelve(row, row.querySelectorAll('li'));
 })();

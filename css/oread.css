@@ -52,6 +52,9 @@ html:not(.js) .arrive > div, html.still .arrive > div { max-width: var(--measure
 }
 
 /* ---------- the rest of the blurb: the whole cover, still, beside the buy button ---------- */
+/* the register (js/site.js) prints the heading's second impression in the Hamadryad ring orange, sliding into
+   register with the lilac page's black: the two covers' colours colliding, as the sentence says */
+.collide h2 { --reg-ink: var(--ring); }
 .collide .first { display: block; width: min(360px, 78vw); }
 .collide .cover { width: 100%; }
 @media (max-width: 859px) { .collide .first { display: none; } }

@@ -73,8 +73,12 @@ html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none
   .novel .in.two > .hold { display: none; }
 }
 
-/* ---------- the shelf (#books) ---------- */
+/* ---------- the shelf (#books) ----------
+   Her other three books are set down on the shelf one after another, left to right, as the shelf comes up under
+   the reader's hand (js/home.js: site.shelve; css/site.css turns --set into the translate). Each small cover is
+   held 1rem above its place until then; standing under reduced motion and without JavaScript. */
 .shelf ol { list-style: none; padding: 0; margin: 0; }
+.shelf li img { --lift: -1rem; }
 .shelf li { display: grid; grid-template-columns: 92px 1fr; gap: 1.2rem; padding: 1.6rem 0; border-top: 1px solid var(--rule); align-items: start; }
 .shelf li:last-child { border-bottom: 1px solid var(--rule); }
 .shelf li img { width: 92px; box-shadow: 0 8px 18px rgba(0, 0, 0, .5); }
@@ -86,5 +90,9 @@ html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none
 .shelf .where { color: var(--soft); font-size: 1.05rem; }
 @media (min-width: 860px) { .shelf li { grid-template-columns: 130px 1fr 1fr; gap: 2.2rem; } .shelf li img { width: 130px; } .shelf li .more { grid-column: 3; padding-top: 2.2rem; } }
 
-/* ---------- a short Lorna (#about) ---------- */
+/* ---------- a short Lorna (#about) ----------
+   On desktop the heading stays while her two paragraphs pass, the same gesture as the About page's h1. The heading
+   cell runs the full height of the row so the h2 has room to stay; one column on phones, so nothing holds there. */
 .lorna h2 { color: var(--paper); }
+.lorna .two > div:first-child { align-self: stretch; }
+@media (min-width: 860px) { .lorna h2 { position: sticky; top: 2.4rem; margin-bottom: 0; } }

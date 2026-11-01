@@ -1,6 +1,6 @@
 /* Flower Gatherers page only. The cover (Lydia Hall) is three planes: the plaster wall with the title,
    the orange fresco lily, and the drawn hand with its bracelet. Scrolling brings them together. */
-.fg { --minoan: #3c78a7; --plaster: #e4d4c0; }
+.fg { --minoan: #3c78a7; --plaster: #e4d4c0; --fresco: #d0895d; }   /* --fresco: the mean of the lily's own pixels (img/flower-gatherers/lily.webp) */
 
 /* ---------- the find: a pinned stage ---------- */
 .find { position: relative; height: 280vh; }
@@ -43,7 +43,13 @@ html:not(.js) .find .words, html.still .find .words { position: relative; left: 
 }
 
 /* ---------- the book, on paper ---------- */
-.fg .pale h2 { color: var(--minoan); text-wrap: balance; }
+/* the register (site.js): the Minoan blue title's second impression prints in the lily's fresco orange, the
+   cover's two pigments coming into register */
+.fg .pale h2 { color: var(--minoan); --reg-ink: var(--fresco); text-wrap: balance; }
+/* the fresco lily, in the page under the museum paragraph: its pigment surfaces as the column comes up
+   (js/flower-gatherers.js writes the opacity; .fx shows it whole under reduced motion and without JavaScript) */
+.fg .pale .fresco { width: min(240px, 58vw); height: auto; margin: 1.6rem 0 0 -4%; }
+@media (min-width: 860px) { .fg .pale .fresco { width: 62%; margin-top: 2.2rem; } }
 @media (min-width: 860px) { .fg .pale h2 { font-size: clamp(3rem, 4.6vw, 4.6rem); } }
 .fg .pale .link { text-decoration-color: var(--minoan); }
 .fg .pale .btn:hover { background: var(--minoan); color: var(--paper); }

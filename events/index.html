@@ -12,7 +12,8 @@
 
   An event with no fixed date (like the monthly café) has no data-date, so it stays in the list.
 
-  Keep the words between the > and < signs; leave the tags (the parts in angle brackets) as they are.
+  Keep the words between the > and < signs; leave the tags (the parts in angle brackets) as they are
+  (data-register on the date line and the poster's <figure> are what let those two pieces move as the page scrolls).
   The home page reads this list and shows the next two dated events on its own, so there is nothing to do there.
   (Without JavaScript the home page shows its own copy of the blocks: ask Sparsh to update that copy if you like.)
   If you break something, email Sparsh and he will put it right.
@@ -86,7 +87,7 @@
 
         <!-- EVENT: copy this whole block (from <li to </li>) to add one. data-date is the last day, year-month-day. -->
         <li data-date="2026-11-14">
-          <span class="day cap">Sat 14 Nov</span>
+          <span class="day cap" data-register>Sat 14 Nov</span>
           <span class="what">Oread launch and mystery artefact trail</span>
           <p class="when">Saturday 14 November 2026, 2.30 to 5pm<br>Cheney School, Oxford</p>
           <p>Arrive any time at main reception and follow the trail through tunnel-like corridors in the Rumble Museum to the Iris Classics Centre: drinks, books, chat, creative writing for anyone who wants a go, and maybe a reading. Tunnel travellers of all ages are welcome.</p>
@@ -99,7 +100,7 @@
 
         <!-- EVENT: copy this whole block (from <li to </li>) to add one. data-date is the last day, year-month-day. -->
         <li data-date="2026-11-22">
-          <span class="day cap">Sun 22 Nov</span>
+          <span class="day cap" data-register>Sun 22 Nov</span>
           <span class="what">Oxford Indie Book Fair, <span class="tbl">table S33</span></span>
           <p class="when">Sunday 22 November 2026, 11am to 4.30pm<br>Oxford Examination Schools, 75 to 81 High Street, Oxford OX1 4BG</p>
           <p>Oread and Hamadryad on the table.</p>
@@ -108,7 +109,7 @@
 
         <!-- EVENT with no fixed date: no data-date, so it never moves to Past. -->
         <li>
-          <span class="day cap">Monthly</span>
+          <span class="day cap" data-register>Monthly</span>
           <span class="what">Classics and Creative Writing Café</span>
           <p class="when">Once a month<br>The Iris Classics Centre at Cheney School, or St Alban's Church on Charles Street, Oxford</p>
           <p>Bring an idea, have a go at writing, or just read and chat. Each session has a classical theme as a prompt, all genres are welcome, and it's for ages 14 to adult. There are drinks and snacks (donations towards costs are welcome). Come once or come every month.</p>
@@ -150,5 +151,6 @@
 </footer>
 
 <script src="../js/site.js"></script>
+<script src="../js/events.js"></script>
 </body>
 </html>

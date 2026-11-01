@@ -67,4 +67,23 @@
     S.onFrame(fn);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fn.measure(); fn(scrollY, innerHeight); });
   }
+
+  /* ---- 3. the linocuts: the shelf slides into place ----
+     The eleven prints are a walk around Oxford on a sideways shelf. As the section comes up they sit 56px to the
+     right and slide left together, the way the reader's own finger will push them, coming to rest flush with the
+     column by the time the shelf itself is 45% of the way up the viewport (measured on the shelf, not the section,
+     so the travel happens while the prints are in sight, under the heading). On a phone the first print already ends a few
+     pixels short of the Contents tab, so there the shelf comes the other way, 18px in from the left edge (the
+     width of the gutter, so nothing is clipped and nothing goes under the tab). Still while they are looked at,
+     and the reader's own sideways scroll is untouched. Reduced motion: at rest. */
+  const strip = document.querySelector('#prints .strip'), lis = strip ? [...strip.querySelectorAll(':scope > li')] : [];
+  if (strip && lis.length) {
+    lis.forEach(li => li.classList.add('fx'));
+    S.track(strip, 1, .45, p => {
+      if (S.still) { lis.forEach(li => li.style.transform = ''); return; }
+      const x = (1 - ease(p)) * (innerWidth < 900 ? -18 : 56);
+      const t = `translate3d(${x.toFixed(1)}px,0,0)`;
+      lis.forEach(li => li.style.transform = t);
+    });
+  }
 })();

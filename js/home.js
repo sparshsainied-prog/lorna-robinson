@@ -93,6 +93,11 @@
   // the two novels below pick the hero's art up at their edges, rising a little as the reader brings them up
   document.querySelectorAll('.novel .edge img').forEach(el => S.drift(el, 56));
 
+  // the shelf: her other three books are set down one after another as the reader brings each entry up. The home
+  // shelf is one book to a row, so each li is its own shelf: the cover is held 1rem above its place (css/home.css)
+  // and set down as that entry's foot comes in (css/site.css does the translate from --set).
+  document.querySelectorAll('#books.shelf > .in > ol > li').forEach(li => S.shelve(li, li.querySelectorAll('img')));
+
   // the next dates: read from events/ (the one page Lorna edits) and show the first two that have not passed.
   // The static block in index.html is the copy shown without JavaScript, or if this fetch fails.
   const list = document.querySelector('#events [data-events]'), empty = document.querySelector('#events [data-when-empty]');

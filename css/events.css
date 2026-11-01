@@ -1,4 +1,6 @@
-/* Events page only: the list of dates, her trail poster beside the launch, and the past list. Nothing moves here. */
+/* Events page only: the list of dates, her trail poster beside the launch, and the past list.
+   Two quiet pieces move (js/events.js and the shared register): the big dates print like the titles, and her poster rises
+   36px as the entry passes. Past and New dates sit still. */
 
 .trail h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1rem; }
 .trail .lead { margin-bottom: 0; }
