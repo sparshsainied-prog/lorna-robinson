@@ -1,0 +1,51 @@
+/* lornarobinson.uk: drawn moments, the shared layer (illustrations/DIRECTION.md, build/SYSTEM.md "Drawn moments").
+   Cut paper and one hairline, on a mostly empty ground. This file holds only what all five drawings share; each
+   drawing's own size, place and colours go in its page's CSS, keyed on [data-draw="<slug>"].
+   Do not edit for one drawing: ask in build/requests.md.
+
+   Markup every drawing uses:
+     <figure class="draw" data-draw="<slug>">
+       <svg viewBox="0 0 W H" width="W" height="H" aria-hidden="true" focusable="false"> ... </svg>
+     </figure>
+   Inside the svg:  .hair   the hairline (drawn on from scroll by drawings.hairline)
+                    .piece  a cut piece that is set down from scroll (drawings.setDown / drawings.pieces);
+                            never give it a transform attribute (CSS transform replaces it): wrap it in a <g>
+                    .word   her words, Alegreya italic (drawings.wipe may write them in)
+                    .speck  CSS speckle mask for an HTML element or a whole <svg>; for shapes inside an svg use an
+                            SVG <mask> with the speckle as a pattern (see SYSTEM.md), it is the one Safari honours. */
+
+/* ---------- the figure and its sizing ----------
+   The full text column on phones (max 340px), up to 420px from 860px. A page sets --draw-max / --draw-max-lg on
+   its own [data-draw] to change either (DIRECTION: 260 to 440px on desktop). The svg's width/height attributes give
+   the ratio, so nothing below shifts while it loads. */
+.draw { margin: 0; padding: 0; width: 100%; max-width: var(--draw-max, 340px); }
+@media (min-width: 860px) { .draw { max-width: var(--draw-max-lg, 420px); } }
+.draw > svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* ---------- the hairline: one weight for the whole set ----------
+   1.25px on screen at any size (non-scaling-stroke). Paper on dark grounds, ring-deep on paper grounds.
+   Set --hair on the figure to choose another ink from the tokens. */
+.draw .hair { fill: none; stroke: var(--hair, var(--paper)); stroke-width: 1.25px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.pale .draw, .cafe .draw, .draw.on-paper { --hair: var(--ring-deep); }
+
+/* ---------- words in a drawing: hers only, Alegreya italic, never Bebas ----------
+   font-size is in the drawing's own units (it scales with the svg): set --word-size so it reads .85 to 1rem on
+   screen at the drawing's usual width. */
+.draw .word { font-family: var(--read); font-style: italic; font-weight: 400; font-size: var(--word-size, 16px); letter-spacing: .01em; fill: var(--word, var(--soft)); }
+
+/* ---------- cut pieces ----------
+   A set-down piece turns about the middle of its own foot unless the page says otherwise. */
+.draw .piece { transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* ---------- the print speckle, for HTML elements or a whole svg ---------- */
+.draw .speck { -webkit-mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; }
+
+/* ---------- finished drawing: reduced motion and no JavaScript ----------
+   Start states are only ever written by js/drawings.js, so without JS nothing is hidden. These rules also cover
+   the moment the reader switches to reduced motion mid-page. */
+html.still .draw .hair, html:not(.js) .draw .hair { stroke-dasharray: none !important; stroke-dashoffset: 0 !important; }
+html.still .draw .piece, html:not(.js) .draw .piece { transform: none !important; opacity: 1 !important; will-change: auto; }
+html.still .draw .word, html:not(.js) .draw .word, html.still .draw .wipe, html:not(.js) .draw .wipe { clip-path: none !important; opacity: 1 !important; }
+
+/* moving pieces are composited only while motion is on */
+html.js:not(.still) .draw .piece { will-change: transform; }

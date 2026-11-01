@@ -105,6 +105,39 @@
   // and set down as that entry's foot comes in (css/site.css does the translate from --set).
   document.querySelectorAll('#books.shelf > .in > ol > li').forEach(li => S.shelve(li, li.querySelectorAll('img')));
 
+  // the trail (#events, index.html): the walk from main reception, through the Rumble Museum's ribs, to the Iris
+  // Classics Centre, drawn on as the reader brings it up. The drawing is fully in view when the walk starts (its foot
+  // at 94% of the viewport) and done with its foot a little past the middle (its top at 32%), so it never draws off screen.
+  // In that window: the hairline walks at a walker's pace (eased only at the ends), each rib comes from .6 to full
+  // as the tip passes through it (the corridor lit as you go), then the Centre's orange door fills up from the floor
+  // as the walk reaches it and her words "Iris Classics Centre" are written in last. Reception and its words are
+  // there from the start: that is where the walk begins. A pure function of scroll; reduced motion and no JS show it
+  // finished (drawings.track calls 1; css/drawings.css clears the dashes and the wipes).
+  if (window.drawings) drawings.each('trail', fig => {
+    const D = window.drawings, walkEl = fig.querySelector('.walk');
+    if (!walkEl) return;
+    const walk = D.hairline(walkEl), door = fig.querySelector('.centre'), end = fig.querySelector('.word.end');
+    const ribs = [...fig.querySelectorAll('.rib')].map(el => ({ el, at: walk.reach(x => x >= +el.dataset.x), last: '' }));
+    const pace = t => .45 * t + .55 * D.smooth(t);
+    D.track(fig, 1, 0, p => {
+      // p is 1 - top/vh over the whole viewport; the drawing's own window is set by its height
+      const vh = innerHeight, h = fig.offsetHeight, top = (1 - p) * vh;
+      const top0 = Math.max(vh * .94 - h, vh * .5), top1 = vh * .32;
+      const q = p >= 1 ? 1 : D.clamp((top0 - top) / (top0 - top1));
+      const tip = pace(D.span(q, 0, .84));
+      walk.set(tip);
+      ribs.forEach(r => {
+        // a long, overlapping rise: each rib starts coming up well before the tip reaches it and is full just after,
+        // so the corridor brightens ahead of the walker as one soft wave (a short window here reads as a pop per rib)
+        const o = q >= 1 ? '' : (.6 + .4 * D.smooth(D.span(tip, r.at - .45, r.at + .05))).toFixed(3);
+        if (o === '1.000') { if (r.last !== '') { r.el.style.opacity = ''; r.last = ''; } return; }
+        if (o !== r.last) { r.el.style.opacity = o; r.last = o; }
+      });
+      if (door) D.wipe(door, D.smooth(D.span(q, .64, .92)), 'bottom');
+      if (end) D.wipe(end, D.smooth(D.span(q, .72, 1)), 'left');
+    });
+  });
+
   // the next dates: read from events/ (the one page Lorna edits) and show the first two that have not passed.
   // The static block in index.html is the copy shown without JavaScript, or if this fetch fails.
   const list = document.querySelector('#events [data-events]'), empty = document.querySelector('#events [data-when-empty]');
@@ -119,7 +152,7 @@
       }).slice(0, 2);
       list.replaceChildren(...next.map(li => {
         const c = document.importNode(li, true);
-        c.querySelectorAll('.poster').forEach(x => x.remove());
+        c.querySelectorAll('.poster, .draw').forEach(x => x.remove());
         c.querySelectorAll('a[href]').forEach(a => { a.setAttribute('href', new URL(a.getAttribute('href'), base).href); });
         return c;
       }));

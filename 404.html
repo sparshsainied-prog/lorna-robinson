@@ -18,8 +18,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="/css/drawings.css">
 <link rel="preload" href="/img/speckle.png" as="image" crossorigin>
-<style>.lost { min-height: calc(100svh - 12rem); } .lost .cover { width: min(220px, 48vw); } .lost h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; }</style>
+<style>.lost { min-height: calc(100svh - 12rem); } .lost .cover { width: min(220px, 48vw); } .lost h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; }
+/* the drawing under the buttons (js/404.js) */
+.lost .draw[data-draw="tunnel-nowhere"] { --draw-max: 290px; --draw-max-lg: 320px; margin-top: 2.6rem; }
+.lost .draw[data-draw="tunnel-nowhere"] .rib { transform-origin: 50% 100%; }</style>
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
 </head>
 <body>
@@ -59,6 +63,24 @@
       <p class="lead">There is no page at this address. Perhaps it moved when the site did, or the link lost a letter on the way.</p>
       <p>Back above ground, you can find the books, the next events and the café.</p>
       <div class="btns"><a class="btn" href="/">Home</a><a class="link" href="/#books">The books</a><a class="link" href="/events/">Events</a></div>
+      <!-- DRAWING: the tunnel that goes nowhere. Delete from here to "end of the drawing" to remove it (and js/404.js from the loader below). -->
+      <figure class="draw" data-draw="tunnel-nowhere">
+        <svg viewBox="0 0 290 236" width="290" height="236" aria-hidden="true" focusable="false">
+          <defs>
+            <pattern id="tunnel-nowhere-grain-a" patternUnits="userSpaceOnUse" width="240" height="240"><image href="/img/speckle.png" crossorigin="anonymous" width="240" height="240"/></pattern>
+            <pattern id="tunnel-nowhere-grain-b" patternUnits="userSpaceOnUse" x="71" y="113" width="240" height="240"><image href="/img/speckle.png" crossorigin="anonymous" width="240" height="240"/></pattern>
+            <mask id="tunnel-nowhere-ink-a" maskUnits="userSpaceOnUse" x="-40" y="-40" width="420" height="320" style="mask-type:alpha"><rect x="-40" y="-40" width="420" height="320" fill="url(#tunnel-nowhere-grain-a)"/></mask>
+            <mask id="tunnel-nowhere-ink-b" maskUnits="userSpaceOnUse" x="-40" y="-40" width="420" height="320" style="mask-type:alpha"><rect x="-40" y="-40" width="420" height="320" fill="url(#tunnel-nowhere-grain-b)"/></mask>
+          </defs>
+          <path class="wall" mask="url(#tunnel-nowhere-ink-b)" fill="#e8702e" d="M101.4,147.5 101.6,140.1 101.5,132.5 101.3,125.0 101.5,117.6 101.3,110.2 101.3,102.5 102.1,95.7 104.4,88.8 107.9,82.7 112.7,77.4 118.4,72.9 124.8,70.1 131.9,68.6 139.2,68.7 146.1,70.2 152.5,72.9 158.3,77.4 163.0,82.6 166.4,88.5 168.6,95.4 169.3,102.6 169.6,109.9 169.6,117.5 169.6,125.2 169.7,132.6 169.5,140.0 169.5,147.7 164.8,147.4 156.5,147.7 151.4,147.8 142.5,147.6 137.9,147.5 130.2,147.7 125.2,147.7 120.6,147.9 114.4,147.5 107.3,147.5Z"/>
+          <g class="rib" data-foot="156.2" mask="url(#tunnel-nowhere-ink-a)" fill="#b9aea4"><path d="M92.0,156.3 92.0,149.5 91.9,142.7 92.1,136.1 92.1,129.4 92.1,122.3 91.9,115.8 91.9,109.1 91.9,102.4 92.5,95.0 94.4,88.4 97.4,81.8 101.3,76.1 106.5,71.2 112.2,67.2 118.6,63.9 125.6,62.2 132.6,61.7 139.6,62.1 146.6,64.1 153.1,67.1 158.8,71.2 163.9,76.1 167.8,82.1 170.7,88.2 172.7,95.0 173.4,102.3 173.3,108.9 173.5,115.9 173.3,122.4 173.5,129.1 173.5,135.8 173.1,142.8 173.2,149.5 173.2,156.2 167.5,156.1 167.4,149.4 167.3,142.8 167.2,135.9 167.6,129.2 167.6,122.5 167.3,115.8 167.4,109.0 167.6,102.3 166.6,95.3 164.9,89.0 161.6,83.0 157.1,77.7 152.1,73.3 145.7,70.2 139.3,68.1 132.5,67.3 125.6,68.0 119.1,70.0 113.4,73.4 108.1,77.8 103.8,83.0 100.3,89.0 98.3,95.5 97.9,102.2 97.9,108.9 97.9,115.9 97.8,122.5 98.0,129.3 98.0,136.0 97.6,142.6 97.8,149.3 97.7,156.2Z"/></g>
+          <g class="rib" data-foot="168.9" mask="url(#tunnel-nowhere-ink-a)" fill="#b9aea4"><path d="M77.6,169.0 77.8,162.1 77.9,155.3 77.7,148.6 77.6,142.1 77.9,135.2 77.8,128.5 77.8,121.8 78.0,115.2 77.9,108.6 77.7,101.7 78.4,95.1 79.5,88.1 82.1,81.6 85.3,75.6 89.2,69.9 93.7,64.9 99.1,60.4 105.2,56.8 111.6,54.3 117.9,52.1 125.0,51.5 131.8,51.2 138.8,52.1 145.5,54.3 151.6,57.0 157.7,60.4 162.9,64.9 167.4,70.1 171.8,75.7 174.9,81.9 177.0,88.0 178.3,95.0 178.9,101.7 179.0,108.5 178.9,115.1 179.1,121.8 179.1,128.8 179.2,135.3 178.8,142.1 179.1,148.6 178.9,155.6 179.1,162.3 178.9,168.7 171.7,168.7 171.6,162.1 171.7,155.4 171.7,148.9 171.4,142.2 171.8,135.3 171.7,128.6 171.8,121.8 171.6,115.1 171.5,108.7 171.8,101.7 171.2,94.8 169.1,88.0 166.3,81.2 162.6,75.2 157.7,70.1 152.1,65.7 145.8,62.1 139.0,59.9 131.9,58.6 124.7,58.6 117.8,60.0 110.9,62.2 104.6,65.6 99.1,69.9 94.1,75.3 90.4,81.2 87.5,88.0 85.9,94.6 85.1,101.7 85.2,108.7 85.3,115.2 85.3,122.1 85.2,128.7 85.1,135.2 85.1,142.0 85.0,148.9 85.2,155.5 85.1,162.2 85.3,169.0Z"/></g>
+          <g class="rib" data-foot="188.2" mask="url(#tunnel-nowhere-ink-a)" fill="#b9aea4"><path d="M56.2,188.4 56.1,181.0 56.2,173.9 56.1,166.5 56.4,159.2 56.2,151.8 56.3,144.5 56.3,137.3 56.3,130.1 56.2,122.9 56.4,115.8 56.3,108.6 56.3,101.2 56.8,94.0 57.9,87.1 59.7,80.2 62.4,73.6 65.5,67.3 69.5,61.3 74.1,56.0 79.6,51.0 85.1,46.8 91.0,43.2 97.5,40.2 104.2,37.9 111.2,36.2 118.5,35.5 125.6,35.8 132.5,36.2 139.3,37.9 146.4,40.0 152.5,43.1 159.0,46.7 164.3,51.3 169.6,55.9 174.3,61.4 178.3,67.5 181.4,73.7 184.2,80.1 185.9,87.3 187.3,94.1 187.8,101.3 187.6,108.4 187.5,115.7 187.6,123.1 187.5,130.3 187.6,137.4 187.7,144.9 187.5,152.1 187.6,159.1 187.6,166.3 187.5,173.7 187.6,180.8 187.4,188.0 178.3,188.3 178.2,180.8 178.1,173.6 177.9,166.5 177.9,159.2 178.1,151.8 177.9,144.7 178.2,137.3 178.0,130.3 178.3,123.0 177.9,115.7 177.9,108.5 178.0,101.2 177.8,94.1 176.2,87.4 174.0,80.7 171.1,74.0 167.4,68.2 162.8,62.7 157.6,57.9 151.9,53.9 145.7,50.5 139.4,47.8 132.4,46.0 125.3,45.1 118.5,45.1 111.4,46.2 104.4,47.9 98.0,50.5 91.6,53.9 86.1,58.1 80.9,62.7 76.6,68.2 72.9,74.3 69.9,80.4 67.6,87.2 66.3,94.2 65.7,101.1 65.7,108.5 65.7,115.9 65.6,123.1 65.9,130.2 65.7,137.5 65.9,144.6 65.6,152.0 65.7,159.1 65.6,166.3 65.8,173.7 65.6,181.0 65.8,188.1Z"/></g>
+          <g class="rib" data-foot="221.1" mask="url(#tunnel-nowhere-ink-a)" fill="#b9aea4"><path d="M19.6,221.3 19.7,213.8 19.5,206.7 19.5,199.6 19.5,192.6 19.7,185.6 19.6,178.4 19.7,171.2 19.6,164.1 19.8,157.2 19.6,150.1 19.8,142.8 19.7,135.6 19.5,128.5 19.6,121.6 19.6,114.3 19.8,107.3 19.8,100.1 19.9,93.3 20.7,86.0 21.9,79.1 23.8,72.3 26.4,65.8 29.2,59.5 32.5,53.3 36.1,47.5 40.4,42.1 45.1,36.9 50.2,32.0 55.5,27.6 61.3,23.4 67.3,19.9 73.7,16.9 80.1,14.1 86.6,12.0 93.4,10.5 100.5,9.3 107.7,8.9 114.6,8.9 121.6,9.3 128.3,10.4 135.0,11.9 142.0,14.2 148.2,16.7 154.5,19.8 160.8,23.6 166.2,27.3 171.7,31.9 176.9,36.6 181.3,41.9 185.8,47.8 189.5,53.4 192.8,59.6 195.5,65.9 197.9,72.6 200.1,79.5 201.2,86.2 202.2,93.3 202.3,100.3 202.2,107.2 202.2,114.4 202.3,121.3 202.1,128.6 202.5,135.8 202.2,142.6 202.5,150.0 202.3,157.2 202.1,164.3 202.1,171.3 202.3,178.3 202.3,185.6 202.2,192.7 202.4,199.8 202.3,206.8 202.1,214.1 202.1,220.9 198.3,220.9 193.9,220.8 189.2,221.1 189.0,214.0 189.0,206.9 189.1,199.9 188.9,192.6 189.2,185.5 188.9,178.6 188.9,171.1 189.2,164.0 189.0,157.1 189.0,150.0 189.1,142.7 189.0,135.6 189.1,128.5 189.2,121.4 188.9,114.2 189.1,107.1 188.9,100.1 188.7,93.2 187.9,86.1 186.2,79.4 184.1,72.5 181.1,66.1 178.1,60.1 174.0,54.0 169.7,48.6 165.1,43.7 159.8,39.0 153.8,35.0 147.8,31.2 141.7,28.1 135.3,26.0 128.5,23.9 121.6,22.8 114.5,22.2 107.3,22.1 100.7,22.7 93.7,24.1 86.7,25.9 80.2,28.2 73.9,31.3 68.0,35.1 62.2,39.0 57.1,43.6 52.3,48.9 47.7,54.0 44.0,60.0 40.6,66.1 37.9,72.8 35.8,79.5 34.1,86.1 33.0,93.1 33.0,100.1 32.9,107.1 32.8,114.3 33.0,121.3 32.7,128.6 32.9,135.6 33.0,143.0 33.0,150.0 32.8,157.2 32.8,164.0 33.0,171.1 33.0,178.3 32.7,185.6 33.0,192.7 33.0,199.6 32.8,206.9 33.1,214.1 33.0,221.2 28.9,220.7 25.9,221.4Z"/></g>
+          <path class="hair walk" d="M76.2 227.1C78.8 224.7 86.3 218.5 91.8 213.1C97.4 207.7 105.8 200.2 109.5 194.6C113.3 188.9 112.2 183.6 114.5 179.0C116.8 174.4 121.3 170.6 123.1 167.2C124.8 163.7 123.8 161.0 124.9 158.5C126.0 156.1 128.3 154.0 129.6 152.5C130.9 151.0 131.3 150.2 132.7 149.5C134.1 148.9 136.4 148.6 138.1 148.4C139.9 148.3 142.3 148.7 143.1 148.8"/>
+        </svg>
+      </figure>
+      <!-- end of the drawing -->
     </div>
   </div>
 </section>
@@ -66,12 +88,12 @@
 
 <footer class="foot">
   <div class="in">
-    <p>© 2026 Lorna Robinson. Covers and illustrations by Lydia Hall.</p>
+    <p>© 2026 Lorna Robinson. Covers by Lydia Hall.</p>
     <p><a href="mailto:lorna@irisproject.org.uk">lorna@irisproject.org.uk</a> <a href="https://www.instagram.com/irisprojectlorna/">Instagram</a></p>
   </div>
 </footer>
 
 <script>// on the GitHub Pages copy the site lives under /lornarobinson/, so point the root links there
-(function(){var m=location.pathname.match(/^\/[^/]+\//);if(location.hostname.endsWith('github.io')&&m){document.querySelectorAll('a[href^="/"],link[href^="/"],script[src^="/"],img[src^="/"]').forEach(function(el){var a=el.href?'href':'src';el.setAttribute(a,m[0]+el.getAttribute(a).slice(1))})}var s=document.createElement('script');s.src=(location.hostname.endsWith('github.io')&&m?m[0]:'/')+'js/site.js';document.body.appendChild(s)})();</script>
+(function(){var m=location.pathname.match(/^\/[^/]+\//);if(location.hostname.endsWith('github.io')&&m){document.querySelectorAll('a[href^="/"],link[href^="/"],script[src^="/"],img[src^="/"],image[href^="/"]').forEach(function(el){var a=el.href?'href':'src';el.setAttribute(a,m[0]+el.getAttribute(a).slice(1))})}var r=location.hostname.endsWith('github.io')&&m?m[0]:'/';['js/site.js','js/drawings.js','js/404.js'].forEach(function(f){var s=document.createElement('script');s.src=r+f;s.async=false;document.body.appendChild(s)})})();</script>
 </body>
 </html>

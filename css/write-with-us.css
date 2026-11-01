@@ -45,3 +45,17 @@ html.js:not(.still) .table .rules li:last-child::after { transform: scaleX(var(-
   .table .in.two { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } /* words left, the photo right; on phone the photo follows the words */
   .board figcaption { max-width: 20rem; }
 }
+
+/* drawn moment: worded feathers (illustrations/DIRECTION.md 3). Five paper feathers from her St Alban's board, one wing,
+   each carrying one of the board's phrases along its quill. Under the invitation on phones and tablets, beside it from
+   860px: the grid's first column is exactly as wide as the invitation's longest line, so the invitation keeps its
+   place and measure; the wing hangs into the section's own padding, so nothing below moves.
+   The fan opens and the words are written in from js/write-with-us.js (4); finished without JS / reduced motion. */
+.draw[data-draw="worded-feathers"] { --draw-max: 340px; --draw-max-lg: 400px; --word: var(--tunnel); --word-size: 16px; max-width: var(--draw-max); margin-top: clamp(.25rem, 2vw, 1rem); } /* the wing's own empty ground above it is the gap */
+/* each feather turns about the point where the quills meet (26, 332 in the drawing), not about its own box */
+.draw[data-draw="worded-feathers"] .fth { transform-box: view-box; transform-origin: 26px 332px; }
+html.js:not(.still) .draw[data-draw="worded-feathers"] .fth { will-change: transform; }
+@media (min-width: 860px) {
+  .written .in.narrow { display: grid; grid-template-columns: max-content minmax(0, 400px); justify-content: space-between; align-items: center; column-gap: 1.5rem; }
+  .draw[data-draw="worded-feathers"] { max-width: var(--draw-max-lg); width: 100%; margin: -7rem 0 -2rem; } /* beats .written .in > * */
+}

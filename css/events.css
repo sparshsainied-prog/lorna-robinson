@@ -47,3 +47,18 @@ html.still .poster .mouth, html:not(.js) .poster .mouth { clip-path: none !impor
 .past-list .what { font-size: 1.4rem; }
 .past-list p { color: var(--soft); }
 .past-list .tbl { color: var(--soft); }
+
+/* the book fair table, S33 (drawn moment, css/drawings.css + js/events.js). The figure carries hidden in the HTML
+   so the copy of this event on the home page never shows it; this page shows it. Under the entry's words on
+   phones; on tablet and desktop in the right column, the width of the poster above, so the two line up. */
+.trail .dates [data-draw="table-s33"] { display: block; margin: 1.5rem 0 0; }
+@media (min-width: 720px) {
+  .trail .dates li > [data-draw="table-s33"] { grid-column: 2; grid-row: 1 / span 6; align-self: end; margin: 0; width: 46vw; max-width: none; }
+}
+@media (min-width: 1024px) {
+  .trail .dates li > [data-draw="table-s33"] { width: min(30vw, 400px); }
+}
+/* each piece turns about the bottom corner it lands on first (js/events.js), then rocks flat */
+.trail [data-draw="table-s33"] [data-piece="hamadryad"], .trail [data-draw="table-s33"] [data-piece="card"] { transform-origin: 0 100%; }
+.trail [data-draw="table-s33"] [data-piece="oread"] { transform-origin: 100% 100%; }
+.past-list [data-draw="table-s33"] { display: none; }

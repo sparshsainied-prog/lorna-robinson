@@ -43,3 +43,43 @@
     mq.addEventListener('change', () => { draw.measure(); draw(scrollY); });
   });
 })();
+
+/* Table S33 (the 22 Nov entry; art direction illustrations/DIRECTION.md, moment 2). The table never moves. The two
+   books and the S33 card are held a little above it and set down one after another, the way a stall is laid out:
+   Hamadryad first, then Oread beside it, then the card at the front. Each one is lowered tipped a few degrees, so
+   one bottom corner meets the table first (it turns about that corner: css/events.css), and then it rocks down flat
+   onto its foot: the drop finishes at 70% of the piece's own stretch and the tip runs on to the end of it. It slows to
+   rest and never bounces. Full ink throughout (a fade turned the name-yellow card olive on the dark ground). The svg's
+   viewBox starts 28 units down (the rested drawing keeps only a thin band on top); held up, the pieces rise at most
+   into the figure's own top margin, never over the words above (the svg is overflow: visible).
+   Driven by drawings.track on the figure: it begins once the whole figure is on screen (its top 66% of the way down
+   the viewport), after the poster above has finished opening, and the card is down when the figure's top reaches
+   26%, well before it leaves. A pure function of scroll (same every pass, exact both ways, nothing on a timer).
+   Reduced motion and no JavaScript: all three simply stand on the table (css/drawings.css; p = 1 clears what is
+   written here). */
+(() => {
+  if (!window.drawings) return;
+  const D = window.drawings;
+  drawings.each('table-s33', fig => {
+    const $ = k => fig.querySelector(`[data-piece="${k}"]`);
+    // start poses in drawing units and degrees: lifted, a little to one side, tipped down toward the corner it lands on
+    const items = [
+      { el: $('hamadryad'), x: -10, y: -36, r: -6 },
+      { el: $('oread'),     x: 12,  y: -54, r: 5.5 },
+      { el: $('card'),      x: -16, y: -58, r: -7 }
+    ].filter(it => it.el);
+    items.forEach(it => { it.el.classList.add('piece', 'fx'); it.last = ''; });
+    const n = items.length, gap = .25, fx = v => +v.toFixed(2);
+    const draw = p => items.forEach((it, i) => {
+      const t = D.stagger(p, i, n, gap);
+      const drop = D.smoother(D.span(t, 0, .7));      // lowered: down by 70% of its stretch
+      const rock = D.smooth(D.span(t, .25, 1));       // tipped: flat only at the end, after the corner has landed
+      const u = 1 - drop, w = 1 - rock;
+      const tf = t >= 1 ? '' : `translate(${fx(it.x * u)}px,${fx(it.y * u)}px) rotate(${fx(it.r * w)}deg)`;
+      if (tf === it.last) return;
+      it.last = tf;
+      it.el.style.transform = tf;
+    });
+    D.track(fig, .66, .26, draw);
+  });
+})();

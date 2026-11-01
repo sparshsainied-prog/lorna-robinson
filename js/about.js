@@ -43,4 +43,49 @@
   /* ---- the shelf ---- */
   const row = document.querySelector('.shelfrow');
   if (row) S.shelve(row, row.querySelectorAll('li'));
+
+  /* ---- the board ---- */
+  const D = window.drawings;
+  if (D) D.each('apollo-artemis-board', fig => {
+    const moon = fig.querySelector('.moon'), sun = fig.querySelector('.sun');
+    if (!moon || !sun) return;
+    [moon, sun].forEach(el => el.classList.add('piece', 'fx'));
+    // start pose of each, in drawing units: low on its own half with its foot cut off by the board's foot (the sun
+    // half risen, the moon's upper horn showing), a little out from the seam and turned
+    const MOON = { x: -18, y: 142, r: -22 }, SUN = { x: 16, y: 150, r: 34 };
+    const keys = new Map();
+    const place = (el, t, a) => {
+      const u = D.smooth(D.clamp(t)), s = 1 - u, w = 1 - u * u;
+      // up at an even pace while it turns; the sideways drift comes late, so the arc rises steeply and then bends
+      // in toward the seam as it settles under its word
+      const tf = s > 0 ? `translate(${(a.x * w).toFixed(2)}px,${(a.y * s).toFixed(2)}px) rotate(${(a.r * s).toFixed(2)}deg)` : '';
+      if (keys.get(el) === tf) return;
+      keys.set(el, tf);
+      el.style.transform = tf;
+    };
+    const draw = p => {
+      place(moon, D.span(p, 0, .74), MOON);
+      place(sun, D.span(p, .26, 1), SUN);
+    };
+    let off = null, range = '';
+    const arm = () => {
+      const vh = innerHeight, r = fig.getBoundingClientRect(), h = r.height;
+      if (!h) return;
+      const foot = r.bottom + scrollY, maxY = Math.max(0, document.documentElement.scrollHeight - vh);
+      const lowest = foot - maxY;                              // where the foot is when the page can go no further
+      const end = Math.max(vh * .8, lowest + Math.min(48, vh * .05));
+      // starts once the top 45% of the board is up (both words in view), so the rise has about twice the room it
+      // would have from the foot at the fold; the moon comes up into view as the board does
+      const from = Math.max((vh - h * .45) / vh, (end - h) / vh + .2), to = (end - h) / vh;
+      const key = from.toFixed(4) + ':' + to.toFixed(4);
+      if (key === range) return;
+      range = key;
+      if (off) off();
+      off = D.track(fig, from, to, draw, { firstScreen: 'plain' });
+    };
+    const frame = () => {};
+    frame.measure = arm;
+    S.onFrame(frame);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(arm);
+  });
 })();

@@ -45,3 +45,19 @@
 /* ---------- Write to me ---------- */
 .write .btns { margin-top: .4rem; }
 .write .cafe-line { margin: 1.6rem 0 0; }
+
+/* ---------- Write to me: the Artemis and Apollo board (drawn moment, css/drawings.css + js/about.js) ----------
+   Her café board in cut paper: the black half with "Artemis" and the moon, the white half (paper on paper, so drawn
+   by its ring-deep hairline) with the sun and "Apollo". Under the links on phones and tablets; beside them, its top
+   level with the heading, from 860px. */
+.write .draw[data-draw="apollo-artemis-board"] { --draw-max: 340px; --draw-max-lg: 400px; --word-size: 15px; margin-top: 2.6rem; }
+.draw .word.artemis { --word: var(--paper); }
+.draw .word.apollo { --word: var(--ring-deep); }
+/* the moon and the sun turn about their own middles as they come up */
+.draw[data-draw="apollo-artemis-board"] .piece { transform-origin: 50% 50%; }
+@media (min-width: 860px) {
+  .write .in { display: grid; grid-template-columns: minmax(0, 1fr) 400px; grid-template-rows: auto auto auto 1fr; column-gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .write .in > * { grid-column: 1; }
+  .write .draw[data-draw="apollo-artemis-board"] { grid-column: 2; grid-row: 1 / span 4; margin: .3rem 0 0; }
+  /* the board's extra height goes into the empty fourth row, so the heading, links and café line keep their spacing */
+}

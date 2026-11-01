@@ -20,8 +20,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/drawings.css">
 <link rel="preload" href="../img/speckle.png" as="image" crossorigin>
-<link rel="stylesheet" href="../css/about.css?v=3">
+<link rel="stylesheet" href="../css/about.css?v=6">
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
 </head>
 <body>
@@ -95,18 +96,45 @@
     <h2 class="cap">Write to me</h2>
     <div class="btns"><a class="btn" href="mailto:lorna@irisproject.org.uk">lorna@irisproject.org.uk</a><a class="link" href="https://www.instagram.com/irisprojectlorna/">@irisprojectlorna</a><a class="link" href="https://apolloandartemisblog.wordpress.com/">Iris Project blog</a></div>
     <p class="cafe-line"><a class="link" href="../write-with-us/">Come and write with us</a></p>
+    <!-- Drawn moment: her Artemis and Apollo board from the café (the photo on write-with-us/), in cut paper: the black
+         half with "Artemis" and the moon, the white half with the sun and "Apollo". As the board comes up the page, the
+         moon and then the sun rise on their own halves (js/about.js). Finished without JS and under reduced motion.
+         The svg is cut by illustrations/build/apollo-artemis-board-site.py, which rewrites what sits between the markers. -->
+    <figure class="draw" data-draw="apollo-artemis-board">
+    <!-- board:start -->
+    <svg viewBox="0 0 320 300" width="320" height="300" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="apollo-artemis-board-grain" patternUnits="userSpaceOnUse" width="220" height="220"><image href="../img/speckle.png" crossorigin="anonymous" width="220" height="220"/></pattern>
+        <pattern id="apollo-artemis-board-grain-moon" href="#apollo-artemis-board-grain" patternTransform="translate(190 135)"/>
+        <pattern id="apollo-artemis-board-grain-sun" href="#apollo-artemis-board-grain" patternTransform="translate(140 125)"/>
+        <mask id="apollo-artemis-board-ink" maskUnits="userSpaceOnUse" x="-2" y="-2" width="324" height="304" style="mask-type:alpha"><rect x="-2" y="-2" width="324" height="304" fill="url(#apollo-artemis-board-grain)"/><path d="M3.4 3.4 L154.6 3.4 L154.6 296.6 L3.4 296.6Z" fill="#000"/></mask>
+        <mask id="apollo-artemis-board-ink-moon" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="300" style="mask-type:alpha"><rect width="320" height="300" fill="url(#apollo-artemis-board-grain-moon)"/><path d="M73.1 112.7 L69.5 113.5 L66 114.5 L62.6 115.8 L59.3 117.4 L56.1 119.3 L53.2 121.4 L50.4 123.7 L47.8 126.3 L45.4 129.1 L43.3 132.1 L41.4 135.2 L39.8 138.5 L38.5 141.9 L37.5 145.4 L36.8 149 L36.3 152.6 L36.2 156.3 L36.4 160 L36.9 163.6 L37.6 167.1 L38.7 170.6 L40.1 174 L41.7 177.3 L43.6 180.4 L45.8 183.4 L48.2 186.1 L50.8 188.7 L53.6 191 L56.7 193.1 L59.8 194.9 L63.1 196.4 L66.6 197.7 L70.1 198.7 L73.7 199.3 L77.3 199.7 L81 199.8 L84.6 199.6 L88.2 199 L91.8 198.2 L95.3 197 L95.3 197 L92.4 196.7 L89.6 196.2 L86.9 195.6 L84.1 194.7 L81.5 193.8 L78.9 192.6 L76.4 191.3 L73.9 189.8 L71.6 188.2 L69.3 186.4 L67.2 184.5 L65.2 182.5 L63.3 180.4 L61.6 178.1 L60 175.8 L58.5 173.3 L57.2 170.8 L56.1 168.2 L55.1 165.5 L54.3 162.8 L53.7 160 L53.2 157.2 L52.9 154.3 L52.8 151.5 L52.9 148.7 L53.1 145.8 L53.5 143 L54.1 140.2 L54.8 137.5 L55.7 134.8 L56.8 132.1 L58.1 129.6 L59.5 127.1 L61 124.7 L62.7 122.4 L64.5 120.2 L66.5 118.2 L68.6 116.2 L70.8 114.4 L73.1 112.7Z" fill="#000"/></mask>
+        <mask id="apollo-artemis-board-ink-sun" maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="300" style="mask-type:alpha"><rect width="320" height="300" fill="url(#apollo-artemis-board-grain-sun)"/><path d="M259.8 150 L259.6 152.6 L259.1 155.1 L258.3 157.6 L257.1 159.9 L255.7 162.1 L254 164 L252.1 165.7 L249.9 167.1 L247.6 168.3 L245.1 169.1 L242.6 169.6 L240 169.8 L237.4 169.6 L234.9 169.1 L232.4 168.3 L230.1 167.1 L227.9 165.7 L226 164 L224.3 162.1 L222.9 159.9 L221.7 157.6 L220.9 155.1 L220.4 152.6 L220.2 150 L220.4 147.4 L220.9 144.9 L221.7 142.4 L222.9 140.1 L224.3 137.9 L226 136 L227.9 134.3 L230.1 132.9 L232.4 131.7 L234.9 130.9 L237.4 130.4 L240 130.2 L242.6 130.4 L245.1 130.9 L247.6 131.7 L249.9 132.9 L252.1 134.3 L254 136 L255.7 137.9 L257.1 140.1 L258.3 142.4 L259.1 144.9 L259.6 147.4 L259.8 150Z" fill="#000"/></mask>
+        <clipPath id="apollo-artemis-board-night"><rect x="0" y="0" width="158" height="299.4"/></clipPath>
+        <clipPath id="apollo-artemis-board-day"><rect x="159.4" y="1.4" width="159.2" height="297.2"/></clipPath>
+      </defs>
+      <path class="night" mask="url(#apollo-artemis-board-ink)" fill="#100d0c" d="M0 0 L5.8 0 L11.5 0.2 L15.7 0.2 L22.3 0.1 L28.6 0.1 L35.5 0.1 L39.8 0.2 L46.7 0.2 L53.8 0.2 L58.2 0.3 L64.3 0.3 L69.1 0.4 L73.7 0.5 L80.9 0.5 L87.3 0.3 L91.7 0.5 L97.5 0.5 L103.2 0.6 L107.7 0.6 L115.2 0.6 L120.3 0.5 L127.6 0.3 L132.8 0.3 L139.8 0.3 L145.1 0.5 L152.1 0.3 L158 0 L157.9 4.9 L157.8 10.2 L157.8 17.5 L157.8 24.7 L157.7 29.7 L157.8 34.3 L157.8 38.5 L158 45 L158 51.7 L158.1 59 L158 64.4 L158 71.9 L157.8 78.3 L158 85.4 L157.9 90.4 L157.8 95.3 L157.9 101.9 L157.9 106.1 L157.8 113.3 L157.7 119.2 L157.6 126.8 L157.7 133.9 L157.7 140.8 L157.6 146.9 L157.6 152.6 L157.6 158.5 L157.6 163.8 L157.6 170.6 L157.6 177.3 L157.6 181.5 L157.6 188.7 L157.6 194 L157.6 199.4 L157.6 204.6 L157.6 208.9 L157.6 216.1 L157.6 222.9 L157.6 227.3 L157.6 231.6 L157.7 238.6 L157.7 243.1 L157.6 247.2 L157.6 253.9 L157.6 259.8 L157.7 264.5 L157.6 269.2 L157.6 276.6 L157.6 282.5 L157.6 288.2 L157.8 295.7 L158 300 L152.3 299.9 L146.3 299.8 L139.4 299.7 L134 299.6 L128.6 299.8 L122 299.8 L116.4 299.6 L111.1 299.7 L107 299.6 L101.8 299.5 L94.3 299.4 L88.9 299.4 L82.7 299.4 L78.3 299.4 L73.6 299.5 L66.6 299.4 L59.4 299.6 L54.5 299.6 L46.6 299.4 L40.9 299.5 L36 299.4 L29.6 299.4 L21.6 299.6 L16 299.6 L10.9 299.8 L4.5 299.8 L0 300 L0.1 295.2 L0 289.9 L0.2 284.5 L0.2 277.9 L0.1 270.7 L0.1 263.9 L0 258.4 L0.3 252.2 L0.3 245.7 L0.1 241.3 L-0 234.8 L-0.2 230.2 L-0.2 225.9 L-0.3 218.6 L-0.2 212.7 L-0.4 206.8 L-0.5 199.6 L-0.6 194.9 L-0.4 190.8 L-0.6 182.9 L-0.6 176.1 L-0.6 172 L-0.6 167.9 L-0.6 162.5 L-0.6 156.2 L-0.6 149.9 L-0.5 145.5 L-0.5 139.4 L-0.4 133.7 L-0.6 126.1 L-0.6 118.8 L-0.6 113.7 L-0.6 106.4 L-0.6 98.5 L-0.5 90.7 L-0.3 85.2 L-0.5 77.4 L-0.5 72 L-0.6 67.6 L-0.6 62.3 L-0.5 55.7 L-0.6 49.6 L-0.4 44 L-0.3 39 L-0 33.3 L-0.1 28 L-0.1 21.4 L-0.1 15.7 L-0.2 8.3Z"/>
+      <path class="hair" d="M158.4 0.7 L216 1 L319.1 0.6 L319.3 80 L319.6 186 L319.2 299.3 L236 299.5 L158.4 299.3"/>
+      <g clip-path="url(#apollo-artemis-board-night)"><g class="moon"><path mask="url(#apollo-artemis-board-ink-moon)" fill="#f4efe6" d="M81.4 110 L74.9 109.8 L67.9 111.6 L60.8 113.8 L53.9 117.9 L48.1 123.3 L42.8 128.9 L37.8 138.3 L35.2 145.5 L34.1 153.1 L34.4 160.2 L35.3 166.4 L38.4 176.6 L41.9 182.5 L47.8 188.6 L52.4 193.4 L59.1 196.7 L67.6 200.5 L73.4 201.7 L84.3 201.8 L89.3 201.4 L99.1 197.9 L103.8 195.3 L103.6 194.6 L98.3 194.7 L90.5 194.5 L83.2 191.7 L77.6 189.9 L71 185.3 L66.7 180.6 L62.5 175.5 L58.9 168.5 L56.7 163 L55.6 156.3 L55.2 147.4 L56.4 141.1 L58.3 135.1 L62.5 127.1 L65.8 122.5 L70.3 117.3 L76.2 113.6 L81.6 110.8Z"/></g></g>
+      <g clip-path="url(#apollo-artemis-board-day)"><g class="sun"><path mask="url(#apollo-artemis-board-ink-sun)" fill="#f2a43a" d="M262 150 L260.6 158.2 L257.2 164 L252.4 168.7 L244 171.9 L234.9 171.2 L229.4 169.3 L222.7 163.5 L219.4 156.9 L218.3 149.9 L220 141.3 L222.7 136.8 L229.9 130.5 L237.2 128.4 L244.5 128.7 L250.7 130.9 L256 135.1 L260.6 143.6Z M241.5 123.9 L238 109.3 L236.8 109.4 L235.5 124.2Z M255.1 128.5 L257.8 120.3 L256.8 119.7 L251.1 126.2Z M264.5 140.7 L276.7 131.7 L276.1 130.7 L261.8 135.4Z M266.1 151.8 L274.8 150.2 L274.8 149 L266 147.2Z M261.6 164.6 L275.8 169 L276.4 168 L264.4 159.3Z M251.2 173.6 L257.1 180.1 L258.1 179.5 L255.1 171.2Z M236 176.1 L238.2 190.3 L239.4 190.4 L242 176.3Z M223.9 170.4 L220.1 178.7 L221.1 179.3 L227.7 172.9Z M215.8 160.5 L203.9 169.8 L204.5 170.8 L218.8 165.7Z M213.6 147.9 L205.3 149.7 L205.3 150.9 L213.6 152.5Z M218.3 134.9 L204.5 129.9 L203.9 131 L215.4 140.2Z M228.7 126 L222.9 119.9 L221.9 120.5 L224.8 128.3Z"/></g></g>
+      <text class="word artemis" x="16" y="36">Artemis</text>
+      <text class="word apollo" x="304" y="36" text-anchor="end">Apollo</text>
+    </svg>
+    <!-- board:end -->
+    </figure>
   </div>
 </section>
 </main>
 
 <footer class="foot">
   <div class="in">
-    <p>© 2026 Lorna Robinson. Covers and illustrations by Lydia Hall.</p>
+    <p>© 2026 Lorna Robinson. Covers by Lydia Hall.</p>
     <p><a href="mailto:lorna@irisproject.org.uk">lorna@irisproject.org.uk</a> <a href="https://www.instagram.com/irisprojectlorna/">Instagram</a></p>
   </div>
 </footer>
 
 <script src="../js/site.js"></script>
-<script src="../js/about.js?v=2"></script>
+<script src="../js/drawings.js"></script>
+<script src="../js/about.js?v=5"></script>
 </body>
 </html>

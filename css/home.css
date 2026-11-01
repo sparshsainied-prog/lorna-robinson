@@ -141,3 +141,12 @@ html:not(.js) .tp, html:not(.js) .otitle, html.still .tp, html.still .otitle { t
   html.js:not(.still) .lorna .two h2.cap.hold { position: sticky; top: 2.4rem; }
   html.js:not(.still) .lorna .two > :last-child { padding-bottom: 36vh; }
 }
+
+/* ---------- the trail (#events): main reception, through the Rumble Museum's ribs, to the Iris Classics Centre ----------
+   Cut paper and one hairline (css/drawings.css has the shared hand; js/home.js walks it). The corridor's ribs and
+   reception's doorframe are cut in soft, the Centre's door in ring orange, the walk in paper. */
+.draw[data-draw="trail"] { margin: .4rem 0 2.2rem; --word: var(--paper); --word-size: 18px; }
+@media (min-width: 860px) { .draw[data-draw="trail"] { margin-top: -.4rem; --word-size: 15.5px; } }
+.draw[data-draw="trail"] .rib, .draw[data-draw="trail"] .frame { fill: var(--soft); }
+.draw[data-draw="trail"] .centre { fill: var(--ring); }
+.draw[data-draw="trail"] .word { letter-spacing: 0; }
