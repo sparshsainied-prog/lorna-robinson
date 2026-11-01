@@ -1,44 +1,77 @@
 /* Home page only: the hero (Hamadryad cracks open onto Oread), the shelf, the short Lorna. */
 
-/* ---------- hero: Hamadryad on top of Oread ---------- */
+/* ---------- hero: Hamadryad opens onto Oread ----------
+   The ring art is the world, not a box: the printed black of the cover is transparent, the rings bleed off the
+   left and bottom of the viewport, and the covers' titles and her name stand as separate planes of text.
+   Phones get their own composition (words above, the art below bleeding off the left); desktop sets the art
+   against the left edge with the title column and the words beside it. --bw is the art's width, --bx/--by its
+   position, --tw the room the vertical title has. */
 .hero { position: relative; height: 300vh; }
-.stage { --bw: min(calc(100vw - 62px), calc((100svh - 245px) * .625)); position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
-.book { position: absolute; left: 12px; top: 12px; width: var(--bw); aspect-ratio: 1000 / 1600; overflow: hidden; background: #000; box-shadow: 0 18px 40px rgba(0, 0, 0, .55); }
-.plate { position: absolute; inset: 0; background: url(../img/oread.jpg) center / 100% 100% no-repeat; will-change: transform; transform-origin: 15.6% 57%; }
-.pit { position: absolute; inset: 0; background: #050404; will-change: opacity; }
-.pl { position: absolute; display: block; max-width: none; will-change: transform; }
-.words { position: absolute; left: var(--gutter); right: 46px; top: calc(12px + var(--bw) * 1.6 + 16px); }
+.stage { --bw: clamp(300px, 118vw, calc((100svh - 240px) / 1.2)); --bx: min(0px, calc((100vw - var(--bw)) * .6)); --by: max(230px, 27svh); --tw: calc(100svh - var(--by) - 44px); position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.book { position: absolute; left: var(--bx); top: var(--by); width: var(--bw); aspect-ratio: 1500 / 2400; }
+.book picture { display: contents; }
+.pl, .tp { position: absolute; display: block; max-width: none; will-change: transform; }
+.pit { position: absolute; inset: 0; background: var(--ground); will-change: opacity; }
+.years { position: absolute; width: calc(var(--bw) * .78); height: calc(var(--bw) * .78); left: calc(21.6% - var(--bw) * .39); top: calc(56.92% - var(--bw) * .39); overflow: visible; opacity: 1; will-change: opacity; -webkit-mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; }
+.years g { transform-box: fill-box; transform-origin: 50% 50%; will-change: transform; }
+.years circle { fill: none; stroke: var(--name); stroke-width: 3; vector-effect: non-scaling-stroke; }
+.years .under { stroke: var(--ground); stroke-width: 6; } /* a dark edge under the counted ring, so it reads on the orange print */
+.htitle, .otitle { position: absolute; margin: 0; top: calc(var(--by) + 14px); right: 50px; writing-mode: vertical-rl; text-orientation: upright; line-height: .5; letter-spacing: -.31em; color: #f6f1ea; will-change: transform, opacity; }
+.htitle { font-size: calc(var(--tw) / 8); }
+.otitle { font-size: calc(var(--tw) / 4.45); }
+.words { position: absolute; left: var(--gutter); right: calc(var(--gutter) + 26px); top: 40px; max-width: 36rem; }
+@media (min-width: 600px) { .htitle, .otitle { right: auto; left: calc(var(--bx) + var(--bw) * .867); translate: -50% 0; } }
+.words h1 { font-family: var(--cap); font-weight: 400; font-size: 1.35rem; letter-spacing: .14em; color: var(--name); margin: 0 0 .3rem; }
 .says { display: grid; }
 .says > * { grid-area: 1 / 1; }
-.words h1 { font-family: var(--cap); font-weight: 400; font-size: 1.35rem; letter-spacing: .14em; color: var(--name); margin: 0 0 .35rem; }
 .say { will-change: opacity, transform; }
-.say .line { font-size: clamp(1.18rem, 4.9vw, 1.45rem); line-height: 1.3; margin: 0 0 .85rem; max-width: none; }
+.say.off { pointer-events: none; }
+.say .line { font-size: clamp(1.15rem, 4.6vw, 1.4rem); line-height: 1.28; margin: 0 0 .45rem; max-width: none; }
 .say .line b { font-family: var(--cap); font-weight: 400; font-size: 1.25em; letter-spacing: .06em; }
 .say.a b { color: var(--ring-hi); }
 .say.b b { color: var(--lilac); }
+.yrs { font-style: italic; color: var(--name); font-size: clamp(1.15rem, 4.6vw, 1.4rem); line-height: 1.28; margin: 0; max-width: none; will-change: opacity; }
+.say.b .btns { gap: .5rem 1rem; }
+.say.b .btn { font-size: 1.25rem; }
 @media (min-width: 900px) {
-  .stage { --bw: min(calc(86svh * .625), 40vw); }
-  .book { left: 7vw; top: 50%; transform: translateY(-50%); }
-  .words { left: calc(7vw + var(--bw) + 5vw); right: calc(var(--spine) + 4vw); top: 50%; transform: translateY(-50%); max-width: 38rem; }
-  .words h1 { font-size: 2rem; margin-bottom: .8rem; }
-  .say .line { font-size: clamp(1.9rem, 2.7vw, 2.75rem); line-height: 1.22; margin-bottom: 1.4rem; }
+  .stage { --bw: min(92svh, 62vw); --bx: -2vw; --by: calc(var(--bw) * -.2375); --tw: 92svh; }
+  .htitle, .otitle { top: 4svh; }
+  .years circle { stroke-width: 3.5; }
+  .years .under { stroke-width: 6.5; }
+  .words { left: calc(var(--bx) + var(--bw) * 1.02); right: calc(var(--spine) + 4vw); top: 50%; translate: 0 -50%; max-width: 44rem; }
+  .words h1 { font-size: 2.4rem; margin-bottom: .8rem; }
+  .say .line, .yrs { font-size: clamp(1.9rem, 2.9vw, 3.1rem); line-height: 1.22; }
+  .say .line { margin-bottom: 1.1rem; }
+  .say.b .btns { gap: .7rem 1.1rem; }
+  .say.b .btn { font-size: 1.75rem; }
 }
-/* no JavaScript or reduced motion: the finished cover, no pin */
+@media (max-height: 560px) and (max-width: 899px) { .stage { --bw: min(70vw, 66svh); --by: 28svh; } } /* phone landscape: the heart of the rings stays inside the first screen */
+/* no JavaScript or reduced motion: the finished state, one screen, nothing pinned, depth kept in the composition */
 html:not(.js) .hero, html.still .hero { height: auto; }
-html:not(.js) .stage, html.still .stage { position: relative; height: auto; padding-bottom: 1.5rem; }
-html:not(.js) .book, html.still .book { position: relative; left: auto; top: auto; transform: none; margin: 12px 0 0 12px; }
-html:not(.js) .pl, html.still .pl, html:not(.js) .pit, html.still .pit, html:not(.js) .say.a, html.still .say.a { display: none; }
-html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none !important; visibility: visible !important; }
-html:not(.js) .words, html.still .words { position: relative; left: auto; right: auto; top: auto; transform: none; max-width: none; padding: 1.4rem calc(var(--gutter) + 26px) 0 var(--gutter); }
-@media (min-width: 900px) {
-  html:not(.js) .stage, html.still .stage { display: flex; align-items: center; gap: 5vw; padding: 3rem 4vw 3rem 7vw; }
-  html:not(.js) .book, html.still .book { margin: 0; flex: none; }
-  html:not(.js) .words, html.still .words { padding: 0; }
-}
+html:not(.js) .stage, html.still .stage { position: relative; }
+html:not(.js) .pl, html.still .pl, html:not(.js) .pit, html.still .pit, html:not(.js) .years, html.still .years,
+html:not(.js) .htitle, html.still .htitle, html:not(.js) .say.a, html.still .say.a { display: none; }
+html:not(.js) .say.b, html.still .say.b { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 
-/* ---------- the two novels ---------- */
-.novel .cover { width: min(360px, 78vw); }
-@media (max-width: 859px) { .novel .cover { display: none; } }
+/* ---------- the two novels ----------
+   No cover thumbnails here: the reader has just fallen into that cover. Each section picks the hero's art up at
+   its edge instead: Oread's near ribs (t1) bleed in from the left on the lilac, Hamadryad's big tree (w0) bleeds
+   in from the right on the ground, each cropped as a bleeding edge and drifting a little under the reader's hand. */
+.novel { position: relative; overflow: hidden; }
+.novel .edge { position: absolute; top: 0; bottom: 0; width: 46%; overflow: hidden; pointer-events: none; }
+.novel .edge img { position: absolute; width: 140%; max-width: none; height: auto; }
+#oread .edge { left: 0; }
+#oread .edge img { left: -62%; top: -8%; }
+#hamadryad .edge { right: 0; }
+#hamadryad .edge img { right: -58%; top: -2%; }
+.novel .in.two { position: relative; }
+@media (max-width: 859px) {
+  .novel .edge { position: relative; width: auto; height: 46vw; margin: 0 calc(-1 * var(--gutter)) 1.2rem; }
+  .novel .edge img { width: 92vw; }
+  #oread .edge img { left: -30vw; top: -34vw; }
+  #hamadryad .edge img { right: -34vw; top: -4vw; }
+  .novel .in.two > .hold { display: none; }
+}
 
 /* ---------- the shelf (#books) ---------- */
 .shelf ol { list-style: none; padding: 0; margin: 0; }

@@ -21,8 +21,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/site.css">
 <link rel="stylesheet" href="css/home.css">
-<link rel="preload" as="image" href="img/oread.jpg">
-<link rel="preload" as="image" href="img/w0.webp">
+<link rel="preload" as="image" href="img/home/w0.webp" media="(min-width: 900px)">
+<link rel="preload" as="image" href="img/home/w0-m.webp" media="(max-width: 899px)">
 <script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
 </head>
 <body>
@@ -56,25 +56,36 @@
 <main id="main">
 <section class="hero" id="top" aria-label="Hamadryad opens onto Oread">
   <div class="stage">
-    <div class="book" role="img" aria-label="The cover of Hamadryad, a cross-section of tree rings in orange, splits open from its heart to show the cover of Oread underneath: a lilac drawing of an old London Underground tunnel.">
-      <div class="plate"></div>
+    <div class="book" role="img" aria-label="Lydia Hall's art for Hamadryad and Oread: a cross-section of tree rings printed in orange, and beneath it a lilac drawing of an old London Underground tunnel.">
+      <!-- the world beneath: Lydia Hall's Oread tunnel in three depth planes (far mouth, mid ribs, near ribs) -->
+      <picture><source media="(max-width: 899px)" srcset="img/home/t3-m.webp"><img class="tp" data-k="t3" src="img/home/t3.webp" alt="" width="527" height="786"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/t2-m.webp"><img class="tp" data-k="t2" src="img/home/t2.webp" alt="" width="847" height="1379"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/t1-m.webp"><img class="tp" data-k="t1" src="img/home/t1.webp" alt="" width="993" height="1596"></picture>
       <div class="pit"></div>
-      <img class="pl" data-k="w0" src="img/w0.webp" alt="" width="991" height="912">
-      <img class="pl" data-k="w1" src="img/w1.webp" alt="" width="785" height="860">
-      <img class="pl" data-k="w2" src="img/w2.webp" alt="" width="784" height="690">
-      <img class="pl" data-k="w3" src="img/w3.webp" alt="" width="714" height="689">
-      <img class="pl" data-k="w4" src="img/w4.webp" alt="" width="217" height="689">
-      <img class="pl" data-k="w5" src="img/w5.webp" alt="" width="217" height="115">
-      <img class="pl" data-k="w6" src="img/w6.webp" alt="" width="217" height="912">
-      <img class="pl" data-k="title" src="img/h-title.webp" alt="" width="146" height="1464">
+      <!-- the world above: the Hamadryad rings in seven pieces along cracks from the heart of the big tree -->
+      <picture><source media="(max-width: 899px)" srcset="img/home/w0-m.webp"><img class="pl" data-k="w0" src="img/home/w0.webp" alt="" width="1116" height="1358"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/w1-m.webp"><img class="pl" data-k="w1" src="img/home/w1.webp" alt="" width="812" height="876"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/w2-m.webp"><img class="pl" data-k="w2" src="img/home/w2.webp" alt="" width="811" height="789"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/w3-m.webp"><img class="pl" data-k="w3" src="img/home/w3.webp" alt="" width="934" height="789"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/w4-m.webp"><img class="pl" data-k="w4" src="img/home/w4.webp" alt="" width="319" height="789"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/w5-m.webp"><img class="pl" data-k="w5" src="img/home/w5.webp" alt="" width="319" height="196"></picture>
+      <picture><source media="(max-width: 899px)" srcset="img/home/w6-m.webp"><img class="pl" data-k="w6" src="img/home/w6.webp" alt="" width="319" height="1334"></picture>
+      <!-- one ring counted outward from the heart: the years between the Charter and Oread -->
+      <svg class="years" viewBox="0 0 100 100" aria-hidden="true"><g><circle class="under" cx="50" cy="50" r="49.3"/><circle cx="50" cy="50" r="49.3"/></g></svg>
     </div>
+    <!-- the covers' own vertical titles, as text -->
+    <p class="htitle cap" aria-hidden="true">Hamadryad</p>
+    <p class="otitle cap">Oread</p>
     <div class="words">
       <h1>Lorna Robinson</h1>
       <div class="says">
-        <div class="say a"><p class="line"><b>Hamadryad.</b> A national programme to restore ancient traditions by pairing trees with humans.</p></div>
+        <div class="say a">
+          <p class="line"><b>Hamadryad.</b> A national programme to restore ancient traditions by pairing trees with humans.</p>
+          <p class="yrs">Two hundred years have passed</p>
+        </div>
         <div class="say b">
-          <p class="line"><b>Oread.</b> Two hundred years later, deep in the tunnels beneath London, a community has been growing which rejects the Charter.</p>
-          <div class="btns"><a class="btn lil" href="oread/">Oread</a><a class="link" href="events/">Come to the launch</a></div>
+          <p class="line"><b>Oread.</b> Deep in the tunnels beneath London, a community has been growing which rejects the Charter.</p>
+          <div class="btns"><a class="btn lil" href="https://www.amazon.co.uk/dp/B0HKSFR4PJ">Get Oread</a><a class="link" href="events/">Come to the launch</a></div>
         </div>
       </div>
     </div>
@@ -82,8 +93,10 @@
 </section>
 
 <section class="sec below novel" id="oread">
+  <!-- the near ribs of the Oread tunnel, carried down from the hero and bleeding in from the left -->
+  <div class="edge" aria-hidden="true"><picture><source media="(max-width: 859px)" srcset="img/home/t1-m.webp"><img src="img/home/t1.webp" alt="" width="993" height="1596" loading="lazy"></picture></div>
   <div class="in two">
-    <a href="oread/"><img class="cover" src="img/covers/oread-440.jpg" alt="The cover of Oread: a lilac and black drawing of a curving Underground tunnel, the title running down the right in white capitals." width="440" height="704" loading="lazy"></a>
+    <div class="hold"></div>
     <div>
       <h2 class="cap">The world beneath the trees</h2>
       <p>Two hundred years have passed since the UK government instituted a bold new programme to pair every citizen with a tree. Known as the Hamadryad Charter, it created vast national forests, major civic festivals and a whole new system of personal names.</p>
@@ -96,8 +109,10 @@
 </section>
 
 <section class="sec above novel" id="hamadryad">
+  <!-- the big tree of the Hamadryad cover, bleeding in from the right -->
+  <div class="edge" aria-hidden="true"><picture><source media="(max-width: 859px)" srcset="img/home/w0-m.webp"><img src="img/home/w0.webp" alt="" width="1116" height="1358" loading="lazy"></picture></div>
   <div class="in two flip">
-    <a href="hamadryad/"><img class="cover" src="img/covers/hamadryad-440.jpg" alt="The cover of Hamadryad: the cross-section of a tree grown from two hearts, printed in orange on black." width="440" height="704" loading="lazy"></a>
+    <div class="hold"></div>
     <div>
       <h2 class="cap">Where it began</h2>
       <p>In a climate-ravaged future UK, the Green Party is elected, and their bold young leader institutes a national programme to restore ancient traditions by pairing trees with humans. From huge civic festivals to different personal names, a new framework is put in place overnight.</p>
