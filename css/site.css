@@ -46,7 +46,7 @@ p { margin: 0 0 1rem; max-width: var(--measure); text-wrap: pretty; }
 /* ---------- nav: the cover's vertical title, as a spine on the right edge ---------- */
 .spine { position: fixed; z-index: 40; top: 0; right: 0; height: 100%; width: 56px; background: var(--ground); border-left: 2px solid var(--ground-2); display: none; }
 .spine ol { --rail-gap: 1.5rem; list-style: none; margin: 0; padding: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: var(--rail-gap); align-items: center; }
-.spine ol > li { display: flex; flex-direction: column; align-items: center; } /* every item sized by its word alone, no line box below it */
+.spine > ol > li { display: flex; flex-direction: column; align-items: center; } /* every item sized by its word alone, no line box below it */
 .spine a { writing-mode: vertical-rl; text-decoration: none; font-family: var(--cap); font-size: 1.3rem; letter-spacing: .12em; color: var(--paper); opacity: .78; padding: .1rem 0; }
 .spine a:hover, .spine a[aria-current], .spine a.on { opacity: 1; color: var(--name); }
 .spine a[aria-current], .spine a.on { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
