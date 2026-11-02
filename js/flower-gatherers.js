@@ -59,4 +59,10 @@
      no fade. The two text columns stay still. Reduced motion and no JS: at rest (.fx). */
   const fresco = document.querySelector('#about-the-book .fresco');
   if (fresco) S.drift(fresco, 32);
+
+  /* ---- reviews: the rule is drawn ----
+     The fresco-orange rule beside each quote is drawn down from its top as the quote rises from 95% to 60% of the
+     viewport (--p, read by css/flower-gatherers.css). Only the rule: the quoted words stay put. Under reduced motion
+     site.track gives p = 1; without JavaScript the CSS leaves the rule whole. */
+  document.querySelectorAll('#reviews .quote').forEach(q => S.prop(q, .95, .6));
 })();

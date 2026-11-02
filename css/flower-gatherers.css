@@ -63,6 +63,24 @@ html:not(.js) .find .words, html.still .find .words { position: relative; left: 
 .fg .pale .where { color: #5e5750; }
 .fg .pale .credit { font-size: 1.05rem; color: #5e5750; margin-top: 1.6rem; }
 
+/* ---------- reviews (on ground-2, between the paper and the shelf line) ----------
+   One review: a lead quote, then two side by side from 860px, then the source. The rule beside each quote is the
+   lily's fresco orange instead of site.css's currentColor border, drawn as ::before so it can be drawn down from the
+   top as the quote rises (--p from site.prop in js/flower-gatherers.js). The words themselves never move. */
+.fg .review { margin: 0; }
+.fg .review .quote { position: relative; border-left: 0; padding-left: 1.1rem; color: var(--paper); }
+.fg .review .quote::before { content: ""; position: absolute; left: 0; top: .2em; bottom: .2em; width: 3px; background: var(--fresco); transform-origin: 50% 0; }
+html.js:not(.still) .fg .review .quote::before { transform: scaleY(var(--p, 1)); }
+.fg .review .quote i { font-style: normal; }   /* the book's title, set roman inside the italic quote */
+.fg .review .lead { font-size: clamp(1.6rem, 1.15rem + 1.5vw, 2rem); line-height: 1.3; max-width: 40rem; margin-top: 0; }   /* clearly the lead at every width */
+.fg .review .revs { display: grid; gap: 1.6rem; margin-top: 1.6rem; }
+.fg .review .revs .quote { margin-top: 0; line-height: 1.5; }
+.fg .review figcaption { margin-top: 1.8rem; color: var(--soft); font-size: 1.05rem; }
+.fg .review figcaption cite { font-style: normal; }
+@media (min-width: 860px) {
+  .fg .review .revs { grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2.6rem; }
+}
+
 /* ---------- next and previous ---------- */
 .fg .shelfline { color: var(--soft); }
 .fg .nextprev { margin-top: 1.2rem; }

@@ -59,19 +59,36 @@ html:not(.js) .stage, html.still .stage { position: relative; height: auto; min-
 html.js .hop { display: block; }
 @media (min-width: 900px) { .places { padding-left: 7rem; } .hop { width: 4.6rem; } .places li { padding: 1.3rem 0 1.1rem; } }
 
-/* ---------- the linocuts: a shelf the reader slides along ----------
-   It bleeds to the right edge of the screen (past the column and the phone's tab gutter), with room at its end so
-   the last print scrolls clear of the Contents tab. Each print is pulled from the inked block as the shelf comes up
-   (site.shelve gives each li --set 0..1): the paper uncovers top to bottom and lifts off a two degree tilt. The
-   clip runs 40px past the print on three sides so the shadow is kept (and 40px past the top at --set 0, so none shows). Reduced motion and no JS: --set is 1. */
-.strip { list-style: none; margin: 1.6rem calc(-1 * var(--gutter)) 0; padding: .8rem calc(var(--gutter) + 38px) 1.2rem var(--gutter); display: flex; gap: 1.1rem; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+/* ---------- the linocuts: all twelve full pages ----------
+   Lorna's own full-page files, uncropped at their true 2480 x 3508 proportion, untouched in colour: the cream and
+   black print as they are. Each sits on a thin margin of its own paper (--print, the cream sampled from the scans)
+   with a shadow, so a print whose edge is black still reads as a sheet on the dark ground.
+   Phones: a shelf the reader slides along (snaps print to print; Previous and Next below it, js/the-birder.js), which
+   bleeds to the right edge of the screen past the Contents tab. The gap is a little wider than the gutter, so once a
+   print is snapped into place no sliver of the one before shows at the left edge. From 700px: a wrapping grid, every print in view.
+   The set-down (js/the-birder.js writes --set 0..1 on each li): the print is held a little above the shelf on a
+   slight tilt and set down flat as it comes up. Only the print moves; its name stays still. Reduced motion and no
+   JS: --set is 1, nothing moved, nothing hidden. */
+#prints { --print: #fffcc0; }
+.sale { margin-top: .4rem; }
+.sale strong { font-weight: 500; color: var(--name); }
+.strip { list-style: none; margin: 1.8rem calc(-1 * (var(--gutter) + 26px)) 0 calc(-1 * var(--gutter)); padding: 1.4rem calc(var(--gutter) + 38px) 1rem var(--gutter); display: flex; gap: calc(var(--gutter) + 4px); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-left: var(--gutter); scrollbar-width: thin; scrollbar-color: var(--soft) transparent; }
 .strip:focus-visible { outline: 3px solid var(--name); outline-offset: -3px; }
-.strip li { flex: none; --lift: 0rem; }
-.strip img { height: min(54vh, 460px, 100vw); width: auto; box-shadow: 0 10px 24px rgba(0, 0, 0, .5); }
-.strip li img { clip-path: inset(-40px -40px calc((1 - var(--set, 1)) * (100% + 80px) - 40px) -40px); transform: rotate(calc((1 - var(--set, 1)) * -2deg)); transform-origin: top left; }
-/* phone: about 70vw a print, so a quarter of the next one shows, most of it clear of the Contents tab */
-@media (max-width: 899px) { .strip { margin-right: calc(-1 * (var(--gutter) + 26px)); gap: .8rem; } }
-@media (min-width: 900px) { .strip { gap: 1.6rem; scrollbar-color: var(--paper) transparent; } }
+.strip li { flex: none; width: min(72vw, 320px); scroll-snap-align: start; }
+.strip figure { margin: 0; }
+.strip img { display: block; width: 100%; height: auto; padding: 5px; background: var(--print); box-shadow: 0 2px 3px rgba(0, 0, 0, .5), 0 14px 30px rgba(0, 0, 0, .55); transform-origin: 50% 100%; }
+html.js:not(.still) .strip img { transform: translateY(calc((1 - var(--set, 1)) * -1.1rem)) rotate(calc((1 - var(--set, 1)) * -1.6deg)); }
+.strip figcaption { font-family: var(--cap); font-size: 1.6rem; line-height: 1; letter-spacing: .04em; color: var(--paper); margin-top: .75rem; }
+.shelfnav { display: flex; gap: .8rem; margin-top: 1.1rem; }
+.shelfnav .btn[disabled] { opacity: .35; cursor: default; background: var(--paper); color: var(--ground); }
+html:not(.js) .shelfnav { display: none; }
+@media (min-width: 700px) {
+  .strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.6rem 1.6rem; margin: 2.2rem 0 0; padding: 0; overflow: visible; scroll-snap-type: none; }
+  .strip li { width: auto; }
+  .strip img { padding: 6px; }
+  .shelfnav { display: none; }
+}
+@media (min-width: 1100px) { .strip { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3rem 1.9rem; } }
 
 /* ---------- reviews ---------- */
 .revs { display: grid; gap: 1.6rem; }

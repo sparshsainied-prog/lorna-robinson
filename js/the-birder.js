@@ -2,7 +2,7 @@
    1. the hero (the signature): the blackbird cut from Lydia Hall's cover lifts off its branch and lands on the
       second moon at the end of the title,
    2. the walk: the same bird moves from one named place to the next as the reader goes down the list,
-   3. the linocuts: each print is pulled from the block as the shelf comes up,
+   3. the linocuts: each print is set down on the shelf as it comes up,
    4. the invitation: the bird again, small, settling on the end of "Read The Birder".
    Under reduced motion and without JavaScript everything is at rest: the cover whole (css hides the cut-out), the
    walk bird by the first name, the prints uncovered, the last bird on its heading. */
@@ -83,13 +83,52 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fn.measure(); fn(scrollY, innerHeight); });
   }
 
-  /* ---- 3. the linocuts: each print pulled from the block ----
-     site.shelve gives each print --set 0..1 as the shelf's foot comes up from the bottom edge (all set by the time it
-     is 72% of the way up), one after another left to right; css/the-birder.css turns --set into the paper uncovering
-     top to bottom off a two degree tilt. Still once set; the reader's own sideways scroll is untouched. A small
-     stagger, so the first two prints on a phone and the first four on a desktop come up nearly together. */
+  /* ---- 3. the linocuts: each print set down on the shelf ----
+     Every print gets --set 0..1 from its own place on the page (so a grid's lower rows are set down when they come
+     up, not when the first row does): 0 while its foot is below the bottom edge, 1 once the foot has risen 30% of
+     the viewport. Prints that sit side by side on one row follow one another left to right (a small stagger by
+     column). css/the-birder.css turns --set into a lift and a slight tilt; nothing is hidden at any point. Measured
+     from the li, which never moves (only its img does), so the frame at any scroll position is the same both ways.
+     Reduced motion: --set removed (1). The reader's own sideways scroll on a phone is untouched.
+     Then the phone shelf's Previous and Next: one print along each press (native scrolling), greyed at either end. */
   const strip = document.querySelector('#prints .strip');
-  if (strip) S.shelve(strip, strip.querySelectorAll(':scope > li'), .04);
+  if (strip) {
+    const items = [...strip.children];
+    let cols = items.map(() => 0);
+    const set = (y, vh) => {
+      if (S.still) { items.forEach(li => li.style.removeProperty('--set')); return; }
+      items.forEach((li, i) => {
+        const r = li.getBoundingClientRect();
+        const base = (vh - r.bottom) / (vh * .3);
+        li.style.setProperty('--set', clamp(base * 1.25 - cols[i] * .08).toFixed(4));
+      });
+    };
+    set.measure = () => {
+      // column within its visual row: 0 for the first print on a row, 1 for the next... (a shelf is one long row)
+      let top = null, c = 0;
+      cols = items.map(li => { const t = li.offsetTop; if (t !== top) { top = t; c = 0; } else c++; return Math.min(c, 3); });
+    };
+    set.measure();
+    S.onFrame(set);
+
+    const prev = document.querySelector('#prints .prev'), next = document.querySelector('#prints .next');
+    if (prev && next) {
+      const step = () => (items[1] ? items[1].offsetLeft - items[0].offsetLeft : strip.clientWidth);
+      const go = d => strip.scrollBy({ left: d * step(), behavior: S.still ? 'auto' : 'smooth' });
+      prev.addEventListener('click', () => go(-1));
+      next.addEventListener('click', () => go(1));
+      let queued = false;
+      const ends = () => {
+        queued = false;
+        const max = strip.scrollWidth - strip.clientWidth;
+        prev.disabled = strip.scrollLeft <= 2;
+        next.disabled = strip.scrollLeft >= max - 2;
+      };
+      strip.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(ends); } }, { passive: true });
+      addEventListener('resize', ends);
+      ends();
+    }
+  }
 
   /* ---- 4. the invitation: the same blackbird settles on the end of "Read The Birder" ----
      A quiet echo of the hero. It comes 28px in from beyond the end of the heading, beak first (the cut-out faces
