@@ -60,8 +60,9 @@ html.js .hop { display: block; }
 @media (min-width: 900px) { .places { padding-left: 7rem; } .hop { width: 4.6rem; } .places li { padding: 1.3rem 0 1.1rem; } }
 
 /* ---------- the linocuts: all twelve full pages ----------
-   Lorna's own full-page files, uncropped at their true 2480 x 3508 proportion, untouched in colour: the cream and
-   black print as they are. Each sits on a thin margin of its own paper (--print, the cream sampled from the scans)
+   Lorna's scans of the printed linocuts (her 'print' files: black ink on white paper, no colour), uncropped at
+   2480 x 3508 (Sparrowhawk, Nightingale and Swan padded to that with their own paper). Each sits on a thin margin
+   of that paper (--print, the off-white sampled from the scans' corners)
    with a shadow, so a print whose edge is black still reads as a sheet on the dark ground.
    Phones: a shelf the reader slides along (snaps print to print; Previous and Next below it, js/the-birder.js), which
    bleeds to the right edge of the screen past the Contents tab. The gap is a little wider than the gutter, so once a
@@ -69,7 +70,7 @@ html.js .hop { display: block; }
    The set-down (js/the-birder.js writes --set 0..1 on each li): the print is held a little above the shelf on a
    slight tilt and set down flat as it comes up. Only the print moves; its name stays still. Reduced motion and no
    JS: --set is 1, nothing moved, nothing hidden. */
-#prints { --print: #fffcc0; }
+#prints { --print: #fdfaf2; }
 .sale { margin-top: .4rem; }
 .sale strong { font-weight: 500; color: var(--name); }
 .strip { list-style: none; margin: 1.8rem calc(-1 * (var(--gutter) + 26px)) 0 calc(-1 * var(--gutter)); padding: 1.4rem calc(var(--gutter) + 38px) 1rem var(--gutter); display: flex; gap: calc(var(--gutter) + 4px); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-left: var(--gutter); scrollbar-width: thin; scrollbar-color: var(--soft) transparent; }
