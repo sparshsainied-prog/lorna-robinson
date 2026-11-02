@@ -27,7 +27,7 @@
 .pl[data-k=w5] { left: .4%; top: 53.167%; width: 21.267%; height: 8.167%; }
 .pl[data-k=w6] { left: .4%; top: 1.375%; width: 21.267%; height: 55.583%; }
 .pit { position: absolute; inset: 0; background: var(--ground); will-change: opacity; }
-.years { position: absolute; width: calc(var(--bw) * .78); height: calc(var(--bw) * .78); left: calc(21.6% - var(--bw) * .39); top: calc(56.92% - var(--bw) * .39); overflow: visible; opacity: 1; will-change: opacity; -webkit-mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; }
+.years { position: absolute; width: calc(var(--bw) * .78); height: calc(var(--bw) * .78); left: calc(21.6% - var(--bw) * .39); top: calc(56.92% - var(--bw) * .39); overflow: visible; opacity: 1; will-change: opacity; -webkit-mask: var(--speckle) 0 0 / 240px 240px repeat; mask: var(--speckle) 0 0 / 240px 240px repeat; }
 .years g { transform-box: fill-box; transform-origin: 50% 50%; will-change: transform; }
 .years circle { fill: none; stroke: var(--name); stroke-width: 3; vector-effect: non-scaling-stroke; }
 .years .under { stroke: var(--ground); stroke-width: 6; } /* a dark edge under the counted ring, so it reads on the orange print */
@@ -94,19 +94,19 @@ html:not(.js) .tp, html:not(.js) .otitle, html.still .tp, html.still .otitle { t
    from her untouched drawing by build/make-home-planes.py), multiplied onto her lilac, so it reads as the black print
    on the section, not a copy of the hero frame. Its right side frays out through the speckle before the words. */
 #oread .edge { left: 0; }
-#oread .edge img { width: 110%; left: -10%; top: -6%; mix-blend-mode: multiply; -webkit-mask: linear-gradient(to right, #000 52%, transparent 90%), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(to right, #000 52%, transparent 90%), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect; }
+#oread .edge img { width: 110%; left: -10%; top: -6%; mix-blend-mode: multiply; -webkit-mask: linear-gradient(to right, #000 52%, transparent 90%), var(--speckle) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(to right, #000 52%, transparent 90%), var(--speckle) 0 0 / 240px 240px repeat; mask-composite: intersect; }
 /* Hamadryad: the big tree frays out through the print's speckle where the section ends, never on a cut line */
-#hamadryad .edge { right: 0; -webkit-mask: linear-gradient(#000 80%, transparent), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(#000 80%, transparent), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect; }
+#hamadryad .edge { right: 0; -webkit-mask: linear-gradient(#000 80%, transparent), var(--speckle) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(#000 80%, transparent), var(--speckle) 0 0 / 240px 240px repeat; mask-composite: intersect; }
 #hamadryad .edge img { right: -58%; top: -2%; }
 .novel .in.two { position: relative; }
 @media (max-width: 859px) {
   .novel .edge { position: relative; width: auto; height: 46vw; margin: 0 calc(-1 * var(--gutter)) 1.2rem; }
   .novel .edge img { width: 92vw; }
   #hamadryad .edge img { right: -34vw; top: -4vw; }
-  #hamadryad .edge { -webkit-mask: linear-gradient(transparent, #000 20%), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(transparent, #000 20%), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect; }
+  #hamadryad .edge { -webkit-mask: linear-gradient(transparent, #000 20%), var(--speckle) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in; mask: linear-gradient(transparent, #000 20%), var(--speckle) 0 0 / 240px 240px repeat; mask-composite: intersect; }
   /* phones: the ribs bleed off the section's left and top edges as a print does, no box; the text starts below them */
   #oread .edge { position: absolute; top: -6vw; left: 0; height: 60vw; width: 70vw; margin: 0; }
-  #oread .edge img { width: 77vw; left: -5vw; top: -40vw; -webkit-mask: linear-gradient(to right, #000 50%, transparent 94%), linear-gradient(#000 36%, transparent 51%), url(../img/speckle.png) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in, source-in; mask: linear-gradient(to right, #000 50%, transparent 94%), linear-gradient(#000 36%, transparent 51%), url(../img/speckle.png) 0 0 / 240px 240px repeat; mask-composite: intersect, intersect; }
+  #oread .edge img { width: 77vw; left: -5vw; top: -40vw; -webkit-mask: linear-gradient(to right, #000 50%, transparent 94%), linear-gradient(#000 36%, transparent 51%), var(--speckle) 0 0 / 240px 240px repeat; -webkit-mask-composite: source-in, source-in; mask: linear-gradient(to right, #000 50%, transparent 94%), linear-gradient(#000 36%, transparent 51%), var(--speckle) 0 0 / 240px 240px repeat; mask-composite: intersect, intersect; }
   #oread .in.two { padding-top: 46vw; }
   .novel .in.two > .hold { display: none; }
 }

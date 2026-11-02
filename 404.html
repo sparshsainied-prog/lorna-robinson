@@ -19,7 +19,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css">
 <link rel="stylesheet" href="/css/drawings.css">
-<link rel="preload" href="/img/speckle.png" as="image" crossorigin>
 <style>.lost { min-height: calc(100svh - 12rem); } .lost .cover { width: min(220px, 48vw); } .lost h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1.4rem; }
 /* the drawing under the buttons (js/404.js) */
 .lost .draw[data-draw="tunnel-nowhere"] { --draw-max: 290px; --draw-max-lg: 320px; margin-top: 2.6rem; }
@@ -82,8 +81,8 @@
       <figure class="draw" data-draw="tunnel-nowhere">
         <svg viewBox="0 0 290 236" width="290" height="236" aria-hidden="true" focusable="false">
           <defs>
-            <pattern id="tunnel-nowhere-grain-a" patternUnits="userSpaceOnUse" width="240" height="240"><image href="/img/speckle.png" crossorigin="anonymous" width="240" height="240"/></pattern>
-            <pattern id="tunnel-nowhere-grain-b" patternUnits="userSpaceOnUse" x="71" y="113" width="240" height="240"><image href="/img/speckle.png" crossorigin="anonymous" width="240" height="240"/></pattern>
+            <pattern id="tunnel-nowhere-grain-a" patternUnits="userSpaceOnUse" width="240" height="240"><image href="/img/speckle.png" width="240" height="240"/></pattern>
+            <pattern id="tunnel-nowhere-grain-b" patternUnits="userSpaceOnUse" x="71" y="113" width="240" height="240"><image href="/img/speckle.png" width="240" height="240"/></pattern>
             <mask id="tunnel-nowhere-ink-a" maskUnits="userSpaceOnUse" x="-40" y="-40" width="420" height="320" style="mask-type:alpha"><rect x="-40" y="-40" width="420" height="320" fill="url(#tunnel-nowhere-grain-a)"/></mask>
             <mask id="tunnel-nowhere-ink-b" maskUnits="userSpaceOnUse" x="-40" y="-40" width="420" height="320" style="mask-type:alpha"><rect x="-40" y="-40" width="420" height="320" fill="url(#tunnel-nowhere-grain-b)"/></mask>
           </defs>

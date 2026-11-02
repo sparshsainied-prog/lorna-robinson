@@ -38,7 +38,7 @@
 .draw .piece { transform-box: fill-box; transform-origin: 50% 100%; }
 
 /* ---------- the print speckle, for HTML elements or a whole svg ---------- */
-.draw .speck { -webkit-mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; mask: url(../img/speckle.png) 0 0 / 240px 240px repeat; }
+.draw .speck { -webkit-mask: var(--speckle) 0 0 / 240px 240px repeat; mask: var(--speckle) 0 0 / 240px 240px repeat; }
 
 /* ---------- finished drawing: reduced motion and no JavaScript ----------
    Start states are only ever written by js/drawings.js, so without JS nothing is hidden. These rules also cover
