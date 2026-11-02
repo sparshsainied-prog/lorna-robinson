@@ -1,0 +1,106 @@
+/* books/: the five books and the Latin, Greek and Ovid books. Colours from the covers (artwork by Lydia Hall):
+   --sky (The Birder, as on its own page), --plaster and --minoan (Flower Gatherers, as on its own page),
+   --leaf (Telling Tales in Nature, as on its own page). */
+:root { --sky: #7a9fb5; --plaster: #e4d4c0; --minoan: #3c78a7; --leaf: #99af5b; }
+
+/* ---------- the run: five books, spine out, turning to show their covers (js/books.js) ---------- */
+.run-sec h1 { font-size: clamp(3rem, 12vw, 6.4rem); margin: 0 0 1rem; }
+.run-sec .lead { margin-bottom: 0; }
+.run { --g: clamp(.5rem, 2.6vw, 2.5rem); list-style: none; padding: 0; margin: clamp(2.2rem, 9vh, 4.5rem) 0 0; display: flex; align-items: flex-end; gap: var(--g); position: relative; }
+/* no will-change on a book: Chrome flattens a preserve-3d element that carries it, and the spine would vanish */
+.run-sec { overflow-x: clip; }
+.run .bk.fx { will-change: auto; }
+.bk { flex: var(--r) 1 0; min-width: 0; margin: 0; transform-origin: 0 50%; transform-style: preserve-3d; }
+/* phones: three over two, so each cover is big enough to know */
+@media (max-width: 599px) {
+  .run { flex-wrap: wrap; justify-content: center; row-gap: 1.1rem; --g: .6rem; }
+  .bk { flex: 0 0 calc((100% - 2 * var(--g)) / 3); }
+}
+.bk a { display: block; position: relative; transform-style: preserve-3d; text-decoration: none; }
+.bk img { width: 100%; height: auto; box-shadow: 0 10px 22px rgba(0, 0, 0, .5); }
+.bk a:hover img { box-shadow: 0 12px 26px rgba(0, 0, 0, .6), 0 0 0 2px var(--name); }
+
+/* the spine: the book's left side, turned back into the page; seen face on while the book stands spine out.
+   Only drawn while the run can move (never without JavaScript or under reduced motion). */
+.spn { display: none; position: absolute; top: 0; right: 100%; width: 26%; height: 100%; transform-origin: 100% 50%; transform: rotateY(-90deg); backface-visibility: hidden; flex-direction: column; align-items: center; justify-content: space-between; padding: .7em 0 .6em; box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25), inset 1px 0 0 rgba(255, 255, 255, .12); overflow: hidden; }
+html.js:not(.still) .spn { display: flex; }
+.spn b, .spn i { writing-mode: vertical-rl; white-space: nowrap; font-style: normal; }
+/* clean print on the spines: the speckle, turned on its side and enlarged with the run, would break the letters */
+.spn .cap { -webkit-mask: none; mask: none; }
+.spn b { font-weight: 400; font-size: 1em; letter-spacing: .06em; line-height: 1; }
+.spn i { font-family: var(--cap); font-size: .46em; letter-spacing: .12em; opacity: .85; }
+[data-s="oread"] .spn { background: var(--lilac); color: var(--ground); }
+[data-s="oread"] .spn i { color: var(--ground); }
+[data-s="hamadryad"] .spn { background: #1f1714; color: var(--ring); box-shadow: inset 0 0 0 1px #3a2a22; }
+[data-s="hamadryad"] .spn i { color: var(--name); }
+[data-s="the-birder"] .spn { background: var(--sky); color: #f2d27a; }
+[data-s="the-birder"] .spn i { color: var(--ground); }
+[data-s="flower-gatherers"] .spn { background: var(--plaster); color: var(--minoan); }
+[data-s="flower-gatherers"] .spn i { color: #5e5750; }
+[data-s="telling-tales-in-nature"] .spn { background: #5f7a35; color: var(--paper); }
+[data-s="telling-tales-in-nature"] .spn i { color: var(--paper); }
+
+/* ---------- the five books, each on a ground from its own cover ---------- */
+.book .cover { width: var(--cw); max-width: 100%; }
+.book .art { display: block; width: max-content; max-width: 100%; }
+.book .txt > :last-child { margin-bottom: 0; }
+.book .lead { margin-bottom: 1rem; }
+.book h2 { margin-bottom: 1rem; }
+
+.b-oread { --cw: min(62vw, 360px); }
+.b-hamadryad { --cw: min(52vw, 300px); }
+.b-birder { --cw: min(50vw, 280px); background: var(--sky); color: var(--ground); }
+.b-fg { --cw: min(54vw, 300px); background: var(--plaster); color: var(--ground); }
+.b-ttn { --cw: min(56vw, 320px); }
+
+.b-birder h2 { color: var(--ground); }
+.b-birder .formats { color: #24323b; }
+.b-birder .btn { background: var(--ground); color: var(--cloud, #dfe4e8); }
+.b-birder .btn:hover { background: #f2d27a; color: var(--ground); }
+.b-birder .link { text-decoration-color: var(--ground); }
+.b-birder :focus-visible { outline-color: var(--ground); }
+
+.b-fg h2 { color: var(--minoan); }
+.b-fg .formats { color: #5e5750; }
+/* the button a shade deeper than the Minoan blue so the paper lettering clears 4.5:1 (5.2) */
+.b-fg .btn { background: #316893; color: var(--paper); }
+.b-fg .btn:hover { background: var(--ground); color: var(--paper); }
+.b-fg .link { text-decoration-color: var(--minoan); }
+.b-fg :focus-visible { outline-color: var(--minoan); }
+
+.b-ttn h2 { color: var(--leaf); }
+.b-ttn .btn { background: var(--leaf); }
+.b-ttn .link { text-decoration-color: var(--leaf); }
+
+/* phones: cover above the words, each book standing on its own side */
+@media (max-width: 859px) {
+  .book .art { margin-bottom: 1.8rem; }
+  .b-hamadryad .art, .b-fg .art { margin-left: auto; }
+}
+/* from 860px: cover and words side by side, the side and the line-up changing from book to book */
+@media (min-width: 860px) {
+  .book .in { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4.5rem; }
+  .b-oread .in { align-items: end; }
+  .b-hamadryad .in, .b-fg .in { grid-template-columns: minmax(0, 1fr) max-content; }
+  .b-hamadryad .art, .b-fg .art { order: 2; }
+  .b-hamadryad .in { align-items: start; }
+  .b-birder .in { align-items: center; gap: 3.5rem; }
+  .b-fg .in { align-items: end; }
+  .b-ttn .in { align-items: center; }
+  .b-hamadryad .txt { padding-top: 2rem; }
+}
+
+/* ---------- Latin, Greek and Ovid: quieter, a hairline list ---------- */
+.classics { border-top: 1px solid var(--rule); }
+.classics h2 { color: var(--paper); font-size: clamp(2.4rem, 8vw, 4.4rem); }
+.shelf-list { list-style: none; padding: 0; margin: 1.4rem 0 0; max-width: 46rem; }
+.shelf-list li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 1.1rem; align-items: center; padding: .9rem 0; border-top: 1px solid var(--rule); }
+.shelf-list li:last-child { border-bottom: 1px solid var(--rule); }
+.shelf-list img { width: 64px; height: auto; box-shadow: 0 6px 12px rgba(0, 0, 0, .5); }
+.shelf-list b { display: block; font-family: var(--cap); font-weight: 400; font-size: 1.6rem; letter-spacing: .04em; line-height: 1; color: var(--name); margin-bottom: .25rem; }
+.shelf-list .pub { color: var(--soft); font-size: 1.05rem; }
+.shelf-list .pub i { color: var(--paper); font-style: normal; }
+.shelf-list .pub a { text-decoration-color: var(--rule); text-underline-offset: 4px; }
+.shelf-list .pub a:hover { color: var(--paper); text-decoration-color: var(--name); }
+.classics .more { margin: 1.8rem 0 0; }
+@media (min-width: 860px) { .shelf-list li { grid-template-columns: 80px minmax(0, 1fr); gap: 1.6rem; } .shelf-list img { width: 80px; } }

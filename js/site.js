@@ -180,9 +180,57 @@
     if (there.hash || there.pathname.replace(/index\.html$/, '') !== here) return;
     a.setAttribute('aria-current', 'page');
   });
-  // the three book pages without a link of their own: the Books link is marked (also hard-coded in their nav for no-JS)
-  if (/\/(the-birder|flower-gatherers|telling-tales-in-nature)\/$/.test(here)) {
-    document.querySelectorAll('.spine a[href$="#books"], .sheet a[href$="#books"]').forEach(a => { a.classList.add('on'); a.setAttribute('aria-current', 'true'); });
+  // On all five book pages the Books link is marked as the current section (also hard-coded in their nav for no-JS;
+  // their own link in the Books list is marked "page" by the loop above). Each book is listed once, under Books.
+  if (/\/(oread|hamadryad|the-birder|flower-gatherers|telling-tales-in-nature)\/$/.test(here)) {
+    document.querySelectorAll('.spine .bks > a, .sheet .bks > a').forEach(a => { a.classList.add('on'); a.setAttribute('aria-current', 'true'); });
+  }
+
+  /* ---- Books in the rail: the list of the five runs out from the rail ----
+     Opens on mouse hover over Books (closes when the mouse leaves, unless it was opened with the button), on the
+     button (click, tap, Enter, Space: toggles), and stays while focus is inside. Escape closes and returns focus to
+     the button; an outside click or focus leaving the item closes it. Open and shut at once: no transition. */
+  const bks = document.querySelector('.spine .bks'), more = bks && bks.querySelector('.more');
+  if (bks && more) {
+    let how = '';
+    const setBooks = (o, why = '') => {
+      how = o ? why : '';
+      bks.toggleAttribute('data-open', o);
+      more.setAttribute('aria-expanded', String(o));
+      if (o) hang();
+    };
+    // the titles hang from the top of "Books" (css: --bt), lifted only as far as the longest needs to fit the screen
+    const fly = bks.querySelector('.fly'), head = bks.querySelector(':scope > a');
+    const hang = () => {
+      const long = Math.max(...[...fly.querySelectorAll('a')].map(a => a.getBoundingClientRect().height));
+      fly.style.setProperty('--bt', Math.max(16, Math.min(head.getBoundingClientRect().top, innerHeight - long - 24)).toFixed(1) + 'px');
+    };
+    addEventListener('resize', () => { if (bks.hasAttribute('data-open')) hang(); });
+    const isOpen = () => bks.hasAttribute('data-open');
+    // a mouse rarely travels in a straight line from "Books" to a title, so leaving waits a moment before closing,
+    // and coming back (to Books or the titles) in that time keeps the list open
+    let shut = 0;
+    const stay = () => { clearTimeout(shut); shut = 0; };
+    bks.addEventListener('pointerenter', e => { if (e.pointerType !== 'mouse') return; stay(); if (!isOpen()) setBooks(true, 'hover'); });
+    bks.addEventListener('pointerleave', e => {
+      if (e.pointerType !== 'mouse' || how !== 'hover') return;
+      stay();
+      shut = setTimeout(() => { if (how === 'hover' && !bks.matches(':hover') && !bks.contains(document.activeElement)) setBooks(false); }, 450);
+    });
+    more.addEventListener('click', () => {
+      stay();
+      if (isOpen() && how === 'hover') { how = 'click'; return; } // a click on a list the mouse already opened keeps it
+      setBooks(!isOpen(), 'click');
+    });
+    bks.addEventListener('focusout', e => { if (isOpen() && e.relatedTarget && !bks.contains(e.relatedTarget) && !bks.matches(':hover')) setBooks(false); });
+    document.addEventListener('pointerdown', e => { if (isOpen() && !bks.contains(e.target)) setBooks(false); });
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape' || !isOpen()) return;
+      const inside = bks.contains(document.activeElement);
+      setBooks(false);
+      if (inside) more.focus();
+    });
+    matchMedia('(min-width: 900px)').addEventListener('change', e => { if (!e.matches) setBooks(false); });
   }
 
   /* ---- the contents sheet on phones ---- */

@@ -32,9 +32,18 @@
 <nav class="spine" aria-label="Pages">
   <ol>
     <li><a href="/">Home</a></li>
-    <li><a href="/oread/">Oread</a></li>
-    <li><a href="/hamadryad/">Hamadryad</a></li>
-    <li><a href="/#books">Books</a></li>
+    <li class="bks">
+      <a href="/books/">Books</a>
+      <button class="more" type="button" aria-expanded="false" aria-controls="books-list" aria-label="The five books"><svg viewBox="0 0 20 18" width="20" height="18" aria-hidden="true" focusable="false"><path d="M2 18V3M6 18V0M10 18V4M14 18V1M18.5 18l-3-15" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></button>
+      <ol class="fly" id="books-list" aria-label="The books">
+        <li><a href="/oread/">Oread</a></li>
+        <li><a href="/hamadryad/">Hamadryad</a></li>
+        <li><a href="/the-birder/">The Birder</a></li>
+        <li><a href="/flower-gatherers/">Flower Gatherers</a></li>
+        <li><a href="/telling-tales-in-nature/">Telling Tales in Nature</a></li>
+        <li class="all"><a href="/books/">All books</a></li>
+      </ol>
+    </li>
     <li><a href="/events/">Events</a></li>
     <li><a href="/about/">About</a></li>
     <li><a href="/write-with-us/">Write with us</a></li>
@@ -45,9 +54,15 @@
   <button class="x" aria-label="Close the contents">Close</button>
   <ol>
     <li><a href="/">Home</a></li>
-    <li><a href="/oread/">Oread <span>the new novel</span></a></li>
-    <li><a href="/hamadryad/">Hamadryad <span>where it began</span></a></li>
-    <li><a href="/#books">Books <span>all five</span></a></li>
+    <li class="bks"><a href="/books/">Books <span>all five</span></a>
+      <ol class="sub" aria-label="The books">
+        <li><a href="/oread/">Oread</a></li>
+        <li><a href="/hamadryad/">Hamadryad</a></li>
+        <li><a href="/the-birder/">The Birder</a></li>
+        <li><a href="/flower-gatherers/">Flower Gatherers</a></li>
+        <li><a href="/telling-tales-in-nature/">Telling Tales in Nature</a></li>
+      </ol>
+    </li>
     <li><a href="/events/">Events <span>Oxford</span></a></li>
     <li><a href="/about/">About <span>Lorna</span></a></li>
     <li><a href="/write-with-us/">Write with us <span>monthly café</span></a></li>
@@ -62,7 +77,7 @@
       <h1 class="cap">This tunnel goes nowhere</h1>
       <p class="lead">There is no page at this address. Perhaps it moved when the site did, or the link lost a letter on the way.</p>
       <p>Back above ground, you can find the books, the next events and the café.</p>
-      <div class="btns"><a class="btn" href="/">Home</a><a class="link" href="/#books">The books</a><a class="link" href="/events/">Events</a></div>
+      <div class="btns"><a class="btn" href="/">Home</a><a class="link" href="/books/">The books</a><a class="link" href="/events/">Events</a></div>
       <!-- DRAWING: the tunnel that goes nowhere. Delete from here to "end of the drawing" to remove it (and js/404.js from the loader below). -->
       <figure class="draw" data-draw="tunnel-nowhere">
         <svg viewBox="0 0 290 236" width="290" height="236" aria-hidden="true" focusable="false">

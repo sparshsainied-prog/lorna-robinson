@@ -1,0 +1,203 @@
+<!doctype html>
+<!--
+  LORNA: THE BOOKS PAGE
+
+  The page has three parts:
+  1. At the top, the five books standing spine out, which turn to show their covers as the page scrolls
+     (js/books.js). Each one is a link down to that book's part of the page.
+  2. One part for each of the five books, in the same order: cover, title, a few lines from the book's own page,
+     a Buy button and a link to the book's own page.
+  3. The Latin, Greek and Ovid books, with their publishers.
+  To change a buy link, find the book's part below and change the address after href=. To add a book, ask Sparsh.
+-->
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><!-- remove at go-live -->
+<title>Books | Lorna Robinson</title>
+<meta name="description" content="Lorna Robinson's books: Oread, Hamadryad, The Birder, Flower Gatherers and Telling Tales in Nature, and her books on Latin, Greek and Ovid.">
+<link rel="canonical" href="https://lornarobinson.uk/books/">
+<meta property="og:title" content="Books | Lorna Robinson">
+<meta property="og:description" content="Oread, Hamadryad, The Birder, Flower Gatherers and Telling Tales in Nature, and the books on Latin, Greek and Ovid.">
+<meta property="og:image" content="https://lornarobinson.uk/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lornarobinson.uk/books/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23100d0c'/><g fill='none' stroke='%23e8702e' stroke-width='2.2'><circle cx='13' cy='19' r='4'/><circle cx='13' cy='19' r='9'/></g></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/site.css">
+<link rel="stylesheet" href="../css/drawings.css">
+<link rel="preload" href="../img/speckle.png" as="image" crossorigin>
+<link rel="stylesheet" href="../css/books.css">
+<script>(function(d){d.className+=' js'+(matchMedia('(prefers-reduced-motion: reduce)').matches?' still':'')})(document.documentElement)</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+
+<nav class="spine" aria-label="Pages">
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li class="bks">
+      <a href="./" aria-current="page">Books</a>
+      <button class="more" type="button" aria-expanded="false" aria-controls="books-list" aria-label="The five books"><svg viewBox="0 0 20 18" width="20" height="18" aria-hidden="true" focusable="false"><path d="M2 18V3M6 18V0M10 18V4M14 18V1M18.5 18l-3-15" fill="none" stroke="currentColor" stroke-width="2.4"/></svg></button>
+      <ol class="fly" id="books-list" aria-label="The books">
+        <li><a href="../oread/">Oread</a></li>
+        <li><a href="../hamadryad/">Hamadryad</a></li>
+        <li><a href="../the-birder/">The Birder</a></li>
+        <li><a href="../flower-gatherers/">Flower Gatherers</a></li>
+        <li><a href="../telling-tales-in-nature/">Telling Tales in Nature</a></li>
+        <li class="all"><a href="./" aria-current="page">All books</a></li>
+      </ol>
+    </li>
+    <li><a href="../events/">Events</a></li>
+    <li><a href="../about/">About</a></li>
+    <li><a href="../write-with-us/">Write with us</a></li>
+  </ol>
+</nav>
+<button class="tab" aria-controls="sheet" aria-expanded="false">Contents</button>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Contents">
+  <button class="x" aria-label="Close the contents">Close</button>
+  <ol>
+    <li><a href="../">Home</a></li>
+    <li class="bks"><a href="./" aria-current="page">Books <span>all five</span></a>
+      <ol class="sub" aria-label="The books">
+        <li><a href="../oread/">Oread</a></li>
+        <li><a href="../hamadryad/">Hamadryad</a></li>
+        <li><a href="../the-birder/">The Birder</a></li>
+        <li><a href="../flower-gatherers/">Flower Gatherers</a></li>
+        <li><a href="../telling-tales-in-nature/">Telling Tales in Nature</a></li>
+      </ol>
+    </li>
+    <li><a href="../events/">Events <span>Oxford</span></a></li>
+    <li><a href="../about/">About <span>Lorna</span></a></li>
+    <li><a href="../write-with-us/">Write with us <span>monthly café</span></a></li>
+  </ol>
+</div>
+
+<main id="main">
+
+<!-- The run: the five books stand together spine out, and turn one after another to show their covers as the page
+     scrolls (js/books.js). The spines are drawn in type, each in a colour from its own cover; they are decoration
+     (aria-hidden). Without JavaScript or under reduced motion the five covers simply stand in a row. -->
+<section class="sec run-sec" aria-labelledby="title">
+  <div class="in">
+    <h1 class="cap" id="title">Books</h1>
+    <p class="lead">My five books of stories, and further down, my books on Latin, Greek and Ovid.</p>
+    <ol class="run">
+      <li class="bk" style="--r:.625" data-s="oread"><a href="#oread"><img src="../img/covers/oread-440.jpg" alt="The cover of Oread: a lilac and black charcoal drawing of a curving Underground tunnel." width="440" height="704"><span class="spn" aria-hidden="true"><b class="cap">Oread</b><i>Lorna Robinson</i></span></a></li>
+      <li class="bk" style="--r:.625" data-s="hamadryad"><a href="#hamadryad"><img src="../img/covers/hamadryad-440.jpg" alt="The cover of Hamadryad: the cross-section of a tree grown from two hearts, its rings printed in orange on black." width="440" height="704"><span class="spn" aria-hidden="true"><b class="cap">Hamadryad</b><i>Lorna Robinson</i></span></a></li>
+      <li class="bk" style="--r:.652" data-s="the-birder"><a href="#the-birder"><img src="../img/covers/the-birder-440.jpg" alt="The cover of The Birder: a linocut blackbird." width="440" height="675"><span class="spn" aria-hidden="true"><b class="cap">The Birder</b><i>Lorna Robinson</i></span></a></li>
+      <li class="bk" style="--r:.648" data-s="flower-gatherers"><a href="#flower-gatherers"><img src="../img/covers/flower-gatherers-440.jpg" alt="The cover of Flower Gatherers: a Minoan fresco figure gathering flowers." width="440" height="679"><span class="spn" aria-hidden="true"><b class="cap">Flower Gatherers</b><i>Lorna Robinson</i></span></a></li>
+      <li class="bk" style="--r:.667" data-s="telling-tales-in-nature"><a href="#telling-tales-in-nature"><img src="../img/covers/telling-tales-in-nature-440.jpg" alt="The cover of Telling Tales in Nature: Compendium, painted by Lydia Hall." width="440" height="660"><span class="spn" aria-hidden="true"><b class="cap">Telling Tales in Nature</b><i>Lorna Robinson</i></span></a></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== THE FIVE BOOKS. Each part is one <section>; the words are taken from the book's own page. ===== -->
+
+<!-- Oread -->
+<section class="sec below book b-oread" id="oread">
+  <div class="in">
+    <a class="art" href="../oread/" tabindex="-1" aria-hidden="true"><img class="cover" src="../img/covers/oread.jpg" alt="" width="900" height="1440" loading="lazy"></a>
+    <div class="txt">
+      <h2 class="cap">Oread</h2>
+      <p class="lead">Oread is the sequel to Hamadryad, but can be read as a standalone novel.</p>
+      <p>Oread explores how people's worlds are shaped by the spaces they inhabit and the stories they are told, and what happens when these worlds collide.</p>
+      <p class="formats">Hardback, paperback and ebook.</p>
+      <div class="btns"><a class="btn" href="https://www.amazon.co.uk/dp/B0HKSFR4PJ">Buy Oread</a><a class="link" href="../oread/">More about Oread</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Hamadryad -->
+<section class="sec above book b-hamadryad" id="hamadryad">
+  <div class="in">
+    <a class="art" href="../hamadryad/" tabindex="-1" aria-hidden="true"><img class="cover" src="../img/covers/hamadryad.jpg" alt="" width="900" height="1440" loading="lazy"></a>
+    <div class="txt">
+      <h2 class="cap">Hamadryad</h2>
+      <p>Hamadryad imagines the lives of three very different people with their trees, and explores the way the world changes when we fundamentally alter our sense of self.</p>
+      <p class="formats">Illustrated by Lydia Hall. Hardback, paperback and ebook.</p>
+      <div class="btns"><a class="btn org" href="https://www.amazon.co.uk/dp/B0GPPCCH79">Buy Hamadryad</a><a class="link" href="../hamadryad/">More about Hamadryad</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- The Birder -->
+<section class="sec book b-birder" id="the-birder">
+  <div class="in">
+    <a class="art" href="../the-birder/" tabindex="-1" aria-hidden="true"><img class="cover" src="../img/covers/the-birder.jpg" alt="" width="900" height="1380" loading="lazy"></a>
+    <div class="txt">
+      <h2 class="cap">The Birder</h2>
+      <p class="lead">An Ovid-inspired novel set in an alternate Oxford where people transform instead of dying.</p>
+      <p>Illustrated with linocut prints of birds around the city of Oxford, The Birder creates a mysterious world that is filled with familiar sorrows and joys.</p>
+      <p class="formats">Cover and illustrations by Lydia Hall.</p>
+      <div class="btns"><a class="btn" href="https://www.amazon.co.uk/dp/B0DNC7V79X">Buy The Birder</a><a class="link" href="../the-birder/">More about The Birder</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Flower Gatherers -->
+<section class="sec book b-fg" id="flower-gatherers">
+  <div class="in">
+    <a class="art" href="../flower-gatherers/" tabindex="-1" aria-hidden="true"><img class="cover" src="../img/covers/flower-gatherers.jpg" alt="" width="900" height="1389" loading="lazy"></a>
+    <div class="txt">
+      <h2 class="cap">Flower Gatherers</h2>
+      <p class="lead">A Minoan-inspired novel exploring themes of motherhood, growing up, and what can really be known about the distant past.</p>
+      <p>Key chapters are set in the Ashmolean Museum's Aegean World Gallery.</p>
+      <p class="formats">Cover and illustrations by Lydia Hall.</p>
+      <div class="btns"><a class="btn" href="https://www.amazon.co.uk/dp/B0FJS96JD6">Buy Flower Gatherers</a><a class="link" href="../flower-gatherers/">More about Flower Gatherers</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- Telling Tales in Nature -->
+<section class="sec book b-ttn" id="telling-tales-in-nature">
+  <div class="in">
+    <a class="art" href="../telling-tales-in-nature/" tabindex="-1" aria-hidden="true"><img class="cover" src="../img/covers/telling-tales-in-nature.jpg" alt="" width="900" height="1349" loading="lazy"></a>
+    <div class="txt">
+      <h2 class="cap">Telling Tales in Nature</h2>
+      <p class="lead">A collection of myths retold from the perspective of the spirits of plants.</p>
+      <p>This compendium includes all four books in the Telling Tales in Nature series: Underworld Tales, Forest Tales, Orchard Tales, and Meadow Tales.</p>
+      <p class="formats">Written by Lorna Robinson with illustrations by artist Lydia Hall.</p>
+      <div class="btns"><a class="btn" href="https://www.amazon.co.uk/dp/B0CSNN1BTN">Buy the compendium</a><a class="link" href="../telling-tales-in-nature/">More about Telling Tales in Nature</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LATIN, GREEK AND OVID: the same books, credits and links as the About page. ===== -->
+<section class="sec dusk classics" id="classics">
+  <div class="in">
+    <h2 class="cap">Latin, Greek and Ovid</h2>
+    <ul class="shelf-list">
+      <li><a href="https://profilebooks.com/work/telling-tales-in-latin/" tabindex="-1" aria-hidden="true"><img src="../img/covers/telling-tales-in-latin-440.jpg" alt="" width="440" height="683" loading="lazy"></a>
+        <div><b>Telling Tales in Latin</b> <span class="pub">Illustrated by Soham De. <a href="https://profilebooks.com/work/telling-tales-in-latin/">Profile Books</a></span></div></li>
+      <li><a href="https://profilebooks.com/work/distant-lands/" tabindex="-1" aria-hidden="true"><img src="../img/covers/distant-lands-440.jpg" alt="" width="440" height="622" loading="lazy"></a>
+        <div><b>Distant Lands</b> <span class="pub"><a href="https://profilebooks.com/work/distant-lands/">Profile Books</a></span></div></li>
+      <li><a href="https://profilebooks.com/work/telling-tales-in-greek/" tabindex="-1" aria-hidden="true"><img src="../img/covers/telling-tales-in-greek-440.jpg" alt="" width="440" height="622" loading="lazy"></a>
+        <div><b>Telling Tales in Greek</b> <span class="pub">Illustrated by Soham De. <a href="https://profilebooks.com/work/telling-tales-in-greek/">Profile Books</a></span></div></li>
+      <li><a href="https://boydellandbrewer.com/book/gabriel-garcia-marquez-and-ovid-9781855662490/" tabindex="-1" aria-hidden="true"><img src="../img/covers/ggm-and-ovid.jpg" alt="" width="515" height="780" loading="lazy"></a>
+        <div><b>Gabriel García Márquez and Ovid</b> <span class="pub"><i>Magical and Monstrous Realities</i>. Tamesis Books. <a href="https://boydellandbrewer.com/book/gabriel-garcia-marquez-and-ovid-9781855662490/">Boydell &amp; Brewer</a></span></div></li>
+    </ul>
+    <p class="more"><a class="link" href="../about/">More about Lorna</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="in">
+    <p>© 2026 Lorna Robinson. Covers by Lydia Hall.</p>
+    <p><a href="mailto:lorna@irisproject.org.uk">lorna@irisproject.org.uk</a> <a href="https://www.instagram.com/irisprojectlorna/">Instagram</a></p>
+  </div>
+</footer>
+
+<script src="../js/site.js"></script>
+<script src="../js/drawings.js"></script>
+<script src="../js/books.js"></script>
+</body>
+</html>
