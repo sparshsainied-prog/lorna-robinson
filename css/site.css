@@ -45,10 +45,11 @@ p { margin: 0 0 1rem; max-width: var(--measure); text-wrap: pretty; }
 
 /* ---------- nav: the cover's vertical title, as a spine on the right edge ---------- */
 .spine { position: fixed; z-index: 40; top: 0; right: 0; height: 100%; width: 56px; background: var(--ground); border-left: 2px solid var(--ground-2); display: none; }
-.spine ol { list-style: none; margin: 0; padding: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; align-items: center; }
+.spine ol { --rail-gap: 1.5rem; list-style: none; margin: 0; padding: 0; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: var(--rail-gap); align-items: center; }
+.spine ol > li { display: flex; flex-direction: column; align-items: center; } /* every item sized by its word alone, no line box below it */
 .spine a { writing-mode: vertical-rl; text-decoration: none; font-family: var(--cap); font-size: 1.3rem; letter-spacing: .12em; color: var(--paper); opacity: .78; padding: .1rem 0; }
 .spine a:hover, .spine a[aria-current], .spine a.on { opacity: 1; color: var(--name); }
-.spine a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.spine a[aria-current], .spine a.on { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
 .tab { position: fixed; z-index: 41; right: 0; top: 46%; width: 38px; padding: .9rem 0; border: 0; background: var(--paper); color: var(--ground); font-family: var(--cap); font-size: 1.15rem; letter-spacing: .14em; writing-mode: vertical-rl; cursor: pointer; border-radius: 0; clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%, 4% 50%); box-shadow: -1px 0 0 var(--rule); }
 .sheet { position: fixed; inset: 0; z-index: 50; background: var(--ground); color: var(--paper); display: none; padding: 4.2rem var(--gutter) 2rem; overflow: auto; }
 .sheet.open { display: block; }
@@ -66,7 +67,7 @@ body.sheet-open { overflow: hidden; }
   .tab, .sheet { display: none; }
   body { padding-right: var(--spine); }
 }
-@media (min-width: 900px) and (max-height: 780px) { .spine ol { gap: 1rem; } .spine a { font-size: 1.15rem; } }
+@media (min-width: 900px) and (max-height: 780px) { .spine ol { --rail-gap: 1rem; } .spine a { font-size: 1.15rem; } }
 
 /* Books in the rail: the link goes to books/; the small shelf mark under it (a real button) runs the five titles out
    from the rail, each standing on its spine like the rail's own words, on the rail's ground: the rail simply grows
@@ -75,9 +76,12 @@ body.sheet-open { overflow: hidden; }
    Without JavaScript the button is hidden and the titles show on hover and while focus is inside (Tab from Books). */
 /* the item takes the rail's full width and the list sits over the rail's own left border, so the mouse never
    crosses a gap between "Books" and the titles (the border is redrawn on the list's right edge, so nothing shifts) */
-.spine .bks { display: flex; flex-direction: column; align-items: center; gap: .35rem; align-self: stretch; }
-.spine .more { display: grid; place-items: center; width: 44px; height: 34px; padding: 0; border: 0; background: none; color: var(--paper); opacity: .78; cursor: pointer; }
-.spine .more:hover, .spine .more[aria-expanded="true"] { opacity: 1; color: var(--name); }
+.spine .bks { display: flex; flex-direction: column; align-items: center; gap: 0; align-self: stretch; }
+/* the rail is words only, in one even rhythm: hovering Books opens the list, and a click or tap goes to the Books page.
+   The list's button sits in the gap under Books (it takes no room of its own) and only shows when the keyboard reaches it. */
+.spine .more { display: grid; place-items: center; width: 44px; height: var(--rail-gap); margin-bottom: calc(-1 * var(--rail-gap)); padding: 0; border: 0; background: none; color: var(--paper); opacity: 0; cursor: pointer; }
+.spine .more:focus-visible { opacity: 1; color: var(--name); }
+.spine .more svg { width: 18px; height: 16px; }
 .spine .fly { display: none; position: absolute; top: 0; right: calc(100% - 2px); height: 100%; width: auto; margin: 0; padding: 0 1rem 0 1.3rem; border-right: 2px solid var(--ground-2); gap: 1.1rem; flex-direction: row-reverse; align-items: center; justify-content: flex-start; background: var(--ground); border-left: 2px solid var(--ground-2); }
 .spine .bks[data-open] .fly, html:not(.js) .spine .bks:hover .fly, html:not(.js) .spine .bks:focus-within .fly { display: flex; }
 html:not(.js) .spine .more { display: none; }
@@ -92,13 +96,13 @@ html:not(.js) .spine .more { display: none; }
 .spine .bks[data-open] .fly li { padding-top: var(--bt, 0px); }
 .spine .bks[data-open] .fly .all { justify-content: flex-start; }
 .spine .fly .all a:hover, .spine .fly .all a[aria-current] { color: var(--name); }
-@media (min-width: 900px) and (max-height: 780px) { .spine .bks { gap: .15rem; } .spine .more { height: 28px; } .spine .fly a { font-size: 1.3rem; } }
+@media (min-width: 900px) and (max-height: 780px) { .spine .fly a { font-size: 1.3rem; } }
 /* short screens (a 1024x600 netbook, a landscape tablet with browser bars): the rail and its Books mark still fit */
-@media (min-width: 900px) and (max-height: 660px) { .spine ol { gap: .7rem; } .spine a { font-size: 1rem; } .spine .more { height: 24px; } .spine .fly a { font-size: 1.15rem; } }
+@media (min-width: 900px) and (max-height: 660px) { .spine ol { --rail-gap: .7rem; } .spine a { font-size: 1rem; } .spine .more svg { width: 12px; height: 11px; } .spine .fly a { font-size: 1.15rem; } }
 
-/* the five under Books in the Contents sheet, indented, smaller */
+/* the five under Books in the Contents sheet: on the same left edge as the rest, smaller */
 .sheet .bks > a { border-bottom: 0; }
-.sheet .sub { padding: 0 0 .5rem 1.4rem; border-bottom: 1px solid #2c2522; }
+.sheet .sub { padding: 0 0 .5rem; border-bottom: 1px solid #2c2522; }
 .sheet .sub a { font-size: 1.75rem; line-height: 1.1; padding: .25rem 0; border-bottom: 0; }
 
 /* ---------- speckled print buttons and links ---------- */
